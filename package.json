@@ -1,0 +1,33 @@
+{
+  "name": "dynamic_radio",
+  "version": "1.0.0",
+  "description": "Dynamic Radio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyloslinger/dynamicRadio.git"
+  },
+  "keywords": [
+    "Dynamic",
+    "Radio",
+    "Radio_Scheduler"
+  ],
+  "author": "Anthony K. Mensah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tyloslinger/dynamicRadio/issues"
+  },
+  "homepage": "https://github.com/tyloslinger/dynamicRadio#readme",
+  "dependencies": {
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "react": "^0.14.5",
+    "react-dom": "^0.14.5",
+    "webpack": "^1.12.9"
+  }
+}
