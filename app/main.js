@@ -1,5 +1,8 @@
 import React from 'react';
-import ReactDom from 'react-dom'
+import {Router} from 'react-router';
+import ReactDom from 'react-dom';
+
+import Routes from './config/routes'
 
 
 class Main extends React.Component {
@@ -9,4 +12,9 @@ class Main extends React.Component {
 	}
 }
 
-ReactDom.render(<Main />, document.getElementById("root"))
+ReactDom.render(
+		<Router>
+			{Routes}
+		</Router>, 
+		document.getElementById("root")
+	)
