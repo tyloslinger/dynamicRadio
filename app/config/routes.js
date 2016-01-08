@@ -1,11 +1,10 @@
 import React from 'react'
-import {Route, IndexRoute} from 'react-router'
+import { Route, IndexRoute } from 'react-router'
 
 import Home from '../components/home';
 import Body from '../body';
-import Profile from '../components/profile';
+import ChannelDashboard from '../components/Dashboard/channelDashboard';
 
 export default 	<Route path="/" component={Body}>
-					<IndexRoute component={Home} />
-					<Route path="profile/:username" component={Profile} />
+					<IndexRoute component={ChannelDashboard} />
 				</Route>
