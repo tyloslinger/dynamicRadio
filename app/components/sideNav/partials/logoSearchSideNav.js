@@ -7,7 +7,7 @@ class LogoSearchSideNav extends React.Component{
 		return(
 				<div className="logo">
 				  <a className="logo-link" href="#/">
-				    <i className="logo-icon fa fa-play"></i>				    
+				    <i className="logo-icon fa fa-headphones"></i>				    
 				  </a>
 
 				  <div className="form-group logo-search">

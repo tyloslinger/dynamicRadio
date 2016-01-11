@@ -14,7 +14,7 @@ class ChannelList extends React.Component{
 
 				<div className="row music-covers-listing">
 					{this.state.repeater.map(function(channelObj, index) {
-						return 	<div key={index} className="col-md-3">					
+						return 	<div key={index} className="col-md-4">					
 									 <ChannelItem key={index}/>
 								</div>
 					})}	

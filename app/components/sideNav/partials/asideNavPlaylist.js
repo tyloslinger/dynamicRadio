@@ -22,19 +22,6 @@ class AsideNavMenuPlaylist extends React.Component{
 
 			          </li>			          
 
-			          <li id="user-menu" className="nav-item" >
-			            <a className="nav-link profile" href="#/playlist/greatest-heats">
-			              <i className="icon fa fa-book"></i>
-			              <span className="label helper-tooltip-measured ng-binding">Greatest hits</span>
-			            </a>
-			          </li>
-			          <li id="user-menu" className="nav-item">
-			            <a className="nav-link profile" href="#/playlist/songsofdream">
-			              <i className="icon fa fa-book"></i>
-			              <span className="label helper-tooltip-measured ng-binding">Sons of Dream</span>
-			            </a>
-			          </li>
-
 			        </ul>
 
 			      </div>

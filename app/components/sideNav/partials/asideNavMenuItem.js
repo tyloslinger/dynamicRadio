@@ -22,13 +22,13 @@ class AsideActionNavMenuList extends React.Component{
 
 		this.state = {
 			menuActions: [{
-				name: "Artists"
+				name: "News Channels"
 			},
 			{
-				name: "Albums"
+				name: "Artist Channels"
 			},
 			{
-				name: "Genres"
+				name: "All"
 			}]
 		}
 	}
@@ -56,7 +56,10 @@ class AsideNavMenuItem extends React.Component{
 	}
 	render(){
 		return(
-				<div className="sidebar-nav-main navigation-menu-container" data-slim-scroll="" >
+				<div className="sidebar-nav-main navigation-menu-container" data-slim-scroll="" 
+
+
+				>
 					<div className="menu-navigation-menus" ng-show="navigation.navigationState.menu">
 						<div className="nav-user-menu sidebar-nav-content">
 					        <ul className="sidebar-nav-menu" data-highlight-active="">

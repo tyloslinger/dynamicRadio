@@ -63,23 +63,20 @@ class ChannelItem extends React.Component{
 
 	              <div className="list-item__name">
 	                <h5 className="color-primary text-center">
-	                  Jason Derulo
+	                  BBC Live
 	                </h5>
 	                <h6 className="text-center">
-	                  Tattoos
+	                  World News
 	                </h6>
 	              </div>
 
 	              <div className="list-item__style text-center">
 	                <div className="artist-genre ng-scope" ng-repeat="genre in album.genre">
-	                  <span className="btn-tag ng-binding">Pop</span>
+	                  <span className="btn-tag ng-binding">#one</span>
 	                </div>
 	                <div className="artist-genre ng-scope" ng-repeat="genre in album.genre">
-	                  <span className="btn-tag ng-binding">Rock</span>
-	                </div>
-	                <div className="artist-genre ng-scope" ng-repeat="genre in album.genre">
-	                  <span className="btn-tag ng-binding">Folk</span>
-	                </div>
+	                  <span className="btn-tag ng-binding">#two</span>
+	                </div>	                
 	              </div>
               </div>				
 			)

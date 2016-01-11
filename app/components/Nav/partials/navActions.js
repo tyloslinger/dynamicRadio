@@ -62,7 +62,8 @@ class TopNavFixer extends React.Component{
 		return(
 				<ul className="nav-left list-unstyled">
 				    <li>				        
-				        <div className="menu-button" toggle-off-canvas="">
+				        <div className="menu-button" toggle-off-canvas=""
+				        	onClick={this.props.activateMenu}>
 				            <span className="icon-bar"></span>
 				            <span className="icon-bar"></span>
 				            <span className="icon-bar"></span>
@@ -125,7 +126,7 @@ class NavActions extends React.Component{
 		return(
 				<header className="clearfix ng-scope">
 					<div className="top-nav">
-						<TopNavFixer />
+						<TopNavFixer activateMenu={this.props.activateMenu}/>
 						<NotificationNavAction />
 						<ProfileNavAction />
 					</div>

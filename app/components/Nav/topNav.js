@@ -7,7 +7,7 @@ class TopNav extends React.Component{
 		return(
 				<div className="no-print">
 					<section id="header" className="top-header">
-						<NavActions />
+						<NavActions activateMenu={this.props.activateMenu} />
 					</section>
 				</div>
 			)

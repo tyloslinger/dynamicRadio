@@ -31,9 +31,12 @@
     "history": "^1.17.0",
     "react": "^0.14.5",
     "react-dom": "^0.14.5",
+    "react-dropzone": "^3.3.0",
     "react-mixin": "^3.0.3",
     "react-router": "^1.0.3",
     "reactfire": "^0.5.1",
+    "superagent": "^1.6.1",
+    "underscore": "^1.8.3",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   }
