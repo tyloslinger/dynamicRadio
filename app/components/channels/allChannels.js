@@ -1,9 +1,11 @@
 import React from 'react';
 import AllChannelsList from './partials/allChannelList';
-
+import Actions from '../../actions/appActions';
 
 class AllChannels extends React.Component{
-
+	componentWillMount(){
+		Actions.SHOW_TOPMENU();
+	}	
 	render(){
 		return(
 				<section id="content" className="animate-fade-up fixed">

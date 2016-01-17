@@ -1,4 +1,5 @@
 import React from 'react';
+import Action from './actions/appActions';
 
 
 class HomeHeader extends React.Component{
@@ -51,7 +52,8 @@ class HeroContainer extends React.Component{
 				          Join DYDIO
 				        </a>
 				        &nbsp;&nbsp;				        
-				        <a className="btn btn-bordered btn-bordered-white">
+				        <a className="btn btn-bordered btn-bordered-white"
+				        	onClick={Action.HIDE_TOPMENU.bind(null, true)}>
 				          OR
 				        </a>
 				        &nbsp;&nbsp;
@@ -67,7 +69,18 @@ class HeroContainer extends React.Component{
 }
 
 class Home extends React.Component{
-
+	constructor(){
+		super();
+		this.state = {
+			showMenu: false
+		}
+	}
+	componentWillMount(){
+		Action.HIDE_TOPMENU();
+	}
+	componentWillUnmount(){
+		Action.SHOW_TOPMENU();
+	}
 	render(){
 		return(				
 				<section id="content" className="animate-fade-up">

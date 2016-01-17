@@ -1,4 +1,6 @@
 import React from 'react';
+import Actions from '../../../actions/appActions';
+import AppStore from '../../../stores/appStore';
 
 
 class NotificationNavAction extends React.Component{
@@ -62,8 +64,8 @@ class TopNavFixer extends React.Component{
 		return(
 				<ul className="nav-left list-unstyled">
 				    <li>				        
-				        <div className="menu-button" toggle-off-canvas=""
-				        	onClick={this.props.activateMenu}>
+				        <div className="menu-button" toggle-off-canvas
+				        	onClick={Actions.SHOW_MINIMENU.bind(null, AppStore.MiniMenuStatus())}>
 				            <span className="icon-bar"></span>
 				            <span className="icon-bar"></span>
 				            <span className="icon-bar"></span>

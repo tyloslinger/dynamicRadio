@@ -1,86 +1,55 @@
 import React from 'react';
 import _ from 'underscore';
 
+import AppStore from './stores/appStore';
 import Flags from './flags';
 import TopNav from './components/nav/topNav';
 import AsideNavMenu from './components/sideNav/asideNavMenu';
 
 
-
-var display = {
-		showTopnav : true,
-		showAsidemenu : true
-	};
-
-var DisplayMenu = function(viewObject){
-	if(viewObject != null){	  	
-			var location = viewObject.props.route.path;			
-			var displayObject = _.find(viewObject.props.routes, function(obj){return obj.path === location});		
-			
-			display.showAsidemenu = displayObject.showAsidemenu;
-			display.showTopnav = displayObject.showTopnav;				
-		}else{			
-			display.showAsidemenu = true;
-			display.showTopnav = true;
-		}
-	}
+const ShowMenu = () => {
+	return {showMenu: AppStore.MenuStatus()};
+}
 
 class Body extends React.Component {
-
 	constructor(props){
 		super(props);
-
 		this.state = {
-			showTopnav: true,
-			showAsidemenu: true,			
-			showMiniMenu: false,
-			bodyClass: "body-special "
-		}		
-
-		this.activateMiniMenu = this.activateMiniMenu.bind(this);
+			showMenu : false,
+		}
+		this._onChange = this._onChange.bind(this);
 	}
 
-	componentDidMount() {
-		DisplayMenu(this.props.children);
-	 	this.setState({
-					showTopnav : display.showTopnav,
-					showAsidemenu : display.showAsidemenu
-				});
+	componentWillMount(){
+		AppStore.addChangeListener( this._onChange );
 	}
-	
-	componentWillReceiveProps (nextProps) {	
-	 	DisplayMenu(nextProps.children);
-	 	this.setState({
-					showTopnav : display.showTopnav,
-					showAsidemenu : display.showAsidemenu
-				});
+
+	componentWillUnmount(){
+		AppStore.removeChangeListener( this._onChange );
 	}
-	
-	activateMiniMenu(){
+
+	_onChange(){
 		this.setState({
-			showMiniMenu : !this.state.showMiniMenu,			
-		})
-
-		this.setState({
-			bodyClass: this.state.showMiniMenu 
-				? this.state.bodyClass + " on-canvas nav-min" 
-				: "body-special " 
-		})
-
-		console.log(this.state.bodyClass);
+			showMenu : AppStore.MenuStatus(),
+			showMiniMenu : AppStore.MiniMenuStatus()
+		});
 	}
 
 	render() {				
 	    return (
-	      	<div className={this.state.showTopnav ? null: "body-special"} >
-	      		{this.state.showTopnav 
-	      			? 
-		      			<div className="no-print">
-		      				{this.state.showAsidemenu ? <AsideNavMenu /> : null}
-		      			</div> 
-	      			: null}
+	      	<div className={this.state.showMenu ? 	this.state.showMiniMenu ? "on-canvas nav-min" 
+	      																  	: null
+	      										: "body-special"}>      			
+  				{ this.state.showMenu 
+  					? 
+  						<div className="no-print">
+  							<AsideNavMenu />
+  						</div>
+  					: null}      			
 		      	<div className="view-container" ng-noName="nothing">  		      		
-		      		{this.state.showTopnav ? <TopNav activateMenu={this.activateMiniMenu}/> : null}
+		      		{ this.state.showMenu 
+		      			? <TopNav />
+		      			: null}
 					{this.props.children}	
 				</div>		
 			</div>
