@@ -48,7 +48,7 @@ class HeroContainer extends React.Component{
 				        <p>Share {"with"} your friends.</p>
 				      </div>
 				      <div>
-				        <a href="#/signUp" className="btn btn-primary">
+				        <a href="#/signUp/233" className="btn btn-primary">
 				          Join DYDIO
 				        </a>
 				        &nbsp;&nbsp;				        
@@ -70,10 +70,7 @@ class HeroContainer extends React.Component{
 
 class Home extends React.Component{
 	constructor(){
-		super();
-		this.state = {
-			showMenu: false
-		}
+		super();		
 	}
 	componentWillMount(){
 		Action.HIDE_TOPMENU();

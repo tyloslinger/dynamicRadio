@@ -7,15 +7,11 @@ import TopNav from './components/nav/topNav';
 import AsideNavMenu from './components/sideNav/asideNavMenu';
 
 
-const ShowMenu = () => {
-	return {showMenu: AppStore.MenuStatus()};
-}
-
 class Body extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			showMenu : false,
+			showMenu: false
 		}
 		this._onChange = this._onChange.bind(this);
 	}

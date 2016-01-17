@@ -8,6 +8,6 @@ export function register(callback){
 }
 
 export function dispatch(actionType, payload){
-	console.log("FROM DISPATCHER: actionType: ", actionType, " payload: ", payload)
+	//console.log("FROM DISPATCHER: actionType: ", actionType, " payload: ", payload)
 	flux.dispatch(actionType, payload);
 }

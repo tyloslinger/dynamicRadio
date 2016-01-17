@@ -4,13 +4,28 @@ import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
 
-var _hideMenuVal; var _miniMenuVal;
+var _menuVal; 
+var _mini_MenuVal;
+var _loginVal;
+
 const _hideMenu = () => {
-	return _hideMenuVal = false;
+	return _menuVal = false;
 };
 
 const _showMenu = () => {
-	return _hideMenuVal = true;
+	return _menuVal = true;
+};
+
+const _login = (payload) => {
+	return _loginVal = {		
+		userType: payload.userType,
+		userName: payload.userName,
+		password: payload.password,
+		phoneNumber: payload.phoneNumber,
+		email: payload.email,
+		loginProcessed: true,
+		status: false
+	};
 }
 
 const AppStore = Object.assign(EventEmitter.prototype, {
@@ -24,25 +39,32 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 		this.removeListener(CHANGE_EVENT, callback )
 	},	
 	MenuStatus(){		
-		return _hideMenuVal;
+		return _menuVal;
 	},
 	MiniMenuStatus(){
-		return _miniMenuVal;
+		return _mini_MenuVal;
+	},
+	CheckLoginStatus(){		
+		return _loginVal;
 	},
 	dispatcherIndex: register( function(action){
 		console.log("FROM STORES");
 		switch(action.actionType){
 			case AppConstants.HIDE_TOPMENU:
 				_hideMenu();
-				console.log(AppConstants.HIDE_TOPMENU, " is called with value: ", _hideMenuVal);
+				console.log(AppConstants.HIDE_TOPMENU, " is called with value: ", _menuVal);
 			break;
 			case AppConstants.SHOW_TOPMENU:
 				_showMenu();
-				console.log(AppConstants.SHOW_TOPMENU, " is called with value: ", _hideMenuVal);
+				console.log(AppConstants.SHOW_TOPMENU, " is called with value: ", _menuVal);
 			break;
 			case AppConstants.SHOW_MINIMENU:
-				_miniMenuVal = !action.payload;
-				console.log(AppConstants.SHOW_MINIMENU, " is value: ", _miniMenuVal);
+				_mini_MenuVal = !action.payload;
+				console.log(AppConstants.SHOW_MINIMENU, " is value: ", _mini_MenuVal);
+			break;
+			case AppConstants.LOGIN:
+				_login(action.payload);
+				console.log(AppConstants.LOGIN, " payload: ", action.payload, " is value: ", _loginVal);
 			break;
 		}
 

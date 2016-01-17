@@ -42,5 +42,12 @@ export default{
 			actionType: AppConstants.SHOW_MINIMENU,
 			payload: payload
 		}, payload)
+	},
+
+	LOGIN(payload){
+		dispatch({
+			actionType: AppConstants.LOGIN,
+		    payload: payload
+		}, payload)
 	}
 }
