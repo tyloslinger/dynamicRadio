@@ -1,6 +1,7 @@
 import React from 'react';
 import Actions from '../../../actions/appActions'
 import AppStore from '../../../stores/appStore';
+import { Router, Location } from 'react-router';
 
 
 class ControlComponents extends React.Component{
@@ -113,10 +114,15 @@ class SignInContainer extends React.Component{
         AppStore.removeChangeListener(this._onChange);
     }
     _onChange(){
-        this.setState(AppStore.CheckLoginStatus());        
+        this.setState({
+            userObject: AppStore.CheckLoginStatus()
+        });
     }    
     componentDidUpdate(){
-        console.log("did update: ", this.state);
+        if(this.state.userObject != undefined 
+            && this.state.userObject.status){
+            Location('allChannels');
+        }
     }
     render(){        
         return(

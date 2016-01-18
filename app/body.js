@@ -12,7 +12,10 @@ class Body extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			showMenu: false
+			showMenu: false,
+			userObject : {
+				userType: ''
+			}
 		}
 		this._onChange = this._onChange.bind(this);
 	}
@@ -33,14 +36,16 @@ class Body extends React.Component {
 		});
 	}
 
-	render() {				
+	render() {
+	
 	    return (
 	      	<div className={this.state.showMenu ? 	this.state.showMiniMenu ? "on-canvas nav-min" 
 	      																  	: null
 	      										: "body-special"}>      			
-  				{ this.state.showMenu 
-  					? 
-  						this.userObject.userType === 'admin' 	?
+  				{this.state.showMenu 
+  						? 
+  						this.state.userObject != undefined && this.state.userObject.userType === 'admin' 	
+  																?
   																	<div className="no-print">
 											  							<AdminSideNavMenu />
 											  						</div>
