@@ -26561,7 +26561,8 @@
 			password: payload.password,
 			phoneNumber: payload.phoneNumber,
 			email: payload.email,
-			status: true
+			loginProcessed: true,
+			status: false
 		};
 	};
 
@@ -28684,6 +28685,9 @@
 
 	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(SignInContainer).call(this));
 
+	        _this2.state = {
+	            loginProcessed: false
+	        };
 	        _this2._onChange = _this2._onChange.bind(_this2);
 	        return _this2;
 	    }
@@ -28701,8 +28705,12 @@
 	    }, {
 	        key: '_onChange',
 	        value: function _onChange() {
-	            this.setState({ userObject: _appStore2.default.CheckLoginStatus() });
-	            console.log("check login state: ", _appStore2.default.CheckLoginStatus());
+	            this.setState(_appStore2.default.CheckLoginStatus());
+	        }
+	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            console.log("did update: ", this.state);
 	        }
 	    }, {
 	        key: 'render',
@@ -28720,6 +28728,15 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'col-md-6' },
+	                            this.state.loginProcessed && !this.state.status ? _react2.default.createElement(
+	                                'div',
+	                                { className: 'text-center' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    null,
+	                                    'Login Failed'
+	                                )
+	                            ) : null,
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'text-center' },
