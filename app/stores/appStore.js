@@ -24,7 +24,7 @@ const _login = (payload) => {
 		phoneNumber: payload.phoneNumber,
 		email: payload.email,
 		loginProcessed: true,
-		status: false
+		status: true
 	};
 }
 

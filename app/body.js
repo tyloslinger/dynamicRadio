@@ -5,6 +5,7 @@ import AppStore from './stores/appStore';
 import Flags from './flags';
 import TopNav from './components/nav/topNav';
 import AsideNavMenu from './components/sideNav/asideNavMenu';
+import AdminSideNavMenu from './components/sideNav/adminSideNavMenu';
 
 
 class Body extends React.Component {
@@ -27,7 +28,8 @@ class Body extends React.Component {
 	_onChange(){
 		this.setState({
 			showMenu : AppStore.MenuStatus(),
-			showMiniMenu : AppStore.MiniMenuStatus()
+			showMiniMenu : AppStore.MiniMenuStatus(),
+			userObject : AppStore.CheckLoginStatus()
 		});
 	}
 
@@ -38,9 +40,15 @@ class Body extends React.Component {
 	      										: "body-special"}>      			
   				{ this.state.showMenu 
   					? 
-  						<div className="no-print">
-  							<AsideNavMenu />
-  						</div>
+  						this.userObject.userType === 'admin' 	?
+  																	<div className="no-print">
+											  							<AdminSideNavMenu />
+											  						</div>
+  															 	:
+  															 		<div className="no-print">
+											  							<AsideNavMenu />
+											  						</div>
+
   					: null}      			
 		      	<div className="view-container" ng-noName="nothing">  		      		
 		      		{ this.state.showMenu 

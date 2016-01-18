@@ -5,7 +5,10 @@ import AppStore from '../../../stores/appStore';
 
 class ControlComponents extends React.Component{
     constructor(){
-        super();        
+        super(); 
+        this.state = {
+            phoneNumber: '233'
+        }       
 
         this.signIn = this.signIn.bind(this);
         this.phoneNumberChange = this.phoneNumberChange.bind(this);

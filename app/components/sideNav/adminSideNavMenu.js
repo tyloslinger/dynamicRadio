@@ -3,7 +3,7 @@ import LogoSearchSideNav from './partials/logoSearchSideNav';
 import AsideNavSwitch from './partials/asideNavSwitch';
 import AsideNavMenuItem from './partials/asideNavMenuItem';
 
-class AsideNav extends React.Component{
+class AdminSideNav extends React.Component{
 
 	render(){
 		return(
@@ -21,4 +21,4 @@ class AsideNav extends React.Component{
 }
 
 
-export default AsideNav;
+export default AdminSideNav;
