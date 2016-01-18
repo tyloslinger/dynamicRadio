@@ -17,7 +17,7 @@ const _showMenu = () => {
 };
 
 const _login = (payload) => {
-	return _loginVal = {		
+    _loginVal = {		
 		userType: payload.userType,
 		userName: payload.userName,
 		password: payload.password,
@@ -25,7 +25,7 @@ const _login = (payload) => {
 		email: payload.email,
 		loginProcessed: true,
 		status: true
-	};
+	};	
 }
 
 const AppStore = Object.assign(EventEmitter.prototype, {

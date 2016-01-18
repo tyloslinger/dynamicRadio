@@ -35,9 +35,12 @@ class Body extends React.Component {
 			userObject : AppStore.CheckLoginStatus()
 		});
 	}
+	componentDidUpdate(){
+		console.log(this.state);
+		console.log("login status from appstore: ", AppStore.CheckLoginStatus());
+	}
 
-	render() {
-	
+	render() {		
 	    return (
 	      	<div className={this.state.showMenu ? 	this.state.showMiniMenu ? "on-canvas nav-min" 
 	      																  	: null

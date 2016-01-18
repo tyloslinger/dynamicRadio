@@ -1,7 +1,7 @@
 import React from 'react';
 import Actions from '../../../actions/appActions'
 import AppStore from '../../../stores/appStore';
-import { Router, Location } from 'react-router';
+import { Router, Navigation } from 'react-router';
 
 
 class ControlComponents extends React.Component{
@@ -39,7 +39,7 @@ class ControlComponents extends React.Component{
             phoneNumber: this.state.phoneNumber,
             password: this.state.password,
             email: this.state.email
-        })
+        })        
     }
 
     render(){
@@ -89,7 +89,7 @@ class ControlComponents extends React.Component{
                            }                        
                     
                     <div className="form-group">
-                        <a className="btn btn-primary btn-lg btn-block"
+                        <a href='#/setup' className="btn btn-primary btn-lg btn-block"
                                 onClick={this.signIn}>Log in</a>
                     </div>
                 </fieldset>
@@ -119,10 +119,7 @@ class SignInContainer extends React.Component{
         });
     }    
     componentDidUpdate(){
-        if(this.state.userObject != undefined 
-            && this.state.userObject.status){
-            Location('allChannels');
-        }
+        
     }
     render(){        
         return(

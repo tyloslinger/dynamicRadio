@@ -1,20 +1,21 @@
 import React from 'react';
 import AddChannelPage from './partials/addChannelPage';
+import Actions from '../../actions/appActions';
 
 
 class AdminDashboard extends React.Component{
 	constructor(){
 		super();
-
-		this.state = {
-			showChannelDashboard: true,
-			showUserDashboard: false
-		}
+	}
+	componentWillMount(){
+		Actions.SHOW_TOPMENU();
+	}
+	componentWillUnmount(){
+		Actions.HIDE_TOPMENU();
 	}
 	render(){
 		return(				
 				<div className="page page-general two-column" style={{width:"100%"}}>
-
 					<div className="signin-header">
 				        <div className="container text-center">
 				            <section className="logo-signin">
@@ -22,8 +23,7 @@ class AdminDashboard extends React.Component{
 				            </section>
 				        </div>
 				    </div>
-
-					{this.state.showChannelDashboard ? <AddChannelPage /> : null}
+					<AddChannelPage />
 				</div>
 			)
 	}

@@ -1,7 +1,7 @@
 import React from 'react';
 import LogoSearchSideNav from './partials/logoSearchSideNav';
 import AsideNavSwitch from './partials/asideNavSwitch';
-import AsideNavMenuItem from './partials/asideNavMenuItem';
+import AdminAsideNavMenuItem from './partials/adminAsideNavMenuItem';
 
 class AdminSideNav extends React.Component{
 
@@ -9,10 +9,9 @@ class AdminSideNav extends React.Component{
 		return(
 				<aside id="nav-container">
 					<LogoSearchSideNav />
-					<div id="nav-wrapper" className="ng-scope">
-						<AsideNavSwitch />
+					<div id="nav-wrapper" className="ng-scope">						
 						<div className="slimScrollDiv" >
-							<AsideNavMenuItem />
+							<AdminAsideNavMenuItem />
 						</div>
 					</div>
 				</aside>
