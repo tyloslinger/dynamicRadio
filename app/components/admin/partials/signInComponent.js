@@ -97,7 +97,7 @@ class ControlComponents extends React.Component{
     }
 }
 
-ControlComponents.proptType
+
 
 class SignInContainer extends React.Component{
     constructor(){

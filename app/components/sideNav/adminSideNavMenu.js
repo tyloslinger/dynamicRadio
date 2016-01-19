@@ -1,6 +1,5 @@
 import React from 'react';
 import LogoSearchSideNav from './partials/logoSearchSideNav';
-import AsideNavSwitch from './partials/asideNavSwitch';
 import AdminAsideNavMenuItem from './partials/adminAsideNavMenuItem';
 
 class AdminSideNav extends React.Component{

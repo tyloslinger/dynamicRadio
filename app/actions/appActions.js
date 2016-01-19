@@ -8,20 +8,38 @@ export default{
 			payload: payload
 		}, payload)
 	},
+	ADD_NEW_USER_PAGE()	{
+		dispatch({
+			actionType: AppConstants.ADD_NEW_USER_PAGE,
+			payload: true
+		}, true)
+	},
+
+
 
 	ADD_NEW_CHANNEL(payload){
 		dispatch({
 			actionType: AppConstants.ADD_NEW_CHANNEL, 
 			payload: payload
 		}, payload)
-	},
-
+	},	
 	DELETE_CHANNEL(payload){
 		dispatch({
 			actionType: AppConstants.DELETE_CHANNEL, 
 			payload: payload
 		}, payload)
 	},
+
+
+
+	ADD_NEW_CATEGORY(payload){
+		dispatch({
+			actionType: AppConstants.ADD_NEW_CATEGORY,
+			payload: payload
+		}, payload)
+	},	
+
+
 
 	HIDE_TOPMENU(){
 		dispatch({			
@@ -44,10 +62,20 @@ export default{
 		}, payload)
 	},
 
+
+
 	LOGIN(payload){
 		dispatch({
 			actionType: AppConstants.LOGIN,
 		    payload: payload
+		}, payload)
+	},
+
+
+	ENABLE_PAGE(payload){
+		dispatch({
+			actionType: AppConstants.ENABLE_PAGE,
+			payload: payload
 		}, payload)
 	}
 }

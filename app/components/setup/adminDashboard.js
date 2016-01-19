@@ -1,7 +1,6 @@
 import React from 'react';
-import AddChannelPage from './partials/addChannelPage';
 import Actions from '../../actions/appActions';
-
+import DashBoardSetup from './partials/dashboardSetup';
 
 class AdminDashboard extends React.Component{
 	constructor(){
@@ -23,7 +22,7 @@ class AdminDashboard extends React.Component{
 				            </section>
 				        </div>
 				    </div>
-					<AddChannelPage />
+					<DashBoardSetup />
 				</div>
 			)
 	}

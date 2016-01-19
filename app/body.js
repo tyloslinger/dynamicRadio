@@ -36,8 +36,7 @@ class Body extends React.Component {
 		});
 	}
 	componentDidUpdate(){
-		console.log(this.state);
-		console.log("login status from appstore: ", AppStore.CheckLoginStatus());
+		
 	}
 
 	render() {		

@@ -2,11 +2,22 @@ import { dispatch, register } from '../dispatchers/appDispatchers';
 import AppConstants from '../constants/appConstants';
 import { EventEmitter } from 'events';
 
+import CategoryAPI from '../API/categoryAPI';
+
 const CHANGE_EVENT = 'change';
 
 var _menuVal; 
 var _mini_MenuVal;
 var _loginVal;
+var _pageObject;
+
+const _setActivePage = (payload) => {	
+	_pageObject = {
+		pageEnabled: true,
+		currentPage: payload.pageName,
+		page: payload.page
+	}
+}
 
 const _hideMenu = () => {
 	return _menuVal = false;
@@ -47,24 +58,27 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 	CheckLoginStatus(){		
 		return _loginVal;
 	},
+	CheckActivePage(){
+		return _pageObject;
+	},
 	dispatcherIndex: register( function(action){
 		console.log("FROM STORES");
 		switch(action.actionType){
 			case AppConstants.HIDE_TOPMENU:
-				_hideMenu();
-				console.log(AppConstants.HIDE_TOPMENU, " is called with value: ", _menuVal);
+				_hideMenu();				
 			break;
 			case AppConstants.SHOW_TOPMENU:
-				_showMenu();
-				console.log(AppConstants.SHOW_TOPMENU, " is called with value: ", _menuVal);
+				_showMenu();				
 			break;
 			case AppConstants.SHOW_MINIMENU:
-				_mini_MenuVal = !action.payload;
-				console.log(AppConstants.SHOW_MINIMENU, " is value: ", _mini_MenuVal);
+				_mini_MenuVal = !action.payload;				
 			break;
 			case AppConstants.LOGIN:
-				_login(action.payload);
-				console.log(AppConstants.LOGIN, " payload: ", action.payload, " is value: ", _loginVal);
+				_login(action.payload);				
+			break;
+			case AppConstants.ENABLE_PAGE:
+				_setActivePage(action.payload);
+				CategoryAPI.addNewCategory(action.payload);				
 			break;
 		}
 
