@@ -36,12 +36,6 @@ class AddChannelUniPage extends React.Component{
 						<section className="panel panel-default">
 					        <div className="panel-heading"><i className="fa fa-list panel-ico"></i>{this.state.pageName}</div>
 					        <div className="panel-body ng-scope" data-ng-controller="NotifyCtrl">
-
-					            <div className="callout-elem callout-elem-warning text-center">
-					                <h4>callout-elem heading</h4>
-					                <p>Lorem ipsum dolor sit amet, Lorem Ipsum is simply dummy text. Assumenda, alias, in accusantium totam adipisci vel et suscipit quidem libero pariatur minus ratione quo doloremque error at nemo incidunt dicta quia?</p>
-					            </div>	
-					            
 					            {this.state.pageEnabled 
 					            	?
 					            		this.state.page === AppConstants.CATEGORY_PAGE

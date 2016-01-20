@@ -38,7 +38,12 @@ export default{
 			payload: payload
 		}, payload)
 	},	
-
+	REMOVE_CATEGORY(payload){
+		dispatch({
+			actionType: AppConstants.REMOVE_CATEGORY,
+			payload: payload
+		}, payload)
+	},
 
 
 	HIDE_TOPMENU(){
@@ -78,4 +83,5 @@ export default{
 			payload: payload
 		}, payload)
 	}
+
 }

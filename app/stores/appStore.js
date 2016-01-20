@@ -39,9 +39,17 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 	CheckActivePage(){
 		return _pageObject;
 	},
+	GetCategories(){
+		return CategoryAPI.categories;
+	},
+
+
+	//DISPATCHER
 	dispatcherIndex: register( function(action){
 		//console.log("FROM STORES");
 		switch(action.actionType){
+
+
 			case AppConstants.HIDE_TOPMENU:
 				_menuVal = GenericServicesAPI._hideMenu();				
 			break;
@@ -51,12 +59,22 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 			case AppConstants.SHOW_MINIMENU:
 				_mini_MenuVal = !action.payload;				
 			break;
+
+
 			case AppConstants.LOGIN:
 				_loginVal = GenericServicesAPI._login(action.payload);				
 			break;
 			case AppConstants.SWITCH_PAGE:				
 				_pageObject = GenericServicesAPI._switchPage(action.payload);
-			break;			
+			break;
+
+			//CATEGORIES
+			case AppConstants.ADD_NEW_CATEGORY:
+				CategoryAPI._addNewCategory(action.payload);
+			break;
+			case AppConstants.REMOVE_CATEGORY:
+				CategoryAPI._removeCategory(action.payload);
+			break;
 		}
 
 		AppStore.emitChange();

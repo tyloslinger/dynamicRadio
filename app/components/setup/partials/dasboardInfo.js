@@ -46,6 +46,7 @@ class DashBoardInfo extends React.Component{
 				index: 1, 
 				infoName: 'Categories',
 				color: ' box-icon bg-success',
+				buttonColor: '#EC5B3F',
 				pageName: 'category',
 				page: AppConstants.CATEGORY_PAGE
 			},
@@ -53,6 +54,7 @@ class DashBoardInfo extends React.Component{
 				index: 2, 
 				infoName: 'Channels',
 				color: 'box-icon bg-info',
+				buttonColor: '#619BF2',
 				pageName: 'channel',
 				page: AppConstants.CHANNEL_PAGE
 			},
@@ -60,6 +62,7 @@ class DashBoardInfo extends React.Component{
 				index: 3, 
 				infoName: 'Local Channels',
 				color: 'box-icon bg-warning',
+				buttonColor: '#F2B53F',
 				pageName: 'channel',
 				page: AppConstants.CHANNEL_PAGE
 			},
@@ -67,6 +70,7 @@ class DashBoardInfo extends React.Component{
 				index: 4, 
 				infoName: 'Something',
 				color: 'box-icon bg-danger',
+				buttonColor: '#AA3D2A',
 				pageName: 'something'
 			}]			
 		}
