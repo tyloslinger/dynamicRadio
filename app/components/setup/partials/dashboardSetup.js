@@ -11,7 +11,8 @@ class AddChannelUniPage extends React.Component{
 		super();
 		this.state = {
 			pageEnabled: false,
-			page: ''
+			page: '',
+			currentPage: 'nothing yet'
 		}
 		this._onChange = this._onChange.bind(this);
 	}	
@@ -22,30 +23,18 @@ class AddChannelUniPage extends React.Component{
 		AppStore.removeChangeListener( this._onChange );
 	}
 	_onChange(){
-		this.setState(AppStore.CheckActivePage());	
-	}
-	CurrentPage(){		
-		if(this.state.pageEnabled){
-			console.log("page value: ", this.state.page);
-			switch(this.state.page){
-				case AppConstants.CATEGORY_PAGE:
-					this.setState({page: <CategoryPage />})
-				break;
-				case AppConstants.CHANNEL_PAGE:
-				break;
-				case AppConstants.USER_PAGE:
-				break;			
-				case AppConstants.MISC_PAGE:
-				break;				
-			}
-		}		
+		this.setState(AppStore.CheckActivePage());		
+	}	
+	componentDidUpdate(prevProps, prevState) {
+		
+			
 	}
 	render(){
 		return(
 				<div>{this.state.pageEnabled 
 					?
 						<section className="panel panel-default">
-					        <div className="panel-heading"><i className="fa fa-list panel-ico"></i>{this.state.currentPage}</div>
+					        <div className="panel-heading"><i className="fa fa-list panel-ico"></i>{this.state.pageName}</div>
 					        <div className="panel-body ng-scope" data-ng-controller="NotifyCtrl">
 
 					            <div className="callout-elem callout-elem-warning text-center">
@@ -53,7 +42,24 @@ class AddChannelUniPage extends React.Component{
 					                <p>Lorem ipsum dolor sit amet, Lorem Ipsum is simply dummy text. Assumenda, alias, in accusantium totam adipisci vel et suscipit quidem libero pariatur minus ratione quo doloremque error at nemo incidunt dicta quia?</p>
 					            </div>	
 					            
-					            {this.state.page}
+					            {this.state.pageEnabled 
+					            	?
+					            		this.state.page === AppConstants.CATEGORY_PAGE
+					            			?
+					            				<CategoryPage />
+					            			:
+					            				this.state.page === AppConstants.CHANNEL_PAGE
+					            					?
+					            						<ChannelPage />
+					            					:					            						
+					            						this.state.page === AppConstants.USER_PAGE
+					            							?
+					            								<UserPage />
+					            							:
+					            								null
+					            	:
+					            		null
+					            }
 					        </div>
 					    </section>
 					:

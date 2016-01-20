@@ -8,12 +8,9 @@ class InfoBoard extends React.Component{
 		super();
 		this.state = {
 			pageName : ''
-		}
-		//this._onSwitchPage = this._onSwitchPage.bind(this, this.state.pageName);	
+		}		
 	}
-	_onSwitchPage(_val){		
-		Action.ENABLE_PAGE({pageName: _val})
-	}
+	
 	render(){
 		return(
 				<div className="col-lg-3 col-xsm-6">
@@ -27,7 +24,12 @@ class InfoBoard extends React.Component{
 			            </div>			            
 			            <div className="panel-body">
 			            	<button className="btn btn-primary"
-			            		onClick={this._onSwitchPage.bind(this, this.props.data.pageName)} defaultValue='category'><i className="fa fa-plus"></i></button>                            
+			            		 onClick={Action.SWITCH_PAGE.bind(null, {
+			            		 	page:this.props.data.page, 
+			            		 	pageName:this.props.data.pageName
+			            		 })}>
+			            		<i className="fa fa-plus"></i>
+			            	</button>                            
 			            </div>
 			        </div>			        
 		        </div>

@@ -2,7 +2,12 @@ import { dispatch, register } from '../dispatchers/appDispatchers';
 import AppConstants from '../constants/appConstants';
 import { EventEmitter } from 'events';
 
-import CategoryAPI from '../API/categoryAPI';
+
+/*IMPORT APIS*/
+import CategoryAPI from '../storesAPI/categoryAPI';
+import GenericServicesAPI from '../storesAPI/genServicesAPI';
+
+
 
 const CHANGE_EVENT = 'change';
 
@@ -11,33 +16,6 @@ var _mini_MenuVal;
 var _loginVal;
 var _pageObject;
 
-const _setActivePage = (payload) => {	
-	_pageObject = {
-		pageEnabled: true,
-		currentPage: payload.pageName,
-		page: payload.page
-	}
-}
-
-const _hideMenu = () => {
-	return _menuVal = false;
-};
-
-const _showMenu = () => {
-	return _menuVal = true;
-};
-
-const _login = (payload) => {
-    _loginVal = {		
-		userType: payload.userType,
-		userName: payload.userName,
-		password: payload.password,
-		phoneNumber: payload.phoneNumber,
-		email: payload.email,
-		loginProcessed: true,
-		status: true
-	};	
-}
 
 const AppStore = Object.assign(EventEmitter.prototype, {
 	emitChange(){
@@ -62,24 +40,23 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 		return _pageObject;
 	},
 	dispatcherIndex: register( function(action){
-		console.log("FROM STORES");
+		//console.log("FROM STORES");
 		switch(action.actionType){
 			case AppConstants.HIDE_TOPMENU:
-				_hideMenu();				
+				_menuVal = GenericServicesAPI._hideMenu();				
 			break;
 			case AppConstants.SHOW_TOPMENU:
-				_showMenu();				
+				_menuVal = GenericServicesAPI._showMenu();				
 			break;
 			case AppConstants.SHOW_MINIMENU:
 				_mini_MenuVal = !action.payload;				
 			break;
 			case AppConstants.LOGIN:
-				_login(action.payload);				
+				_loginVal = GenericServicesAPI._login(action.payload);				
 			break;
-			case AppConstants.ENABLE_PAGE:
-				_setActivePage(action.payload);
-				CategoryAPI.addNewCategory(action.payload);				
-			break;
+			case AppConstants.SWITCH_PAGE:				
+				_pageObject = GenericServicesAPI._switchPage(action.payload);
+			break;			
 		}
 
 		AppStore.emitChange();

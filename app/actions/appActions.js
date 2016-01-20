@@ -72,9 +72,9 @@ export default{
 	},
 
 
-	ENABLE_PAGE(payload){
+	SWITCH_PAGE(payload){
 		dispatch({
-			actionType: AppConstants.ENABLE_PAGE,
+			actionType: AppConstants.SWITCH_PAGE,
 			payload: payload
 		}, payload)
 	}

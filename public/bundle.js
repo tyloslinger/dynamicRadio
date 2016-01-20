@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "38951157aa00856e3bcb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "47c2a3aacc083dfdf44d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -550,7 +550,7 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	var _react = __webpack_require__(1);
 
@@ -574,7 +574,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Main = function (_React$Component) {
+	var Main = (function (_React$Component) {
 		_inherits(Main, _React$Component);
 
 		function Main() {
@@ -595,7 +595,7 @@
 		}]);
 
 		return Main;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	_reactDom2.default.render(_react2.default.createElement(
 		_reactRouter.Router,
@@ -17214,21 +17214,15 @@
 	 * @typechecks
 	 */
 
-	/* eslint-disable fb-www/typeof-undefined */
-
 	/**
 	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
 	 * not safe to call document.activeElement if there is nothing focused.
 	 *
-	 * The activeElement will be null only if the document or document body is not
-	 * yet defined.
+	 * The activeElement will be null only if the document body is not yet defined.
 	 */
-	'use strict';
+	"use strict";
 
 	function getActiveElement() /*?DOMElement*/{
-	  if (typeof document === 'undefined') {
-	    return null;
-	  }
 	  try {
 	    return document.activeElement || document.body;
 	  } catch (e) {
@@ -19227,7 +19221,7 @@
 
 	'use strict';
 
-	module.exports = '0.14.6';
+	module.exports = '0.14.5';
 
 /***/ },
 /* 147 */
@@ -24680,23 +24674,23 @@
 
 	var _body2 = _interopRequireDefault(_body);
 
-	var _allChannels = __webpack_require__(231);
+	var _allChannels = __webpack_require__(232);
 
 	var _allChannels2 = _interopRequireDefault(_allChannels);
 
-	var _channelDashboard = __webpack_require__(234);
+	var _channelDashboard = __webpack_require__(235);
 
 	var _channelDashboard2 = _interopRequireDefault(_channelDashboard);
 
-	var _signIn = __webpack_require__(237);
+	var _signIn = __webpack_require__(238);
 
 	var _signIn2 = _interopRequireDefault(_signIn);
 
-	var _signUp = __webpack_require__(239);
+	var _signUp = __webpack_require__(240);
 
 	var _signUp2 = _interopRequireDefault(_signUp);
 
-	var _adminDashboard = __webpack_require__(241);
+	var _adminDashboard = __webpack_require__(242);
 
 	var _adminDashboard2 = _interopRequireDefault(_adminDashboard);
 
@@ -24719,7 +24713,7 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -24741,7 +24735,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var HomeHeader = function (_React$Component) {
+	var HomeHeader = (function (_React$Component) {
 		_inherits(HomeHeader, _React$Component);
 
 		function HomeHeader() {
@@ -24821,9 +24815,9 @@
 		}]);
 
 		return HomeHeader;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var HeroContainer = function (_React$Component2) {
+	var HeroContainer = (function (_React$Component2) {
 		_inherits(HeroContainer, _React$Component2);
 
 		function HeroContainer() {
@@ -24891,8 +24885,7 @@
 							'  ',
 							_react2.default.createElement(
 								'a',
-								{ className: 'btn btn-bordered btn-bordered-white',
-									onClick: _appActions2.default.HIDE_TOPMENU.bind(null, true) },
+								{ className: 'btn btn-bordered btn-bordered-white' },
 								'OR'
 							),
 							'  ',
@@ -24909,9 +24902,9 @@
 		}]);
 
 		return HeroContainer;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var Home = function (_React$Component3) {
+	var Home = (function (_React$Component3) {
 		_inherits(Home, _React$Component3);
 
 		function Home() {
@@ -24947,7 +24940,7 @@
 		}]);
 
 		return Home;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = Home;
 
@@ -25024,9 +25017,9 @@
 				payload: payload
 			}, payload);
 		},
-		ENABLE_PAGE: function ENABLE_PAGE(payload) {
+		SWITCH_PAGE: function SWITCH_PAGE(payload) {
 			(0, _appDispatchers.dispatch)({
-				actionType: _appConstants2.default.ENABLE_PAGE,
+				actionType: _appConstants2.default.SWITCH_PAGE,
 				payload: payload
 			}, payload);
 		}
@@ -25056,7 +25049,7 @@
 
 		LOGIN: 'LOGIN',
 
-		ENABLE_PAGE: 'ENABLE_PAGE',
+		SWITCH_PAGE: 'SWITCH_PAGE',
 		CATEGORY_PAGE: 'CATEGORY_PAGE',
 		CHANNEL_PAGE: 'CHANNEL_PAGE',
 		USER_PAGE: 'USER_PAGE',
@@ -25403,7 +25396,7 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -25421,19 +25414,19 @@
 
 	var _appStore2 = _interopRequireDefault(_appStore);
 
-	var _flags = __webpack_require__(221);
+	var _flags = __webpack_require__(222);
 
 	var _flags2 = _interopRequireDefault(_flags);
 
-	var _topNav = __webpack_require__(222);
+	var _topNav = __webpack_require__(223);
 
 	var _topNav2 = _interopRequireDefault(_topNav);
 
-	var _asideNavMenu = __webpack_require__(224);
+	var _asideNavMenu = __webpack_require__(225);
 
 	var _asideNavMenu2 = _interopRequireDefault(_asideNavMenu);
 
-	var _adminSideNavMenu = __webpack_require__(229);
+	var _adminSideNavMenu = __webpack_require__(230);
 
 	var _adminSideNavMenu2 = _interopRequireDefault(_adminSideNavMenu);
 
@@ -25445,7 +25438,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Body = function (_React$Component) {
+	var Body = (function (_React$Component) {
 		_inherits(Body, _React$Component);
 
 		function Body(props) {
@@ -25511,7 +25504,7 @@
 		}]);
 
 		return Body;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = Body;
 
@@ -27091,7 +27084,13 @@
 
 	var _categoryAPI2 = _interopRequireDefault(_categoryAPI);
 
+	var _genServicesAPI = __webpack_require__(221);
+
+	var _genServicesAPI2 = _interopRequireDefault(_genServicesAPI);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/*IMPORT APIS*/
 
 	var CHANGE_EVENT = 'change';
 
@@ -27099,34 +27098,6 @@
 	var _mini_MenuVal;
 	var _loginVal;
 	var _pageObject;
-
-	var _setActivePage = function _setActivePage(payload) {
-		_pageObject = {
-			pageEnabled: true,
-			currentPage: payload.pageName,
-			page: payload.page
-		};
-	};
-
-	var _hideMenu = function _hideMenu() {
-		return _menuVal = false;
-	};
-
-	var _showMenu = function _showMenu() {
-		return _menuVal = true;
-	};
-
-	var _login = function _login(payload) {
-		_loginVal = {
-			userType: payload.userType,
-			userName: payload.userName,
-			password: payload.password,
-			phoneNumber: payload.phoneNumber,
-			email: payload.email,
-			loginProcessed: true,
-			status: true
-		};
-	};
 
 	var AppStore = Object.assign(_events.EventEmitter.prototype, {
 		emitChange: function emitChange() {
@@ -27152,23 +27123,22 @@
 		},
 
 		dispatcherIndex: (0, _appDispatchers.register)(function (action) {
-			console.log("FROM STORES");
+			//console.log("FROM STORES");
 			switch (action.actionType) {
 				case _appConstants2.default.HIDE_TOPMENU:
-					_hideMenu();
+					_menuVal = _genServicesAPI2.default._hideMenu();
 					break;
 				case _appConstants2.default.SHOW_TOPMENU:
-					_showMenu();
+					_menuVal = _genServicesAPI2.default._showMenu();
 					break;
 				case _appConstants2.default.SHOW_MINIMENU:
 					_mini_MenuVal = !action.payload;
 					break;
 				case _appConstants2.default.LOGIN:
-					_login(action.payload);
+					_loginVal = _genServicesAPI2.default._login(action.payload);
 					break;
-				case _appConstants2.default.ENABLE_PAGE:
-					_setActivePage(action.payload);
-					_categoryAPI2.default.addNewCategory(action.payload);
+				case _appConstants2.default.SWITCH_PAGE:
+					_pageObject = _genServicesAPI2.default._switchPage(action.payload);
 					break;
 			}
 
@@ -27508,6 +27478,53 @@
 
 /***/ },
 /* 221 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var genServiceAPI = {
+		//LOGIN
+
+		_login: function _login(payload) {
+			return {
+				userType: payload.userType,
+				userName: payload.userName,
+				password: payload.password,
+				phoneNumber: payload.phoneNumber,
+				email: payload.email,
+				loginProcessed: true,
+				status: true
+			};
+		},
+
+		//SWITCH CURRENT PAGE
+		_switchPage: function _switchPage(payload) {
+			console.log("payload from gen api: ", payload);
+			return {
+				pageEnabled: true,
+				pageName: payload.pageName,
+				page: payload.page
+			};
+		},
+
+		//HIDE SIDE MENU
+		_hideMenu: function _hideMenu() {
+			return false;
+		},
+
+		//SHOW SIDE MENU
+		_showMenu: function _showMenu() {
+			return true;
+		}
+	};
+
+	exports.default = genServiceAPI;
+
+/***/ },
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27524,12 +27541,12 @@
 	};
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -27539,7 +27556,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _navActions = __webpack_require__(223);
+	var _navActions = __webpack_require__(224);
 
 	var _navActions2 = _interopRequireDefault(_navActions);
 
@@ -27551,7 +27568,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var TopNav = function (_React$Component) {
+	var TopNav = (function (_React$Component) {
 		_inherits(TopNav, _React$Component);
 
 		function TopNav() {
@@ -27576,17 +27593,17 @@
 		}]);
 
 		return TopNav;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = TopNav;
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -27612,7 +27629,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var NotificationNavAction = function (_React$Component) {
+	var NotificationNavAction = (function (_React$Component) {
 		_inherits(NotificationNavAction, _React$Component);
 
 		function NotificationNavAction() {
@@ -27734,9 +27751,9 @@
 		}]);
 
 		return NotificationNavAction;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var TopNavFixer = function (_React$Component2) {
+	var TopNavFixer = (function (_React$Component2) {
 		_inherits(TopNavFixer, _React$Component2);
 
 		function TopNavFixer() {
@@ -27768,9 +27785,9 @@
 		}]);
 
 		return TopNavFixer;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var ProfileNavAction = function (_React$Component3) {
+	var ProfileNavAction = (function (_React$Component3) {
 		_inherits(ProfileNavAction, _React$Component3);
 
 		function ProfileNavAction() {
@@ -27872,9 +27889,9 @@
 		}]);
 
 		return ProfileNavAction;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var NavActions = function (_React$Component4) {
+	var NavActions = (function (_React$Component4) {
 		_inherits(NavActions, _React$Component4);
 
 		function NavActions() {
@@ -27901,17 +27918,17 @@
 		}]);
 
 		return NavActions;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = NavActions;
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -27921,15 +27938,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _logoSearchSideNav = __webpack_require__(225);
+	var _logoSearchSideNav = __webpack_require__(226);
 
 	var _logoSearchSideNav2 = _interopRequireDefault(_logoSearchSideNav);
 
-	var _asideNavSwitch = __webpack_require__(226);
+	var _asideNavSwitch = __webpack_require__(227);
 
 	var _asideNavSwitch2 = _interopRequireDefault(_asideNavSwitch);
 
-	var _asideNavMenuItem = __webpack_require__(227);
+	var _asideNavMenuItem = __webpack_require__(228);
 
 	var _asideNavMenuItem2 = _interopRequireDefault(_asideNavMenuItem);
 
@@ -27941,7 +27958,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AsideNav = function (_React$Component) {
+	var AsideNav = (function (_React$Component) {
 		_inherits(AsideNav, _React$Component);
 
 		function AsideNav() {
@@ -27972,17 +27989,17 @@
 		}]);
 
 		return AsideNav;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AsideNav;
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28000,7 +28017,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var LogoSearchSideNav = function (_React$Component) {
+	var LogoSearchSideNav = (function (_React$Component) {
 		_inherits(LogoSearchSideNav, _React$Component);
 
 		function LogoSearchSideNav() {
@@ -28035,17 +28052,17 @@
 		}]);
 
 		return LogoSearchSideNav;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = LogoSearchSideNav;
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 						value: true
@@ -28063,7 +28080,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AsideNavSwitch = function (_React$Component) {
+	var AsideNavSwitch = (function (_React$Component) {
 						_inherits(AsideNavSwitch, _React$Component);
 
 						function AsideNavSwitch() {
@@ -28118,17 +28135,17 @@
 						}]);
 
 						return AsideNavSwitch;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AsideNavSwitch;
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28138,7 +28155,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _asideNavPlaylist = __webpack_require__(228);
+	var _asideNavPlaylist = __webpack_require__(229);
 
 	var _asideNavPlaylist2 = _interopRequireDefault(_asideNavPlaylist);
 
@@ -28150,7 +28167,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AsideActionNavMenuItem = function (_React$Component) {
+	var AsideActionNavMenuItem = (function (_React$Component) {
 		_inherits(AsideActionNavMenuItem, _React$Component);
 
 		function AsideActionNavMenuItem() {
@@ -28180,9 +28197,9 @@
 		}]);
 
 		return AsideActionNavMenuItem;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var AsideActionNavMenuList = function (_React$Component2) {
+	var AsideActionNavMenuList = (function (_React$Component2) {
 		_inherits(AsideActionNavMenuList, _React$Component2);
 
 		function AsideActionNavMenuList() {
@@ -28216,9 +28233,9 @@
 		}]);
 
 		return AsideActionNavMenuList;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var AsideNavMenuItem = function (_React$Component3) {
+	var AsideNavMenuItem = (function (_React$Component3) {
 		_inherits(AsideNavMenuItem, _React$Component3);
 
 		function AsideNavMenuItem() {
@@ -28307,17 +28324,17 @@
 		}]);
 
 		return AsideNavMenuItem;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AsideNavMenuItem;
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 				value: true
@@ -28335,7 +28352,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AsideNavMenuPlaylist = function (_React$Component) {
+	var AsideNavMenuPlaylist = (function (_React$Component) {
 				_inherits(AsideNavMenuPlaylist, _React$Component);
 
 				function AsideNavMenuPlaylist() {
@@ -28382,17 +28399,17 @@
 				}]);
 
 				return AsideNavMenuPlaylist;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AsideNavMenuPlaylist;
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28402,11 +28419,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _logoSearchSideNav = __webpack_require__(225);
+	var _logoSearchSideNav = __webpack_require__(226);
 
 	var _logoSearchSideNav2 = _interopRequireDefault(_logoSearchSideNav);
 
-	var _adminAsideNavMenuItem = __webpack_require__(230);
+	var _adminAsideNavMenuItem = __webpack_require__(231);
 
 	var _adminAsideNavMenuItem2 = _interopRequireDefault(_adminAsideNavMenuItem);
 
@@ -28418,7 +28435,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AdminSideNav = function (_React$Component) {
+	var AdminSideNav = (function (_React$Component) {
 		_inherits(AdminSideNav, _React$Component);
 
 		function AdminSideNav() {
@@ -28448,17 +28465,17 @@
 		}]);
 
 		return AdminSideNav;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AdminSideNav;
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28468,7 +28485,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _asideNavPlaylist = __webpack_require__(228);
+	var _asideNavPlaylist = __webpack_require__(229);
 
 	var _asideNavPlaylist2 = _interopRequireDefault(_asideNavPlaylist);
 
@@ -28480,7 +28497,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AsideActionNavMenuItem = function (_React$Component) {
+	var AsideActionNavMenuItem = (function (_React$Component) {
 		_inherits(AsideActionNavMenuItem, _React$Component);
 
 		function AsideActionNavMenuItem() {
@@ -28510,9 +28527,9 @@
 		}]);
 
 		return AsideActionNavMenuItem;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var AsideActionNavMenuList = function (_React$Component2) {
+	var AsideActionNavMenuList = (function (_React$Component2) {
 		_inherits(AsideActionNavMenuList, _React$Component2);
 
 		function AsideActionNavMenuList() {
@@ -28546,9 +28563,9 @@
 		}]);
 
 		return AsideActionNavMenuList;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var AdminAsideNavMenuItem = function (_React$Component3) {
+	var AdminAsideNavMenuItem = (function (_React$Component3) {
 		_inherits(AdminAsideNavMenuItem, _React$Component3);
 
 		function AdminAsideNavMenuItem() {
@@ -28584,17 +28601,17 @@
 		}]);
 
 		return AdminAsideNavMenuItem;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AdminAsideNavMenuItem;
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28604,7 +28621,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _allChannelList = __webpack_require__(232);
+	var _allChannelList = __webpack_require__(233);
 
 	var _allChannelList2 = _interopRequireDefault(_allChannelList);
 
@@ -28620,7 +28637,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AllChannels = function (_React$Component) {
+	var AllChannels = (function (_React$Component) {
 		_inherits(AllChannels, _React$Component);
 
 		function AllChannels() {
@@ -28686,17 +28703,17 @@
 		}]);
 
 		return AllChannels;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AllChannels;
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28706,7 +28723,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _allChannelItem = __webpack_require__(233);
+	var _allChannelItem = __webpack_require__(234);
 
 	var _allChannelItem2 = _interopRequireDefault(_allChannelItem);
 
@@ -28718,7 +28735,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AllChannelItemList = function (_React$Component) {
+	var AllChannelItemList = (function (_React$Component) {
 		_inherits(AllChannelItemList, _React$Component);
 
 		function AllChannelItemList() {
@@ -28802,17 +28819,17 @@
 		}]);
 
 		return AllChannelItemList;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AllChannelItemList;
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -28830,7 +28847,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AllChannelItem = function (_React$Component) {
+	var AllChannelItem = (function (_React$Component) {
 	  _inherits(AllChannelItem, _React$Component);
 
 	  function AllChannelItem() {
@@ -28890,17 +28907,17 @@
 	  }]);
 
 	  return AllChannelItem;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AllChannelItem;
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -28910,7 +28927,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _channelList = __webpack_require__(235);
+	var _channelList = __webpack_require__(236);
 
 	var _channelList2 = _interopRequireDefault(_channelList);
 
@@ -28922,7 +28939,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ChannelDashboard = function (_React$Component) {
+	var ChannelDashboard = (function (_React$Component) {
 		_inherits(ChannelDashboard, _React$Component);
 
 		function ChannelDashboard() {
@@ -28981,17 +28998,17 @@
 		}]);
 
 		return ChannelDashboard;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = ChannelDashboard;
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29001,7 +29018,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _channelItem = __webpack_require__(236);
+	var _channelItem = __webpack_require__(237);
 
 	var _channelItem2 = _interopRequireDefault(_channelItem);
 
@@ -29013,7 +29030,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ChannelList = function (_React$Component) {
+	var ChannelList = (function (_React$Component) {
 		_inherits(ChannelList, _React$Component);
 
 		function ChannelList() {
@@ -29045,17 +29062,17 @@
 		}]);
 
 		return ChannelList;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = ChannelList;
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29073,7 +29090,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ChannelItemInfo = function (_React$Component) {
+	var ChannelItemInfo = (function (_React$Component) {
 		_inherits(ChannelItemInfo, _React$Component);
 
 		function ChannelItemInfo() {
@@ -29107,9 +29124,9 @@
 		}]);
 
 		return ChannelItemInfo;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var ChannelItem = function (_React$Component2) {
+	var ChannelItem = (function (_React$Component2) {
 		_inherits(ChannelItem, _React$Component2);
 
 		function ChannelItem(props) {
@@ -29216,17 +29233,17 @@
 		}]);
 
 		return ChannelItem;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = ChannelItem;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29236,7 +29253,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _signInComponent = __webpack_require__(238);
+	var _signInComponent = __webpack_require__(239);
 
 	var _signInComponent2 = _interopRequireDefault(_signInComponent);
 
@@ -29252,7 +29269,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var SignIn = function (_React$Component) {
+	var SignIn = (function (_React$Component) {
 		_inherits(SignIn, _React$Component);
 
 		function SignIn() {
@@ -29312,17 +29329,17 @@
 		}]);
 
 		return SignIn;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = SignIn;
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -29350,7 +29367,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ControlComponents = function (_React$Component) {
+	var ControlComponents = (function (_React$Component) {
 	    _inherits(ControlComponents, _React$Component);
 
 	    function ControlComponents() {
@@ -29470,9 +29487,9 @@
 	    }]);
 
 	    return ControlComponents;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var SignInContainer = function (_React$Component2) {
+	var SignInContainer = (function (_React$Component2) {
 	    _inherits(SignInContainer, _React$Component2);
 
 	    function SignInContainer() {
@@ -29560,9 +29577,9 @@
 	    }]);
 
 	    return SignInContainer;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var SignInComponent = function (_React$Component3) {
+	var SignInComponent = (function (_React$Component3) {
 	    _inherits(SignInComponent, _React$Component3);
 
 	    function SignInComponent() {
@@ -29591,17 +29608,17 @@
 	    }]);
 
 	    return SignInComponent;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = SignInComponent;
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29611,7 +29628,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _singUpComponent = __webpack_require__(240);
+	var _singUpComponent = __webpack_require__(241);
 
 	var _singUpComponent2 = _interopRequireDefault(_singUpComponent);
 
@@ -29627,7 +29644,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var SignUp = function (_React$Component) {
+	var SignUp = (function (_React$Component) {
 		_inherits(SignUp, _React$Component);
 
 		function SignUp() {
@@ -29661,17 +29678,17 @@
 		}]);
 
 		return SignUp;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = SignUp;
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29689,7 +29706,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ControlComponents = function (_React$Component) {
+	var ControlComponents = (function (_React$Component) {
 		_inherits(ControlComponents, _React$Component);
 
 		function ControlComponents() {
@@ -29769,9 +29786,9 @@
 		}]);
 
 		return ControlComponents;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var SignUpContainer = function (_React$Component2) {
+	var SignUpContainer = (function (_React$Component2) {
 		_inherits(SignUpContainer, _React$Component2);
 
 		function SignUpContainer() {
@@ -29842,9 +29859,9 @@
 		}]);
 
 		return SignUpContainer;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var SignUpComponent = function (_React$Component3) {
+	var SignUpComponent = (function (_React$Component3) {
 		_inherits(SignUpComponent, _React$Component3);
 
 		function SignUpComponent() {
@@ -29873,17 +29890,17 @@
 		}]);
 
 		return SignUpComponent;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = SignUpComponent;
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29897,7 +29914,7 @@
 
 	var _appActions2 = _interopRequireDefault(_appActions);
 
-	var _dashboardSetup = __webpack_require__(242);
+	var _dashboardSetup = __webpack_require__(243);
 
 	var _dashboardSetup2 = _interopRequireDefault(_dashboardSetup);
 
@@ -29909,7 +29926,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AdminDashboard = function (_React$Component) {
+	var AdminDashboard = (function (_React$Component) {
 		_inherits(AdminDashboard, _React$Component);
 
 		function AdminDashboard() {
@@ -29957,17 +29974,17 @@
 		}]);
 
 		return AdminDashboard;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AdminDashboard;
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -29989,11 +30006,11 @@
 
 	var _appConstants2 = _interopRequireDefault(_appConstants);
 
-	var _dasboardInfo = __webpack_require__(243);
+	var _dasboardInfo = __webpack_require__(244);
 
 	var _dasboardInfo2 = _interopRequireDefault(_dasboardInfo);
 
-	var _categoryPage = __webpack_require__(245);
+	var _categoryPage = __webpack_require__(246);
 
 	var _categoryPage2 = _interopRequireDefault(_categoryPage);
 
@@ -30005,7 +30022,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AddChannelUniPage = function (_React$Component) {
+	var AddChannelUniPage = (function (_React$Component) {
 		_inherits(AddChannelUniPage, _React$Component);
 
 		function AddChannelUniPage() {
@@ -30015,7 +30032,8 @@
 
 			_this.state = {
 				pageEnabled: false,
-				page: ''
+				page: '',
+				currentPage: 'nothing yet'
 			};
 			_this._onChange = _this._onChange.bind(_this);
 			return _this;
@@ -30037,23 +30055,8 @@
 				this.setState(_appStore2.default.CheckActivePage());
 			}
 		}, {
-			key: 'CurrentPage',
-			value: function CurrentPage() {
-				if (this.state.pageEnabled) {
-					console.log("page value: ", this.state.page);
-					switch (this.state.page) {
-						case _appConstants2.default.CATEGORY_PAGE:
-							this.setState({ page: _react2.default.createElement(_categoryPage2.default, null) });
-							break;
-						case _appConstants2.default.CHANNEL_PAGE:
-							break;
-						case _appConstants2.default.USER_PAGE:
-							break;
-						case _appConstants2.default.MISC_PAGE:
-							break;
-					}
-				}
-			}
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate(prevProps, prevState) {}
 		}, {
 			key: 'render',
 			value: function render() {
@@ -30067,7 +30070,7 @@
 							'div',
 							{ className: 'panel-heading' },
 							_react2.default.createElement('i', { className: 'fa fa-list panel-ico' }),
-							this.state.currentPage
+							this.state.pageName
 						),
 						_react2.default.createElement(
 							'div',
@@ -30086,7 +30089,7 @@
 									'Lorem ipsum dolor sit amet, Lorem Ipsum is simply dummy text. Assumenda, alias, in accusantium totam adipisci vel et suscipit quidem libero pariatur minus ratione quo doloremque error at nemo incidunt dicta quia?'
 								)
 							),
-							this.state.page
+							this.state.pageEnabled ? this.state.page === _appConstants2.default.CATEGORY_PAGE ? _react2.default.createElement(_categoryPage2.default, null) : this.state.page === _appConstants2.default.CHANNEL_PAGE ? _react2.default.createElement(ChannelPage, null) : this.state.page === _appConstants2.default.USER_PAGE ? _react2.default.createElement(UserPage, null) : null : null
 						)
 					) : null
 				);
@@ -30094,9 +30097,9 @@
 		}]);
 
 		return AddChannelUniPage;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var AddChannelPage = function (_React$Component2) {
+	var AddChannelPage = (function (_React$Component2) {
 		_inherits(AddChannelPage, _React$Component2);
 
 		function AddChannelPage() {
@@ -30122,17 +30125,17 @@
 		}]);
 
 		return AddChannelPage;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = AddChannelPage;
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -30142,7 +30145,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classNames = __webpack_require__(244);
+	var _classNames = __webpack_require__(245);
 
 	var _classNames2 = _interopRequireDefault(_classNames);
 
@@ -30162,7 +30165,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var InfoBoard = function (_React$Component) {
+	var InfoBoard = (function (_React$Component) {
 		_inherits(InfoBoard, _React$Component);
 
 		function InfoBoard() {
@@ -30173,16 +30176,10 @@
 			_this.state = {
 				pageName: ''
 			};
-			//this._onSwitchPage = this._onSwitchPage.bind(this, this.state.pageName);	
 			return _this;
 		}
 
 		_createClass(InfoBoard, [{
-			key: '_onSwitchPage',
-			value: function _onSwitchPage(_val) {
-				_appActions2.default.ENABLE_PAGE({ pageName: _val });
-			}
-		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -30216,7 +30213,10 @@
 							_react2.default.createElement(
 								'button',
 								{ className: 'btn btn-primary',
-									onClick: this._onSwitchPage.bind(this, this.props.data.pageName), defaultValue: 'category' },
+									onClick: _appActions2.default.SWITCH_PAGE.bind(null, {
+										page: this.props.data.page,
+										pageName: this.props.data.pageName
+									}) },
 								_react2.default.createElement('i', { className: 'fa fa-plus' })
 							)
 						)
@@ -30226,9 +30226,9 @@
 		}]);
 
 		return InfoBoard;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
-	var DashBoardInfo = function (_React$Component2) {
+	var DashBoardInfo = (function (_React$Component2) {
 		_inherits(DashBoardInfo, _React$Component2);
 
 		function DashBoardInfo() {
@@ -30279,12 +30279,12 @@
 		}]);
 
 		return DashBoardInfo;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = DashBoardInfo;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30338,12 +30338,12 @@
 
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -30361,16 +30361,25 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var CategoryPage = function (_React$Component) {
+	var CategoryPage = (function (_React$Component) {
 		_inherits(CategoryPage, _React$Component);
 
 		function CategoryPage() {
 			_classCallCheck(this, CategoryPage);
 
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(CategoryPage).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CategoryPage).call(this));
+
+			_this.handleSave = _this.handleSave.bind(_this);
+			_this.handleTextChange = _this.handleTextChange.bind(_this);
+			return _this;
 		}
 
 		_createClass(CategoryPage, [{
+			key: "handleTextChange",
+			value: function handleTextChange(e) {
+				console.log(e.target.value);
+			}
+		}, {
 			key: "render",
 			value: function render() {
 				return _react2.default.createElement(
@@ -30393,7 +30402,8 @@
 										{ className: "input-group-addon" },
 										_react2.default.createElement("span", { className: "fa fa-pencil" })
 									),
-									_react2.default.createElement("input", { type: "text", placeholder: "Category Group Name", className: "form-control" })
+									_react2.default.createElement("input", { type: "text", placeholder: "Category Group Name", className: "form-control",
+										onChange: this.handleTextChange })
 								)
 							),
 							_react2.default.createElement(
@@ -30415,7 +30425,8 @@
 								{ className: "form-group pull-right" },
 								_react2.default.createElement(
 									"button",
-									{ className: "btn btn-default" },
+									{ className: "btn btn-default",
+										onClick: this.handleSave },
 									"Save"
 								)
 							)
@@ -30423,13 +30434,13 @@
 					),
 					_react2.default.createElement(
 						"div",
-						{ className: "col-xs-4 col-md-4", style: { paddingTop: '0px', marginTop: '0px' } },
+						{ className: "col-xs-4 col-md-4" },
 						_react2.default.createElement(
 							"div",
 							{ className: "row" },
 							_react2.default.createElement(
 								"div",
-								{ className: "callout-elem callout-elem-success" },
+								{ className: "callout-elem callout-elem-success", style: { paddingTop: '0px', marginTop: '0px' } },
 								_react2.default.createElement(
 									"h4",
 									{ className: "text-center" },
@@ -30448,7 +30459,7 @@
 		}]);
 
 		return CategoryPage;
-	}(_react2.default.Component);
+	})(_react2.default.Component);
 
 	exports.default = CategoryPage;
 
