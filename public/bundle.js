@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1827a7be2418441363be"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "38951157aa00856e3bcb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -29519,10 +29519,10 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'row' },
-	                        _react2.default.createElement('div', { className: 'col-xs-3 col-sm-3 col-md-3' }),
+	                        _react2.default.createElement('div', { className: 'col-md-3' }),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-xs-6 col-sm-6 col-md-6' },
+	                            { className: 'col-md-6' },
 	                            this.state.loginProcessed && !this.state.status ? _react2.default.createElement(
 	                                'div',
 	                                { className: 'text-center' },
@@ -29552,7 +29552,7 @@
 	                            ),
 	                            _react2.default.createElement(ControlComponents, { userType: this.props.userType })
 	                        ),
-	                        _react2.default.createElement('div', { className: 'col-xs-3 col-sm-3 col-md-3' })
+	                        _react2.default.createElement('div', { className: 'col-md-3' })
 	                    )
 	                )
 	            );

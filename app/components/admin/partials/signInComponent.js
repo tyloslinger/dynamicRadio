@@ -126,8 +126,8 @@ class SignInContainer extends React.Component{
                 <div >
                     <div className="container">
                         <div className="row">
-                            <div className="col-xs-3 col-sm-3 col-md-3"></div>
-                            <div className="col-xs-6 col-sm-6 col-md-6">  
+                            <div className="col-md-3"></div>
+                            <div className="col-md-6">  
                                 {this.state.loginProcessed && !this.state.status 
                                     ?
                                         <div className="text-center">
@@ -145,7 +145,7 @@ class SignInContainer extends React.Component{
                                 </div>                              
                                 <ControlComponents userType={this.props.userType}/>                                                               
                             </div>
-                            <div className="col-xs-3 col-sm-3 col-md-3"></div>
+                            <div className="col-md-3"></div>
                         </div>
                     </div>
                 </div>
