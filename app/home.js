@@ -52,9 +52,7 @@ class HeroContainer extends React.Component{
 				          Join DYDIO
 				        </a>
 				        &nbsp;&nbsp;				        
-				        <a className="btn btn-bordered btn-bordered-white">
-				          OR
-				        </a>
+				        {"/"}
 				        &nbsp;&nbsp;
 				        <a href="#/allChannels" className="btn btn-primary">
 				          Just Listen AWAY{"!!!"}

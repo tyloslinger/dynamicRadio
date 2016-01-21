@@ -32,15 +32,21 @@ export default{
 
 
 
+	ADD_NEW_CATEGORY_GROUP(payload){
+		dispatch({
+			actionType: AppConstants.ADD_NEW_CATEGORY_GROUP,
+			payload: payload
+		}, payload)
+	},
 	ADD_NEW_CATEGORY(payload){
 		dispatch({
 			actionType: AppConstants.ADD_NEW_CATEGORY,
 			payload: payload
 		}, payload)
 	},	
-	REMOVE_CATEGORY(payload){
+	DELETE_CATEGORY(payload){
 		dispatch({
-			actionType: AppConstants.REMOVE_CATEGORY,
+			actionType: AppConstants.DELETE_CATEGORY,
 			payload: payload
 		}, payload)
 	},
@@ -65,6 +71,12 @@ export default{
 			actionType: AppConstants.SHOW_MINIMENU,
 			payload: payload
 		}, payload)
+	},
+	SWITCH_MENU(payload){
+		dispatch({
+			actionType: AppConstants.SWITCH_MENU,
+			payload: payload
+		},payload)
 	},
 
 

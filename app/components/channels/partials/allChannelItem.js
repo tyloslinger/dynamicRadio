@@ -7,27 +7,29 @@ class AllChannelItem extends React.Component{
 		return(
 				<div className="col-md-3">
 
-		            <div className="list-item__wrap">
+		            <div  className="list-item__wrap">
 
                         <div className="list-item__image">
-                          <img src="../assets/images/albums/album2.jpg"/>
+                          <img src={this.props.data.channelImg}/>
                           <div className="list-item__play">
                             <a href="#">
-                              <i style={{color:"#EC5B3F"}} className="fa fa-3x fa-headphones">
-                              </i>
+                              <i style={{color:"#ffffff"}} 
+                                className="fa fa-3x fa-headphones"></i>
+                              <i style={{color:"#ffffff", paddingLeft:'10px'}} 
+                                className="fa fa-3x fa-plus"></i>
                             </a>
                           </div>
                         </div>
 
                         <div className="list-item__name">
                           <h6>
-                            channel name
+                            {this.props.data.channelName}
                           </h6>
                         </div>
 
                         <div className="list-item__style">
                           	<div className="artist-genre" ng-repeat="genre in artistItem.genre">
-                            	<span>genre</span>
+                            	<span>{this.props.data.category}</span>
                           	</div>
                         </div>
                     </div>         

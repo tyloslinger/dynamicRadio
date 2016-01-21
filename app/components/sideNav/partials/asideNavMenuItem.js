@@ -1,5 +1,9 @@
 import React from 'react';
+import AppStore from '../../../stores/appStore';
 import AsideNavMenuPlaylist from './asideNavPlaylist';
+import PlaylistQueue from './queuedPlaylist';
+
+
 
 
 class AsideActionNavMenuItem extends React.Component{
@@ -51,16 +55,26 @@ class AsideNavMenuItem extends React.Component{
 		this.state = {
 			user:{
 				name: "Anthony"				
-			}
+			},
+			menu: '',
+			queue: 'hide'
 		}
+
+		this._onChange = this._onChange.bind(this);
+	}
+	componentWillMount(){
+		AppStore.addChangeListener( this._onChange );
+	}
+	componentWillUnmount(){
+		AppStore.removeChangeListener( this._onChange );
+	}
+	_onChange(){
+		this.setState(AppStore.GetSwitchedMenu())
 	}
 	render(){
 		return(
-				<div className="sidebar-nav-main navigation-menu-container" data-slim-scroll="" 
-
-
-				>
-					<div className="menu-navigation-menus" ng-show="navigation.navigationState.menu">
+				<div className="sidebar-nav-main navigation-menu-container" data-slim-scroll="">
+					<div className={`menu-navigation-menus ${this.state.menu}`} ng-show="navigation.navigationState.menu">
 						<div className="nav-user-menu sidebar-nav-content">
 					        <ul className="sidebar-nav-menu" data-highlight-active="">
 					          <li id="user-menu" className="nav-item">
@@ -91,7 +105,9 @@ class AsideNavMenuItem extends React.Component{
 				      	<div className="nav-user-menu sidebar-nav-content">
 				      		<AsideNavMenuPlaylist />
 				      	</div>
-				    </div>
+				    </div>	
+
+				    <PlaylistQueue hide={this.state.queue}/>
 			    </div>
 			)
 	}

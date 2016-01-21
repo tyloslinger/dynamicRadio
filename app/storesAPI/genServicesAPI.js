@@ -1,4 +1,5 @@
 const genServiceAPI = {
+
 	//LOGIN 
 	_login(payload){
 	    return	{		
@@ -11,15 +12,25 @@ const genServiceAPI = {
 			status: true
 		};	
 	},
+
+
 	//SWITCH CURRENT PAGE
-	_switchPage(payload){
-		console.log("payload from gen api: ", payload);
+	_switchPage(payload){		
 		return {
 			pageEnabled: true,
 			pageName: payload.pageName,
 			page: payload.page
 		}
 	},
+
+
+	_switchMenu(payload){
+		return{
+			menu: payload.menu,
+			queue: payload.queue
+		}
+	},
+
 	//HIDE SIDE MENU
 	_hideMenu(){
 		return false;

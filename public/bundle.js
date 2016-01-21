@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a29d4a1c962c3816341f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7317082e4f6fe9abcde8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -24680,7 +24680,7 @@
 
 	var _body2 = _interopRequireDefault(_body);
 
-	var _allChannels = __webpack_require__(232);
+	var _allChannels = __webpack_require__(233);
 
 	var _allChannels2 = _interopRequireDefault(_allChannels);
 
@@ -24889,11 +24889,7 @@
 								'Join DYDIO'
 							),
 							'  ',
-							_react2.default.createElement(
-								'a',
-								{ className: 'btn btn-bordered btn-bordered-white' },
-								'OR'
-							),
+							"/",
 							'  ',
 							_react2.default.createElement(
 								'a',
@@ -24993,15 +24989,21 @@
 				payload: payload
 			}, payload);
 		},
+		ADD_NEW_CATEGORY_GROUP: function ADD_NEW_CATEGORY_GROUP(payload) {
+			(0, _appDispatchers.dispatch)({
+				actionType: _appConstants2.default.ADD_NEW_CATEGORY_GROUP,
+				payload: payload
+			}, payload);
+		},
 		ADD_NEW_CATEGORY: function ADD_NEW_CATEGORY(payload) {
 			(0, _appDispatchers.dispatch)({
 				actionType: _appConstants2.default.ADD_NEW_CATEGORY,
 				payload: payload
 			}, payload);
 		},
-		REMOVE_CATEGORY: function REMOVE_CATEGORY(payload) {
+		DELETE_CATEGORY: function DELETE_CATEGORY(payload) {
 			(0, _appDispatchers.dispatch)({
-				actionType: _appConstants2.default.REMOVE_CATEGORY,
+				actionType: _appConstants2.default.DELETE_CATEGORY,
 				payload: payload
 			}, payload);
 		},
@@ -25020,6 +25022,12 @@
 		SHOW_MINIMENU: function SHOW_MINIMENU(payload) {
 			(0, _appDispatchers.dispatch)({
 				actionType: _appConstants2.default.SHOW_MINIMENU,
+				payload: payload
+			}, payload);
+		},
+		SWITCH_MENU: function SWITCH_MENU(payload) {
+			(0, _appDispatchers.dispatch)({
+				actionType: _appConstants2.default.SWITCH_MENU,
 				payload: payload
 			}, payload);
 		},
@@ -25050,6 +25058,7 @@
 		HIDE_TOPMENU: 'HIDE_TOPMENU',
 		SHOW_TOPMENU: 'SHOW_TOPMENU',
 		SHOW_MINIMENU: 'SHOW_MINIMENU',
+		SWITCH_MENU: 'SWITCH_MENU',
 
 		ADD_NEW_CHANNEL: 'ADD_NEW_CHANNEL',
 		DELETE_CHANNEL: 'DELETE_CHANNEL',
@@ -25057,8 +25066,9 @@
 		ADD_NEW_USER: 'ADD_NEW_USER',
 		ADD_NEW_USER_PAGE: 'ADD_NEW_USER_PAGE',
 
+		ADD_NEW_CATEGORY_GROUP: 'ADD_NEW_CATEGORY_GROUP',
 		ADD_NEW_CATEGORY: 'ADD_NEW_CATEGORY',
-		REMOVE_CATEGORY: 'REMOVE_CATEGORY',
+		DELETE_CATEGORY: 'DELETE_CATEGORY',
 
 		LOGIN: 'LOGIN',
 
@@ -25427,19 +25437,19 @@
 
 	var _appStore2 = _interopRequireDefault(_appStore);
 
-	var _flags = __webpack_require__(222);
+	var _flags = __webpack_require__(223);
 
 	var _flags2 = _interopRequireDefault(_flags);
 
-	var _topNav = __webpack_require__(223);
+	var _topNav = __webpack_require__(224);
 
 	var _topNav2 = _interopRequireDefault(_topNav);
 
-	var _asideNavMenu = __webpack_require__(225);
+	var _asideNavMenu = __webpack_require__(226);
 
 	var _asideNavMenu2 = _interopRequireDefault(_asideNavMenu);
 
-	var _adminSideNavMenu = __webpack_require__(230);
+	var _adminSideNavMenu = __webpack_require__(231);
 
 	var _adminSideNavMenu2 = _interopRequireDefault(_adminSideNavMenu);
 
@@ -27097,45 +27107,74 @@
 
 	var _categoryAPI2 = _interopRequireDefault(_categoryAPI);
 
-	var _genServicesAPI = __webpack_require__(221);
+	var _channelAPI = __webpack_require__(221);
+
+	var _channelAPI2 = _interopRequireDefault(_channelAPI);
+
+	var _genServicesAPI = __webpack_require__(222);
 
 	var _genServicesAPI2 = _interopRequireDefault(_genServicesAPI);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*IMPORT APIS*/
-
 	var CHANGE_EVENT = 'change';
+
+	/*IMPORT APIS*/
 
 	var _menuVal;
 	var _mini_MenuVal;
 	var _loginVal;
 	var _pageObject;
+	var _switchedMenu;
 
 	var AppStore = Object.assign(_events.EventEmitter.prototype, {
+
+		//EMITTER METHOD
+
 		emitChange: function emitChange() {
 			this.emit(CHANGE_EVENT);
 		},
+
+		//LISTENERS
 		addChangeListener: function addChangeListener(callback) {
 			this.on(CHANGE_EVENT, callback);
 		},
 		removeChangeListener: function removeChangeListener(callback) {
 			this.removeListener(CHANGE_EVENT, callback);
 		},
+
+		//MENU METHODS
 		MenuStatus: function MenuStatus() {
 			return _menuVal;
 		},
 		MiniMenuStatus: function MiniMenuStatus() {
 			return _mini_MenuVal;
 		},
+		GetSwitchedMenu: function GetSwitchedMenu() {
+			return _switchedMenu;
+		},
+
+		//LOGIN METHODS
 		CheckLoginStatus: function CheckLoginStatus() {
 			return _loginVal;
 		},
+
+		//PAGE METHODS
 		CheckActivePage: function CheckActivePage() {
 			return _pageObject;
 		},
-		GetCategories: function GetCategories() {
-			return _categoryAPI2.default.categories;
+
+		//CATEGORY METHODS
+		GetCategories: function GetCategories(payload) {
+			return _categoryAPI2.default._getCategories(payload);
+		},
+		GetCategoryGroup: function GetCategoryGroup() {
+			return _categoryAPI2.default.categoryGroup;
+		},
+
+		//CHANNEL METHODS	
+		GetChannels: function GetChannels(payload) {
+			return _channelAPI2.default._getChannels(payload);
 		},
 
 		//DISPATCHER
@@ -27143,6 +27182,7 @@
 			//console.log("FROM STORES");
 			switch (action.actionType) {
 
+				//TOP AND SIDE MENU
 				case _appConstants2.default.HIDE_TOPMENU:
 					_menuVal = _genServicesAPI2.default._hideMenu();
 					break;
@@ -27152,7 +27192,11 @@
 				case _appConstants2.default.SHOW_MINIMENU:
 					_mini_MenuVal = !action.payload;
 					break;
+				case _appConstants2.default.SWITCH_MENU:
+					_switchedMenu = action.payload;
+					break;
 
+				//LOGIN
 				case _appConstants2.default.LOGIN:
 					_loginVal = _genServicesAPI2.default._login(action.payload);
 					break;
@@ -27161,11 +27205,22 @@
 					break;
 
 				//CATEGORIES
+				case _appConstants2.default.ADD_NEW_CATEGORY_GROUP:
+					_categoryAPI2.default._addNewCategoryGroup(action.payload);
+					break;
 				case _appConstants2.default.ADD_NEW_CATEGORY:
 					_categoryAPI2.default._addNewCategory(action.payload);
 					break;
-				case _appConstants2.default.REMOVE_CATEGORY:
-					_categoryAPI2.default._removeCategory(action.payload);
+				case _appConstants2.default.DELETE_CATEGORY:
+					_categoryAPI2.default._deleteCategory(action.payload);
+					break;
+
+				//CHANNELS
+				case _appConstants2.default.ADD_NEW_CHANNEL:
+					_channelAPI2.default._addNewChannel(action.payload);
+					break;
+				case _appConstants2.default.DELETE_CHANNEL:
+					_channelAPI2.default._deleteChannel(action.payload);
 					break;
 			}
 
@@ -27483,13 +27538,38 @@
 /* 220 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 	var CategoryAPI = {
+		categoryGroup: [],
 		categories: [],
+		//
+		_getCategories: function _getCategories(payload) {
+			if (payload === undefined) {
+				return CategoryAPI.categories;
+			} else {
+				var temp = [];
+				CategoryAPI.categories.forEach(function (cat) {
+					if (cat.groupName === payload.groupName) {
+						temp.push(cat);
+					}
+				});
+				return temp;
+			}
+		},
+
+		//
+		_addNewCategoryGroup: function _addNewCategoryGroup(_categoryGroup) {
+			if (CategoryAPI.categoryGroup.find(function (grp) {
+				return grp.groupName === _categoryGroup.groupName;
+			}) === undefined) {
+				CategoryAPI.categoryGroup.push(_categoryGroup);
+			}
+		},
+
 		//
 		_addNewCategory: function _addNewCategory(category) {
 			if (CategoryAPI.categories.find(function (cat) {
@@ -27498,12 +27578,12 @@
 				CategoryAPI.categories.push(category);
 			}
 		},
-		_removeCategory: function _removeCategory(category) {
-			console.log("before: ", CategoryAPI.categories);
+
+		//
+		_deleteCategory: function _deleteCategory(category) {
 			CategoryAPI.categories.splice(CategoryAPI.categories.findIndex(function (i) {
 				return i === category;
 			}), 1);
-			console.log("after: ", CategoryAPI.categories);
 		},
 
 		//
@@ -27525,7 +27605,55 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	var ChannelAPI = {
+		//
+		channels: [],
+		//
+		_getChannels: function _getChannels(category) {
+			if (category === undefined) {
+				return ChannelAPI.channels;
+			} else {
+				var temp = [];
+				ChannelAPI.channels.forEach(function (channel) {
+					if (channel.catName === category.catName) {
+						temp.push(channel);
+					}
+				});
+
+				return temp;
+			}
+		},
+
+		//
+		_addNewChannel: function _addNewChannel(_channel) {
+			if (ChannelAPI.channels.find(function (channel) {
+				return channel.id === _channel.id;
+			}) === undefined) {
+				ChannelAPI.channels.push(_channel);
+			}
+		},
+
+		//
+		_deleteChannel: function _deleteChannel(channel) {
+			ChannelAPI.channels.splice(ChannelAPI.channels.findIndex(function (i) {
+				return i === channel;
+			}), 1);
+		}
+	};
+
+	exports.default = ChannelAPI;
+
+/***/ },
+/* 222 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	var genServiceAPI = {
+
 		//LOGIN
 
 		_login: function _login(payload) {
@@ -27542,11 +27670,16 @@
 
 		//SWITCH CURRENT PAGE
 		_switchPage: function _switchPage(payload) {
-			console.log("payload from gen api: ", payload);
 			return {
 				pageEnabled: true,
 				pageName: payload.pageName,
 				page: payload.page
+			};
+		},
+		_switchMenu: function _switchMenu(payload) {
+			return {
+				menu: payload.menu,
+				queue: payload.queue
 			};
 		},
 
@@ -27564,7 +27697,7 @@
 	exports.default = genServiceAPI;
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27581,7 +27714,7 @@
 	};
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27596,7 +27729,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _navActions = __webpack_require__(224);
+	var _navActions = __webpack_require__(225);
 
 	var _navActions2 = _interopRequireDefault(_navActions);
 
@@ -27638,7 +27771,7 @@
 	exports.default = TopNav;
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27963,7 +28096,7 @@
 	exports.default = NavActions;
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27978,15 +28111,15 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _logoSearchSideNav = __webpack_require__(226);
+	var _logoSearchSideNav = __webpack_require__(227);
 
 	var _logoSearchSideNav2 = _interopRequireDefault(_logoSearchSideNav);
 
-	var _asideNavSwitch = __webpack_require__(227);
+	var _asideNavSwitch = __webpack_require__(228);
 
 	var _asideNavSwitch2 = _interopRequireDefault(_asideNavSwitch);
 
-	var _asideNavMenuItem = __webpack_require__(228);
+	var _asideNavMenuItem = __webpack_require__(229);
 
 	var _asideNavMenuItem2 = _interopRequireDefault(_asideNavMenuItem);
 
@@ -28034,7 +28167,7 @@
 	exports.default = AsideNav;
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28097,89 +28230,6 @@
 	exports.default = LogoSearchSideNav;
 
 /***/ },
-/* 227 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-						value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var AsideNavSwitch = function (_React$Component) {
-						_inherits(AsideNavSwitch, _React$Component);
-
-						function AsideNavSwitch() {
-											_classCallCheck(this, AsideNavSwitch);
-
-											return _possibleConstructorReturn(this, Object.getPrototypeOf(AsideNavSwitch).apply(this, arguments));
-						}
-
-						_createClass(AsideNavSwitch, [{
-											key: "render",
-											value: function render() {
-																return _react2.default.createElement(
-																					"div",
-																					{ className: "sidebar-nav-switch" },
-																					_react2.default.createElement(
-																										"div",
-																										{ className: "btn-group switch" },
-																										_react2.default.createElement(
-																															"a",
-																															{ className: "btn main-nav-link home active", "data-nav-section": "home", "data-ng-click": "navigation.SwitchToMenu()" },
-																															_react2.default.createElement(
-																																				"span",
-																																				{ className: "label" },
-																																				"BROWSE"
-																															)
-																										),
-																										_react2.default.createElement(
-																															"a",
-																															{ className: "btn main-nav-link queue", "data-nav-section": "queue", "data-ng-click": "navigation.SwitchToPlaylist()" },
-																															_react2.default.createElement(
-																																				"span",
-																																				{ className: "label queue-label" },
-																																				_react2.default.createElement(
-																																									"span",
-																																									null,
-																																									"QUEUE"
-																																				),
-																																				_react2.default.createElement(
-																																									"span",
-																																									{ className: "songs ng-hide", "ng-show": "mediaPlayer.tracks > 0" },
-																																									_react2.default.createElement(
-																																														"span",
-																																														{ className: "badge badge-primary ng-binding" },
-																																														"0"
-																																									)
-																																				)
-																															)
-																										)
-																					)
-																);
-											}
-						}]);
-
-						return AsideNavSwitch;
-	}(_react2.default.Component);
-
-	exports.default = AsideNavSwitch;
-
-/***/ },
 /* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -28195,9 +28245,128 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _asideNavPlaylist = __webpack_require__(229);
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AsideNavSwitch = function (_React$Component) {
+		_inherits(AsideNavSwitch, _React$Component);
+
+		function AsideNavSwitch() {
+			_classCallCheck(this, AsideNavSwitch);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AsideNavSwitch).call(this));
+
+			_this.state = {
+				home: 'active',
+				queue: ''
+			};
+			return _this;
+		}
+
+		_createClass(AsideNavSwitch, [{
+			key: '_setActive',
+			value: function _setActive(label) {
+				switch (label) {
+					case 'home':
+						this.setState({
+							home: 'active',
+							queue: ''
+						});
+						break;
+					case 'queue':
+						this.setState({
+							home: '',
+							queue: 'active'
+						});
+						break;
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'sidebar-nav-switch' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn-group switch' },
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn main-nav-link home ' + this.state.home, 'data-nav-section': 'home',
+								onClick: _appActions2.default.SWITCH_MENU.bind(null, { menu: '', queue: 'hide' }) },
+							_react2.default.createElement(
+								'span',
+								{ className: 'label',
+									onClick: this._setActive.bind(this, 'home') },
+								'BROWSE'
+							)
+						),
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn main-nav-link queue ' + this.state.queue, 'data-nav-section': 'queue',
+								onClick: _appActions2.default.SWITCH_MENU.bind(null, { menu: 'hide', queue: '' }) },
+							_react2.default.createElement(
+								'span',
+								{ className: 'label queue-label' },
+								_react2.default.createElement(
+									'span',
+									{
+										onClick: this._setActive.bind(this, 'queue') },
+									'QUEUE'
+								),
+								_react2.default.createElement(
+									'span',
+									{ className: 'badge badge-primary ng-binding' },
+									'0'
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return AsideNavSwitch;
+	}(_react2.default.Component);
+
+	exports.default = AsideNavSwitch;
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _appStore = __webpack_require__(218);
+
+	var _appStore2 = _interopRequireDefault(_appStore);
+
+	var _asideNavPlaylist = __webpack_require__(230);
 
 	var _asideNavPlaylist2 = _interopRequireDefault(_asideNavPlaylist);
+
+	var _queuedPlaylist = __webpack_require__(250);
+
+	var _queuedPlaylist2 = _interopRequireDefault(_queuedPlaylist);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28286,22 +28455,39 @@
 			_this3.state = {
 				user: {
 					name: "Anthony"
-				}
+				},
+				menu: '',
+				queue: 'hide'
 			};
+
+			_this3._onChange = _this3._onChange.bind(_this3);
 			return _this3;
 		}
 
 		_createClass(AsideNavMenuItem, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_appStore2.default.addChangeListener(this._onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_appStore2.default.removeChangeListener(this._onChange);
+			}
+		}, {
+			key: '_onChange',
+			value: function _onChange() {
+				this.setState(_appStore2.default.GetSwitchedMenu());
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ className: 'sidebar-nav-main navigation-menu-container', 'data-slim-scroll': ''
-
-					},
+					{ className: 'sidebar-nav-main navigation-menu-container', 'data-slim-scroll': '' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'menu-navigation-menus', 'ng-show': 'navigation.navigationState.menu' },
+						{ className: 'menu-navigation-menus ' + this.state.menu, 'ng-show': 'navigation.navigationState.menu' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'nav-user-menu sidebar-nav-content' },
@@ -28358,7 +28544,8 @@
 							{ className: 'nav-user-menu sidebar-nav-content' },
 							_react2.default.createElement(_asideNavPlaylist2.default, null)
 						)
-					)
+					),
+					_react2.default.createElement(_queuedPlaylist2.default, { hide: this.state.queue })
 				);
 			}
 		}]);
@@ -28369,7 +28556,7 @@
 	exports.default = AsideNavMenuItem;
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28444,7 +28631,7 @@
 	exports.default = AsideNavMenuPlaylist;
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28459,11 +28646,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _logoSearchSideNav = __webpack_require__(226);
+	var _logoSearchSideNav = __webpack_require__(227);
 
 	var _logoSearchSideNav2 = _interopRequireDefault(_logoSearchSideNav);
 
-	var _adminAsideNavMenuItem = __webpack_require__(231);
+	var _adminAsideNavMenuItem = __webpack_require__(232);
 
 	var _adminAsideNavMenuItem2 = _interopRequireDefault(_adminAsideNavMenuItem);
 
@@ -28510,7 +28697,7 @@
 	exports.default = AdminSideNav;
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28525,7 +28712,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _asideNavPlaylist = __webpack_require__(229);
+	var _asideNavPlaylist = __webpack_require__(230);
 
 	var _asideNavPlaylist2 = _interopRequireDefault(_asideNavPlaylist);
 
@@ -28646,7 +28833,7 @@
 	exports.default = AdminAsideNavMenuItem;
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28661,7 +28848,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _allChannelList = __webpack_require__(233);
+	var _allChannelList = __webpack_require__(234);
 
 	var _allChannelList2 = _interopRequireDefault(_allChannelList);
 
@@ -28748,7 +28935,7 @@
 	exports.default = AllChannels;
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28763,7 +28950,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _allChannelItem = __webpack_require__(234);
+	var _allChannelItem = __webpack_require__(248);
 
 	var _allChannelItem2 = _interopRequireDefault(_allChannelItem);
 
@@ -28784,12 +28971,83 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AllChannelItemList).call(this));
 
 			_this.state = {
-				repeater: [1, 2, 3, 4]
+				foreign: 'active',
+				local: '',
+				aritst: '',
+				foreignChannelData: [{
+					channelImg: "../assets/images/albums/bbc1.jpeg",
+					channelName: 'BBC',
+					category: 'FOREIGN_NEWS'
+				}, {
+					channelImg: "../assets/images/albums/cnn.png",
+					channelName: 'BBC',
+					category: 'FOREIGN_NEWS'
+				}, {
+					channelImg: "../assets/images/albums/bbc3.png",
+					channelName: 'BBC',
+					category: 'FOREIGN_NEWS'
+				}, {
+					channelImg: "../assets/images/albums/aljazeera.jpeg",
+					channelName: 'BBC',
+					category: 'FOREIGN_NEWS'
+				}, {
+					channelImg: "../assets/images/albums/bbc4.jpg",
+					channelName: 'BBC',
+					category: 'FOREIGN_NEWS'
+				}],
+				localChannelData: [{
+					channelImg: "../assets/images/albums/joy1.png",
+					channelName: 'BBC',
+					category: 'LOCAL_NEWS'
+				}, {
+					channelImg: "../assets/images/albums/city.jpg",
+					channelName: 'BBC',
+					category: 'LOCAL_NEWS'
+				}, {
+					channelImg: "../assets/images/albums/radioFlash.jpeg",
+					channelName: 'BBC',
+					category: 'LOCAL_NEWS'
+				}, {
+					channelImg: "../assets/images/albums/Y.jpeg",
+					channelName: 'BBC',
+					category: 'LOCAL_NEWS'
+				}, {
+					channelImg: "../assets/images/albums/happy.jpeg",
+					channelName: 'BBC',
+					category: 'LOCAL_NEWS'
+				}]
 			};
 			return _this;
 		}
 
 		_createClass(AllChannelItemList, [{
+			key: '_setActive',
+			value: function _setActive(label) {
+				switch (label) {
+					case 'foreign':
+						this.setState({
+							local: '',
+							foreign: 'active',
+							artist: ''
+						});
+						break;
+					case 'local':
+						this.setState({
+							local: 'active',
+							foreign: '',
+							artist: ''
+						});
+						break;
+					case 'artist':
+						this.setState({
+							local: '',
+							foreign: '',
+							artist: 'active'
+						});
+						break;
+				}
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -28809,28 +29067,31 @@
 									{ className: 'nav nav-tabs' },
 									_react2.default.createElement(
 										'li',
-										{ heading: 'New Artists', className: 'ng-isolate-scope active' },
+										{ heading: 'Foreign Channels', className: this.state.foreign,
+											onClick: this._setActive.bind(this, 'foreign') },
 										_react2.default.createElement(
 											'a',
-											{ href: '', 'ng-click': 'select()', 'tab-heading-transclude': '' },
-											'Local Channels'
-										)
-									),
-									_react2.default.createElement(
-										'li',
-										{ heading: 'New albums' },
-										_react2.default.createElement(
-											'a',
-											{ href: '', 'ng-click': 'select()', 'tab-heading-transclude': '' },
+											null,
 											'Foreign Channels'
 										)
 									),
 									_react2.default.createElement(
 										'li',
-										{ heading: 'Genres' },
+										{ heading: 'Local Channels', className: this.state.local,
+											onClick: this._setActive.bind(this, 'local') },
 										_react2.default.createElement(
 											'a',
-											{ href: '', 'ng-click': 'select()', 'tab-heading-transclude': '' },
+											null,
+											'Local Channels'
+										)
+									),
+									_react2.default.createElement(
+										'li',
+										{ heading: 'Artists Channels', className: this.state.artist,
+											onClick: this._setActive.bind(this, 'artist') },
+										_react2.default.createElement(
+											'a',
+											null,
 											'Artists Channels'
 										)
 									)
@@ -28840,13 +29101,25 @@
 									{ className: 'tab-content' },
 									_react2.default.createElement(
 										'div',
-										{ className: 'tab-pane active' },
+										{ id: 'foreign', className: 'tab-pane ' + this.state.foreign },
 										_react2.default.createElement('div', { className: 'divider' }),
 										_react2.default.createElement(
 											'div',
 											{ className: 'row music-covers-listing minified' },
-											this.state.repeater.map(function (channel, index) {
-												return _react2.default.createElement(_allChannelItem2.default, { key: index });
+											this.state.foreignChannelData.map(function (_data, index) {
+												return _react2.default.createElement(_allChannelItem2.default, { key: index, data: _data });
+											})
+										)
+									),
+									_react2.default.createElement(
+										'div',
+										{ id: 'local', className: 'tab-pane ' + this.state.local },
+										_react2.default.createElement('div', { className: 'divider' }),
+										_react2.default.createElement(
+											'div',
+											{ className: 'row music-covers-listing minified' },
+											this.state.localChannelData.map(function (_data, index) {
+												return _react2.default.createElement(_allChannelItem2.default, { key: index, data: _data });
 											})
 										)
 									)
@@ -28862,94 +29135,6 @@
 	}(_react2.default.Component);
 
 	exports.default = AllChannelItemList;
-
-/***/ },
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var AllChannelItem = function (_React$Component) {
-	  _inherits(AllChannelItem, _React$Component);
-
-	  function AllChannelItem() {
-	    _classCallCheck(this, AllChannelItem);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AllChannelItem).apply(this, arguments));
-	  }
-
-	  _createClass(AllChannelItem, [{
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "col-md-3" },
-	        _react2.default.createElement(
-	          "div",
-	          { className: "list-item__wrap" },
-	          _react2.default.createElement(
-	            "div",
-	            { className: "list-item__image" },
-	            _react2.default.createElement("img", { src: "../assets/images/albums/album2.jpg" }),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "list-item__play" },
-	              _react2.default.createElement(
-	                "a",
-	                { href: "#" },
-	                _react2.default.createElement("i", { style: { color: "#EC5B3F" }, className: "fa fa-3x fa-headphones" })
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "list-item__name" },
-	            _react2.default.createElement(
-	              "h6",
-	              null,
-	              "channel name"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "list-item__style" },
-	            _react2.default.createElement(
-	              "div",
-	              { className: "artist-genre", "ng-repeat": "genre in artistItem.genre" },
-	              _react2.default.createElement(
-	                "span",
-	                null,
-	                "genre"
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return AllChannelItem;
-	}(_react2.default.Component);
-
-	exports.default = AllChannelItem;
 
 /***/ },
 /* 235 */
@@ -30054,6 +30239,10 @@
 
 	var _categoryPage2 = _interopRequireDefault(_categoryPage);
 
+	var _channelPage = __webpack_require__(247);
+
+	var _channelPage2 = _interopRequireDefault(_channelPage);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30115,7 +30304,7 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'panel-body ng-scope', 'data-ng-controller': 'NotifyCtrl' },
-							this.state.pageEnabled ? this.state.page === _appConstants2.default.CATEGORY_PAGE ? _react2.default.createElement(_categoryPage2.default, null) : this.state.page === _appConstants2.default.CHANNEL_PAGE ? _react2.default.createElement(ChannelPage, null) : this.state.page === _appConstants2.default.USER_PAGE ? _react2.default.createElement(UserPage, null) : null : null
+							this.state.pageEnabled ? this.state.page === _appConstants2.default.CATEGORY_PAGE ? _react2.default.createElement(_categoryPage2.default, null) : this.state.page === _appConstants2.default.CHANNEL_PAGE ? _react2.default.createElement(_channelPage2.default, null) : this.state.page === _appConstants2.default.USER_PAGE ? null : null : null
 						)
 					) : null
 				);
@@ -30410,7 +30599,10 @@
 			_this.state = {
 				catName: '',
 				catDispName: '',
-				categories: []
+				catGroup: '',
+				categories: [],
+				catGroups: [],
+				selectedGroup: ''
 			};
 
 			_this._onChange = _this._onChange.bind(_this);
@@ -30422,6 +30614,9 @@
 			key: 'handleTextChange',
 			value: function handleTextChange(e, label) {
 				switch (e) {
+					case 'catGroup':
+						this.setState({ catGroup: label.target.value });
+						break;
 					case 'catName':
 						this.setState({ catName: label.target.value });
 						break;
@@ -30443,7 +30638,34 @@
 		}, {
 			key: '_onChange',
 			value: function _onChange() {
-				this.setState({ categories: _appStore2.default.GetCategories() });
+				this.setState({
+					categories: _appStore2.default.GetCategories(undefined),
+					catGroups: _appStore2.default.GetCategoryGroup()
+				});
+			}
+		}, {
+			key: 'handleClear1',
+			value: function handleClear1() {
+				this.setState({
+					catName: '',
+					catDispName: ''
+				});
+			}
+		}, {
+			key: 'handleClear2',
+			value: function handleClear2() {
+				this.setState({
+					catGroup: ''
+				});
+			}
+		}, {
+			key: 'handleSelect',
+			value: function handleSelect(e) {
+				if (e.target.value != undefined) {
+					this.setState({
+						selectedGroup: e.target.value
+					});
+				}
 			}
 		}, {
 			key: 'render',
@@ -30453,72 +30675,7 @@
 					{ className: 'row' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'col-xs-8 col-md-8' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'callout-elem callout-elem-warning text-center' },
-							_react2.default.createElement(
-								'h4',
-								null,
-								'blah blah blah'
-							),
-							_react2.default.createElement(
-								'p',
-								null,
-								'Lorem ipsum dolor sit amet, Lorem Ipsum is simply dummy text. Assumenda, alias, in accusantium totam adipisci vel et suscipit quidem libero pariatur minus ratione quo doloremque error at nemo incidunt dicta quia?'
-							)
-						),
-						_react2.default.createElement(
-							'fieldset',
-							null,
-							_react2.default.createElement(
-								'div',
-								{ className: 'form-group' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'input-group' },
-									_react2.default.createElement(
-										'span',
-										{ className: 'input-group-addon' },
-										_react2.default.createElement('span', { className: 'fa fa-pencil' })
-									),
-									_react2.default.createElement('input', { type: 'text', placeholder: 'Category Group Name', className: 'form-control',
-										value: this.state.catName, onChange: this.handleTextChange.bind(this, 'catName') })
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'form-group' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'input-group' },
-									_react2.default.createElement(
-										'span',
-										{ className: 'input-group-addon' },
-										_react2.default.createElement('span', { className: 'fa fa-pencil' })
-									),
-									_react2.default.createElement('input', { type: 'text', placeholder: 'Category Display Name', className: 'form-control',
-										value: this.state.catDisplayname, onChange: this.handleTextChange.bind(this, 'catDispName') })
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'form-group pull-right' },
-								_react2.default.createElement(
-									'button',
-									{ className: 'btn btn-default',
-										onClick: _appActions2.default.ADD_NEW_CATEGORY.bind(null, {
-											catName: this.state.catName,
-											catDispName: this.state.catDispName
-										}) },
-									'Save'
-								)
-							)
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'col-xs-4 col-md-4' },
+						{ className: 'col-md-12' },
 						_react2.default.createElement(
 							'div',
 							{ className: 'row' },
@@ -30533,26 +30690,186 @@
 								_react2.default.createElement(
 									'p',
 									null,
-									'Lorem ipsum dolor sit amet, Lorem Ipsum is simply dummy text. Assumenda, alias, in accusantium  '
+									'Lorem ipsum dolor sit amet, Lorem Ipsum is simply dummy text. Assumenda, alias, in accusantium totam adipisci vel et suscipit quidem libero pariatur minus ratione quo doloremque error at nemo incidunt dicta quia?'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-12' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-md-7' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'form-group' },
+										_react2.default.createElement(
+											'div',
+											{ className: 'input-group' },
+											_react2.default.createElement(
+												'span',
+												{ className: 'input-group-addon' },
+												_react2.default.createElement('span', { className: 'fa fa-pencil' })
+											),
+											_react2.default.createElement('input', { type: 'text', placeholder: '--enter category group Name--', className: 'form-control',
+												value: this.state.catGroup, onChange: this.handleTextChange.bind(this, 'catGroup') })
+										)
+									),
+									_react2.default.createElement(
+										'div',
+										{ className: 'form-group pull-right' },
+										_react2.default.createElement(
+											'div',
+											null,
+											_react2.default.createElement(
+												'button',
+												{ className: 'btn btn-default btn-width-xs',
+													onClick: _appActions2.default.ADD_NEW_CATEGORY_GROUP.bind(null, {
+														groupName: this.state.catGroup
+													}) },
+												'Save'
+											),
+											_react2.default.createElement(
+												'button',
+												{ className: 'btn btn-primary btn-width-xs',
+													onClick: this.handleClear2.bind(this) },
+												'Clear'
+											)
+										)
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-md-5' },
+									_react2.default.createElement(
+										'select',
+										{ className: 'form-control', onChange: this.handleSelect.bind(this) },
+										_react2.default.createElement(
+											'option',
+											{ value: '' },
+											'--select Group--'
+										),
+										this.state.catGroups.map(function (obj, index) {
+											return _react2.default.createElement(
+												'option',
+												{ key: obj.groupName, value: obj.groupName },
+												obj.groupName
+											);
+										})
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'form-group' },
+								this.state.selectedGroup != '' ? _react2.default.createElement(
+									'h4',
+									null,
+									'Selected Group: ',
+									_react2.default.createElement(
+										'strong',
+										{ className: 'alert-default' },
+										this.state.selectedGroup
+									)
+								) : null
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-7' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'form-group' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'input-group' },
+										_react2.default.createElement(
+											'span',
+											{ className: 'input-group-addon' },
+											_react2.default.createElement('span', { className: 'fa fa-pencil' })
+										),
+										_react2.default.createElement('input', { type: 'text', placeholder: '--enter sub-category Name--', className: 'form-control', disabled: this.state.selectedGroup === '',
+											value: this.state.catName, onChange: this.handleTextChange.bind(this, 'catName') })
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'form-group' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'input-group' },
+										_react2.default.createElement(
+											'span',
+											{ className: 'input-group-addon' },
+											_react2.default.createElement('span', { className: 'fa fa-pencil' })
+										),
+										_react2.default.createElement('input', { type: 'text', placeholder: '--enter display Name--', className: 'form-control', disabled: this.state.selectedGroup === '',
+											value: this.state.catDispName, onChange: this.handleTextChange.bind(this, 'catDispName') })
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'form-group pull-right' },
+									_react2.default.createElement(
+										'button',
+										{ className: 'btn btn-default btn-width-xs', disabled: this.state.selectedGroup === '',
+											onClick: _appActions2.default.ADD_NEW_CATEGORY.bind(null, {
+												catName: this.state.catName,
+												catDispName: this.state.catDispName,
+												groupName: this.state.selectedGroup
+											}) },
+										'Save'
+									),
+									_react2.default.createElement(
+										'button',
+										{ className: 'btn btn-primary btn-width-xs',
+											onClick: this.handleClear1.bind(this), disabled: this.state.selectedGroup === ''
+										},
+										'Clear'
+									)
 								)
 							),
 							_react2.default.createElement(
 								'div',
-								{ className: 'callout-elem callout-elem-success', style: { paddingTop: '0px', marginTop: '0px' } },
+								{ className: 'col-md-5' },
 								_react2.default.createElement(
-									'h4',
-									{ className: 'text-center' },
-									'Categories'
-								),
-								this.state.categories.map(function (obj, index) {
-									return _react2.default.createElement(
-										'p',
-										{ key: obj.catName },
-										obj.catDispName,
-										_react2.default.createElement('i', { key: obj.catName && '(_i)', className: 'fa fa-times pull-right', style: { color: "red", fontSize: '0.8em' },
-											onClick: _appActions2.default.REMOVE_CATEGORY.bind(null, obj) })
-									);
-								})
+									'div',
+									{ className: 'row' },
+									_react2.default.createElement(
+										'div',
+										null,
+										_react2.default.createElement(
+											'div',
+											{ className: 'callout-elem callout-elem-warning', style: { margin: '0px' } },
+											_react2.default.createElement(
+												'h4',
+												{ className: 'text-center' },
+												'Categories'
+											),
+											this.state.categories.map(function (obj, index) {
+												return _react2.default.createElement(
+													'p',
+													{ key: obj.catName },
+													obj.groupName,
+													'-',
+													obj.catDispName,
+													_react2.default.createElement('i', { key: obj.catName && '(_i)', className: 'fa fa-times pull-right', style: { color: "red", fontSize: '1em' },
+														onClick: _appActions2.default.DELETE_CATEGORY.bind(null, obj) })
+												);
+											})
+										)
+									)
+								)
 							)
 						)
 					)
@@ -30564,6 +30881,480 @@
 	}(_react2.default.Component);
 
 	exports.default = CategoryPage;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	var _appStore = __webpack_require__(218);
+
+	var _appStore2 = _interopRequireDefault(_appStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ChannelPage = function (_React$Component) {
+		_inherits(ChannelPage, _React$Component);
+
+		function ChannelPage() {
+			_classCallCheck(this, ChannelPage);
+
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ChannelPage).call(this));
+
+			_this.state = {
+				channelName: '',
+				channelDispName: '',
+				channels: [],
+				catGroups: [],
+				selectedCatGroup: '',
+				categories: [],
+				selectedCategory: ''
+			};
+
+			_this._onChange = _this._onChange.bind(_this);
+			return _this;
+		}
+
+		_createClass(ChannelPage, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_appStore2.default.addChangeListener(this._onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_appStore2.default.removeChangeListener(this._onChange);
+			}
+		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.setState({
+					catGroups: _appStore2.default.GetCategoryGroup()
+				});
+			}
+		}, {
+			key: '_onChange',
+			value: function _onChange() {
+				this.setState({
+					channels: _appStore2.default.GetChannels(undefined),
+					catGroups: _appStore2.default.GetCategoryGroup()
+				});
+			}
+		}, {
+			key: 'handleTextChange',
+			value: function handleTextChange(label, text) {
+				switch (label) {
+					case 'channelName':
+						this.setState({ channelName: text.target.value });
+						break;
+					case 'channelDispName':
+						this.setState({ channelDispName: text.target.value });
+						break;
+				}
+			}
+		}, {
+			key: 'handleSelect',
+			value: function handleSelect(label, text) {
+				switch (label) {
+					case 'catGroup':
+						//get category related
+						this.setState({
+							categories: _appStore2.default.GetCategories({ groupName: text.target.value })
+						});
+						break;
+					case 'category':
+						this.setState({
+							selectedCategory: text.target.value
+						});
+						break;
+				}
+			}
+		}, {
+			key: 'handleClear1',
+			value: function handleClear1() {
+				this.setState({
+					channelName: '',
+					channelDispName: ''
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-md-12' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'callout-elem callout-elem-info text-center' },
+								_react2.default.createElement(
+									'h4',
+									null,
+									'blah blah blah for channel'
+								),
+								_react2.default.createElement(
+									'p',
+									null,
+									'Lorem ipsum dolor sit amet, Lorem Ipsum is simply dummy text. Assumenda, alias, in accusantium totam adipisci vel et suscipit quidem libero pariatur minus ratione quo doloremque error at nemo incidunt dicta quia?'
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-12' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-md-6' },
+									_react2.default.createElement(
+										'select',
+										{ className: 'form-control', onChange: this.handleSelect.bind(this, 'catGroup') },
+										_react2.default.createElement(
+											'option',
+											{ value: '' },
+											'--select Group--'
+										),
+										this.state.catGroups.map(function (obj, index) {
+											return _react2.default.createElement(
+												'option',
+												{ key: obj.groupName, value: obj.groupName },
+												obj.groupName
+											);
+										})
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'col-md-6' },
+									_react2.default.createElement(
+										'select',
+										{ className: 'form-control', onChange: this.handleSelect.bind(this, 'category') },
+										_react2.default.createElement(
+											'option',
+											{ value: '' },
+											'--select Category--'
+										),
+										this.state.categories.map(function (obj, index) {
+											return _react2.default.createElement(
+												'option',
+												{ key: obj.catName, value: obj.catDispName },
+												obj.catDispName
+											);
+										})
+									)
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'form-group' },
+								this.state.selectedCategory != '' ? _react2.default.createElement(
+									'h4',
+									null,
+									'Selected Category: ',
+									_react2.default.createElement(
+										'strong',
+										{ className: 'alert-default' },
+										this.state.selectedCategory
+									)
+								) : null
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-7' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'form-group' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'input-group' },
+										_react2.default.createElement(
+											'span',
+											{ className: 'input-group-addon' },
+											_react2.default.createElement('span', { className: 'fa fa-pencil' })
+										),
+										_react2.default.createElement('input', { type: 'text', placeholder: '--enter channel Name--', className: 'form-control', disabled: this.state.selectedCategory === '',
+											value: this.state.channelName, onChange: this.handleTextChange.bind(this, 'channelName') })
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'form-group' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'input-group' },
+										_react2.default.createElement(
+											'span',
+											{ className: 'input-group-addon' },
+											_react2.default.createElement('span', { className: 'fa fa-pencil' })
+										),
+										_react2.default.createElement('input', { type: 'text', placeholder: '--enter display Name--', className: 'form-control', disabled: this.state.selectedCategory === '',
+											value: this.state.channelDispName, onChange: this.handleTextChange.bind(this, 'channelDispName') })
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'form-group pull-right' },
+									_react2.default.createElement(
+										'button',
+										{ className: 'btn btn-default btn-width-xs', disabled: this.state.selectedCategory === '',
+											onClick: _appActions2.default.ADD_NEW_CHANNEL.bind(null, {
+												channelName: this.state.channelName,
+												channelDispName: this.state.channelDispName,
+												catName: this.state.selectedCategory,
+												id: this.state.selectedCategory + "_" + this.state.channelName
+											}) },
+										'Save'
+									),
+									_react2.default.createElement(
+										'button',
+										{ className: 'btn btn-info btn-width-xs',
+											onClick: this.handleClear1.bind(this), disabled: this.state.selectedCategory === ''
+										},
+										'Clear'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-md-5' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'row' },
+									_react2.default.createElement(
+										'div',
+										null,
+										_react2.default.createElement(
+											'div',
+											{ className: 'callout-elem callout-elem-info', style: { margin: '0px' } },
+											_react2.default.createElement(
+												'h4',
+												{ className: 'text-center' },
+												'Channels'
+											),
+											this.state.channels.map(function (obj, index) {
+												return _react2.default.createElement(
+													'p',
+													{ key: obj.channelName },
+													obj.channelName,
+													'-',
+													obj.channelName,
+													_react2.default.createElement('i', { key: obj.channelName && '(_i)', className: 'fa fa-times pull-right', style: { color: "red", fontSize: '1em' },
+														onClick: _appActions2.default.DELETE_CHANNEL.bind(null, obj) })
+												);
+											})
+										)
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return ChannelPage;
+	}(_react2.default.Component);
+
+	exports.default = ChannelPage;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AllChannelItem = function (_React$Component) {
+	  _inherits(AllChannelItem, _React$Component);
+
+	  function AllChannelItem() {
+	    _classCallCheck(this, AllChannelItem);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AllChannelItem).apply(this, arguments));
+	  }
+
+	  _createClass(AllChannelItem, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "col-md-3" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "list-item__wrap" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "list-item__image" },
+	            _react2.default.createElement("img", { src: this.props.data.channelImg }),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "list-item__play" },
+	              _react2.default.createElement(
+	                "a",
+	                { href: "#" },
+	                _react2.default.createElement("i", { style: { color: "#ffffff" },
+	                  className: "fa fa-3x fa-headphones" }),
+	                _react2.default.createElement("i", { style: { color: "#ffffff", paddingLeft: '10px' },
+	                  className: "fa fa-3x fa-plus" })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "list-item__name" },
+	            _react2.default.createElement(
+	              "h6",
+	              null,
+	              this.props.data.channelName
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "list-item__style" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "artist-genre", "ng-repeat": "genre in artistItem.genre" },
+	              _react2.default.createElement(
+	                "span",
+	                null,
+	                this.props.data.category
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return AllChannelItem;
+	}(_react2.default.Component);
+
+	exports.default = AllChannelItem;
+
+/***/ },
+/* 249 */,
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+				value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PlaylistQueue = function (_React$Component) {
+				_inherits(PlaylistQueue, _React$Component);
+
+				function PlaylistQueue() {
+							_classCallCheck(this, PlaylistQueue);
+
+							return _possibleConstructorReturn(this, Object.getPrototypeOf(PlaylistQueue).apply(this, arguments));
+				}
+
+				_createClass(PlaylistQueue, [{
+							key: "render",
+							value: function render() {
+										return _react2.default.createElement(
+													"div",
+													{ className: "music-listing__songs " + this.props.hide },
+													_react2.default.createElement(
+																"div",
+																{ className: "empty-listing" },
+																_react2.default.createElement(
+																			"div",
+																			{ className: "empty-listing-icon" },
+																			_react2.default.createElement("i", { className: "musicicon-dj4" })
+																),
+																_react2.default.createElement(
+																			"div",
+																			{ className: "empty-listing-message" },
+																			"You dont have any item in the playlist"
+																),
+																_react2.default.createElement(
+																			"div",
+																			{ className: "empty-listing-message" },
+																			_react2.default.createElement(
+																						"a",
+																						{ "ng-href": "#/artist-list", className: "btn btn-primary btn-block btn-sm", href: "#/artist-list" },
+																						"Search"
+																			)
+																)
+													)
+										);
+							}
+				}]);
+
+				return PlaylistQueue;
+	}(_react2.default.Component);
+
+	exports.default = PlaylistQueue;
 
 /***/ }
 /******/ ]);

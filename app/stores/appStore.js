@@ -5,6 +5,7 @@ import { EventEmitter } from 'events';
 
 /*IMPORT APIS*/
 import CategoryAPI from '../storesAPI/categoryAPI';
+import ChannelAPI from '../storesAPI/channelAPI';
 import GenericServicesAPI from '../storesAPI/genServicesAPI';
 
 
@@ -15,32 +16,59 @@ var _menuVal;
 var _mini_MenuVal;
 var _loginVal;
 var _pageObject;
+var _switchedMenu;
 
 
 const AppStore = Object.assign(EventEmitter.prototype, {
+
+	//EMITTER METHOD
 	emitChange(){
 		this.emit( CHANGE_EVENT )
 	},
+
+	//LISTENERS
 	addChangeListener( callback ){
 		this.on(CHANGE_EVENT, callback)
 	},
 	removeChangeListener( callback ){
 		this.removeListener(CHANGE_EVENT, callback )
 	},	
+
+
+	//MENU METHODS
 	MenuStatus(){		
 		return _menuVal;
 	},
 	MiniMenuStatus(){
 		return _mini_MenuVal;
 	},
+	GetSwitchedMenu(){		
+		return _switchedMenu;
+	},
+
+
+	//LOGIN METHODS
 	CheckLoginStatus(){		
 		return _loginVal;
 	},
+
+	//PAGE METHODS
 	CheckActivePage(){
 		return _pageObject;
 	},
-	GetCategories(){
-		return CategoryAPI.categories;
+
+	//CATEGORY METHODS
+	GetCategories(payload){		
+		return CategoryAPI._getCategories(payload);
+	},
+	GetCategoryGroup(){				
+		return CategoryAPI.categoryGroup;
+	},
+
+
+	//CHANNEL METHODS	
+	GetChannels(payload){
+		return ChannelAPI._getChannels(payload);
 	},
 
 
@@ -49,7 +77,7 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 		//console.log("FROM STORES");
 		switch(action.actionType){
 
-
+			//TOP AND SIDE MENU
 			case AppConstants.HIDE_TOPMENU:
 				_menuVal = GenericServicesAPI._hideMenu();				
 			break;
@@ -59,8 +87,12 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 			case AppConstants.SHOW_MINIMENU:
 				_mini_MenuVal = !action.payload;				
 			break;
+			case AppConstants.SWITCH_MENU:
+				_switchedMenu = action.payload;				
+			break;
 
 
+			//LOGIN
 			case AppConstants.LOGIN:
 				_loginVal = GenericServicesAPI._login(action.payload);				
 			break;
@@ -68,12 +100,24 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 				_pageObject = GenericServicesAPI._switchPage(action.payload);
 			break;
 
+
 			//CATEGORIES
+			case AppConstants.ADD_NEW_CATEGORY_GROUP:
+				CategoryAPI._addNewCategoryGroup(action.payload);				
+			break;
 			case AppConstants.ADD_NEW_CATEGORY:
 				CategoryAPI._addNewCategory(action.payload);
 			break;
-			case AppConstants.REMOVE_CATEGORY:
-				CategoryAPI._removeCategory(action.payload);
+			case AppConstants.DELETE_CATEGORY:
+				CategoryAPI._deleteCategory(action.payload);
+			break;
+
+			//CHANNELS
+			case AppConstants.ADD_NEW_CHANNEL:
+				ChannelAPI._addNewChannel(action.payload);
+			break;
+			case AppConstants.DELETE_CHANNEL:
+				ChannelAPI._deleteChannel(action.payload);
 			break;
 		}
 

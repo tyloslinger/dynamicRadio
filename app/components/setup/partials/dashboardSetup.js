@@ -5,6 +5,7 @@ import AppConstants from '../../../constants/appConstants';
 
 import DashBoardInfo from './dasboardInfo';
 import CategoryPage from './categoryPage';
+import ChannelPage from './channelPage';
 
 class AddChannelUniPage extends React.Component{
 	constructor(){
@@ -48,7 +49,7 @@ class AddChannelUniPage extends React.Component{
 					            					:					            						
 					            						this.state.page === AppConstants.USER_PAGE
 					            							?
-					            								<UserPage />
+					            								null
 					            							:
 					            								null
 					            	:

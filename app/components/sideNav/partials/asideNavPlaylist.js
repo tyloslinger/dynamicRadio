@@ -6,7 +6,6 @@ class AsideNavMenuPlaylist extends React.Component{
 	render(){
 		return(
 				<div className="nav-user-menu sidebar-nav-content">
-
 			        <div className="sidebar-nav-content__header">
 			        <span>
 			          Your playlists
