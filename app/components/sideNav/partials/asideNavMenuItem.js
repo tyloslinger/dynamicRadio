@@ -11,7 +11,7 @@ class AsideActionNavMenuItem extends React.Component{
 	render(){
 		return(
 				<li id="user-menu" className="nav-item">
-		            <a className="nav-link profile" href="#/artist-list">
+		            <a className="nav-link profile">
 		              <i className="icon fa fa-headphones"></i>
 		              <span className="label helper-tooltip-measured">{this.props.navItem.name}</span>
 		            </a>
@@ -26,13 +26,13 @@ class AsideActionNavMenuList extends React.Component{
 
 		this.state = {
 			menuActions: [{
-				name: "News Channels"
+				name: "Foreign Channels"
+			},
+			{
+				name: "Local Channels"
 			},
 			{
 				name: "Artist Channels"
-			},
-			{
-				name: "All"
 			}]
 		}
 	}
@@ -82,19 +82,19 @@ class AsideNavMenuItem extends React.Component{
 					        <ul className="sidebar-nav-menu" data-highlight-active="">
 					          <li id="user-menu" className="nav-item">
 					            <div className="actions">
-					              <a className="action-btn" href="#/dashboard">
+					              <a className="action-btn">
 					                <i className="action-icon fa fa-bell"></i>
 					              </a>
 					              <i id="user-settings-btn" className="action-icon fa fa-gear"></i>
 					            </div>
-					            <a className="nav-link profile" href="#/pages/profile">
+					            <a className="nav-link profile">
 					              <img src="../assets/images/user.png" alt="" className="img20_20 img-circle" />
 					              <span className="label helper-tooltip-measured">{this.state.user.name}</span>
 					            </a>
 
 					          </li>
 					          <li id="user-menu" className="nav-item">
-					            <a className="nav-link profile" href="#/dashboard">
+					            <a className="nav-link profile" href="#/allChannels">
 					              <i className="icon fa fa-inbox"></i>
 					              <span className="label helper-tooltip-measured">Dashboard</span>
 					            </a>

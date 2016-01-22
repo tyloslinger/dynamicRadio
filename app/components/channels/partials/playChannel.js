@@ -1,6 +1,7 @@
 import React from 'react';
 import AppStore from '../../../stores/appStore';
 import Action from '../../../actions/appActions';
+import ChannelActivity from './channelActivity';
 
 
 class PlayChannelItem extends React.Component{
@@ -10,14 +11,15 @@ class PlayChannelItem extends React.Component{
 				<div className="music-listing__name">
 
                     <div className="music-listing__thumbnail">
-                      <img src="../assets/images/songs/song1.jpg" alt="song__image"/>
+                      <img src="../assets/images/songs/song1.jpg" alt="song__image" width='100px' height='100px'/>
+                      <img src={this.props.data.channelImg} alt="song__image" width='100px' height='100px'/>
                     </div>
 
                     <div className="music-listing__artist-name ng-binding">
-                      The lunatics
+                      {this.props.data.channelName}
                     </div>
                     <div className="music-listing__song-name ng-binding">
-                      Come Together
+                      {this.props.data.category}
                     </div>
 
                 </div>
@@ -32,19 +34,16 @@ class PlayChannelHeader extends React.Component{
 				<div className="music-listing__header">
 
 	                <div className="music-listing__actions-top">
-	                  	<button ng-click="artist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)" className="btn btn-primary"><i className="fa fa-headphones"></i>&nbsp;&nbsp;Play all</button>	                  
+	                  	<button ng-click="artist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)" className="btn btn-primary"><i className="fa fa-headphones"></i>&nbsp;&nbsp;Listening</button>	                  
 
 	                  	<div className="btn-group">
 		                    <button type="button" className="btn btn-bordered btn-bordered-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 		                      <i className="fa fa-plus"></i>&nbsp;&nbsp; <span className="caret"></span>
 		                    </button>
 
-		                    <ul className="dropdown-menu" role="menu">
-		                      <li><a ng-click="artist.addSongs(generalPlaylist.audioPlaylist)" href="javascript:;">Add to Queue</a></li>
+		                    <ul className="dropdown-menu" role="menu">		                      
 		                      <li><a href="#">Another action</a></li>
-		                      <li><a href="#">Something else here</a></li>
-		                      <li className="divider"></li>
-		                      <li><a href="#">Separated link</a></li>
+		                      <li><a href="#">Something else here</a></li>		                      
 		                    </ul>
 	                  	</div>
 
@@ -73,26 +72,46 @@ class PlayChannelHeader extends React.Component{
 }
 
 class PlayChannel extends React.Component{
-
+	constructor(){
+		super();
+		this.state = {
+			playlist: []
+		}
+		this._onChange = this._onChange.bind(this);
+	}
+	componentWillMount(){
+		AppStore.addChangeListener( this._onChange );
+	}
+	componentWillUnmount(){
+		AppStore.removeChangeListener( this._onChange );
+	}
+	_onChange(){	
+		var _channelList = AppStore.GetChannelPlayList(true);
+		if(_channelList != undefined){
+			this.setState({
+				playlist: AppStore.GetChannelPlayList(true)
+			});
+		}
+	}
 	render(){
 		return(
 				<div className="page page-artist">
-
 				    <div className="row">
-
 				      	<div className="col-md-8">
-
 					        <div className="panel panel-default">
 					          	<div className="panel-body">
 
 						            <div className="music-listing">
 						            	<PlayChannelHeader />
 
-						            	<PlayChannelItem />
+						            	{this.state.playlist.map((obj, index) => {
+						            		return <PlayChannelItem key={obj.channelId} data={obj}/>
+						            	})}						            	
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>						
+						<ChannelActivity />
 					</div>
 				</div>
 

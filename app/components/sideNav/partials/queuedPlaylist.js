@@ -18,7 +18,7 @@ class PlayListItem extends React.Component{
 
 		          	<div className="music-listing__row-actions">
 			            <i className="fa fa-times action" title="Remove song"
-			            	onClick={Action.REMOVE_CHANNEL(this.props.data.channelId)}></i>
+			            	onClick={Action.DELETE_CHANNEL_FROM_PLAYLIST.bind(null, this.props.data.channelId)}></i>
 			            <a href="#/playChannel">
 			            	<i className="fa fa-list action" title="More Options..."></i>
 			            </a>

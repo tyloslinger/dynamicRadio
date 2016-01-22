@@ -34,8 +34,8 @@ const ChannelAPI = {
 		ChannelAPI.channels.splice(ChannelAPI.channels.findIndex( id => id === channel), 1);
 	},
 	//
-	_deleteFromChannelPlaylist(cahnnelId){
-		ChannelAPI.channelPlaylist.splice(ChannelAPI.findIndex( id => id === channelId), 1);
+	_deleteFromChannelPlaylist(channelId){
+		ChannelAPI.channelPlaylist.splice(ChannelAPI.channelPlaylist.findIndex( _channel => _channel.channelId === channelId), 1);
 	}
 }
 

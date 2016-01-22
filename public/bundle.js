@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "89a7a5c573fad043e2dd"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0fae7a852a205f693c78"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -24680,27 +24680,27 @@
 
 	var _body2 = _interopRequireDefault(_body);
 
-	var _allChannels = __webpack_require__(236);
+	var _allChannels = __webpack_require__(239);
 
 	var _allChannels2 = _interopRequireDefault(_allChannels);
 
-	var _playAllChannels = __webpack_require__(252);
+	var _playAllChannels = __webpack_require__(242);
 
 	var _playAllChannels2 = _interopRequireDefault(_playAllChannels);
 
-	var _channelDashboard = __webpack_require__(239);
+	var _channelDashboard = __webpack_require__(245);
 
 	var _channelDashboard2 = _interopRequireDefault(_channelDashboard);
 
-	var _signIn = __webpack_require__(242);
+	var _signIn = __webpack_require__(248);
 
 	var _signIn2 = _interopRequireDefault(_signIn);
 
-	var _signUp = __webpack_require__(244);
+	var _signUp = __webpack_require__(250);
 
 	var _signUp2 = _interopRequireDefault(_signUp);
 
-	var _adminDashboard = __webpack_require__(246);
+	var _adminDashboard = __webpack_require__(252);
 
 	var _adminDashboard2 = _interopRequireDefault(_adminDashboard);
 
@@ -25479,6 +25479,14 @@
 
 	var _adminSideNavMenu2 = _interopRequireDefault(_adminSideNavMenu);
 
+	var _player = __webpack_require__(236);
+
+	var _player2 = _interopRequireDefault(_player);
+
+	var _channelMedia = __webpack_require__(238);
+
+	var _channelMedia2 = _interopRequireDefault(_channelMedia);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25533,6 +25541,7 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: this.state.showMenu ? this.state.showMiniMenu ? "on-canvas nav-min" : null : "body-special" },
+					_react2.default.createElement(_channelMedia2.default, null),
 					this.state.showMenu ? this.state.userObject != undefined && this.state.userObject.userType === 'admin' ? _react2.default.createElement(
 						'div',
 						{ className: 'no-print' },
@@ -25547,7 +25556,8 @@
 						{ className: 'view-container', 'ng-noName': 'nothing' },
 						this.state.showMenu ? _react2.default.createElement(_topNav2.default, null) : null,
 						this.props.children
-					)
+					),
+					_react2.default.createElement(_player2.default, null)
 				);
 			}
 		}]);
@@ -27254,6 +27264,9 @@
 				case _appConstants2.default.ADD_CHANNEL_TO_PLAYLIST:
 					_channelAPI2.default._addToChannelPlaylist(action.payload);
 					break;
+				case _appConstants2.default.DELETE_CHANNEL_FROM_PLAYLIST:
+					_channelAPI2.default._deleteFromChannelPlaylist(action.payload);
+					break;
 			}
 
 			AppStore.emitChange();
@@ -27684,9 +27697,9 @@
 		},
 
 		//
-		_deleteFromChannelPlaylist: function _deleteFromChannelPlaylist(cahnnelId) {
-			ChannelAPI.channelPlaylist.splice(ChannelAPI.findIndex(function (id) {
-				return id === channelId;
+		_deleteFromChannelPlaylist: function _deleteFromChannelPlaylist(channelId) {
+			ChannelAPI.channelPlaylist.splice(ChannelAPI.channelPlaylist.findIndex(function (_channel) {
+				return _channel.channelId === channelId;
 			}), 1);
 		}
 	};
@@ -28470,7 +28483,7 @@
 					{ id: 'user-menu', className: 'nav-item' },
 					_react2.default.createElement(
 						'a',
-						{ className: 'nav-link profile', href: '#/artist-list' },
+						{ className: 'nav-link profile' },
 						_react2.default.createElement('i', { className: 'icon fa fa-headphones' }),
 						_react2.default.createElement(
 							'span',
@@ -28495,11 +28508,11 @@
 
 			_this2.state = {
 				menuActions: [{
-					name: "News Channels"
+					name: "Foreign Channels"
+				}, {
+					name: "Local Channels"
 				}, {
 					name: "Artist Channels"
-				}, {
-					name: "All"
 				}]
 			};
 			return _this2;
@@ -28582,14 +28595,14 @@
 										{ className: 'actions' },
 										_react2.default.createElement(
 											'a',
-											{ className: 'action-btn', href: '#/dashboard' },
+											{ className: 'action-btn' },
 											_react2.default.createElement('i', { className: 'action-icon fa fa-bell' })
 										),
 										_react2.default.createElement('i', { id: 'user-settings-btn', className: 'action-icon fa fa-gear' })
 									),
 									_react2.default.createElement(
 										'a',
-										{ className: 'nav-link profile', href: '#/pages/profile' },
+										{ className: 'nav-link profile' },
 										_react2.default.createElement('img', { src: '../assets/images/user.png', alt: '', className: 'img20_20 img-circle' }),
 										_react2.default.createElement(
 											'span',
@@ -28603,7 +28616,7 @@
 									{ id: 'user-menu', className: 'nav-item' },
 									_react2.default.createElement(
 										'a',
-										{ className: 'nav-link profile', href: '#/dashboard' },
+										{ className: 'nav-link profile', href: '#/allChannels' },
 										_react2.default.createElement('i', { className: 'icon fa fa-inbox' }),
 										_react2.default.createElement(
 											'span',
@@ -28771,7 +28784,7 @@
 						'div',
 						{ className: 'music-listing__row-actions' },
 						_react2.default.createElement('i', { className: 'fa fa-times action', title: 'Remove song',
-							onClick: _appActions2.default.REMOVE_CHANNEL(this.props.data.channelId) }),
+							onClick: _appActions2.default.DELETE_CHANNEL_FROM_PLAYLIST.bind(null, this.props.data.channelId) }),
 						_react2.default.createElement(
 							'a',
 							{ href: '#/playChannel' },
@@ -29338,7 +29351,280 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _allChannelList = __webpack_require__(237);
+	var _playerControls = __webpack_require__(237);
+
+	var _playerControls2 = _interopRequireDefault(_playerControls);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Player = function (_React$Component) {
+		_inherits(Player, _React$Component);
+
+		function Player() {
+			_classCallCheck(this, Player);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Player).apply(this, arguments));
+		}
+
+		_createClass(Player, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'player-region hide' },
+					_react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(_playerControls2.default, null)
+					)
+				);
+			}
+		}]);
+
+		return Player;
+	}(_react2.default.Component);
+
+	exports.default = Player;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	var _appStore = __webpack_require__(218);
+
+	var _appStore2 = _interopRequireDefault(_appStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PlayControls = function (_React$Component) {
+		_inherits(PlayControls, _React$Component);
+
+		function PlayControls() {
+			_classCallCheck(this, PlayControls);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayControls).apply(this, arguments));
+		}
+
+		_createClass(PlayControls, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'controlling-options' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn', 'ng-click': 'mediaPlayer.prev()' },
+						_react2.default.createElement('i', { className: 'fa fa-step-backward' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn', 'ng-click': 'mediaPlayer.playPause()' },
+						_react2.default.createElement('i', { className: 'fa fa-play', 'ng-className': '{ \'fa-pause\': mediaPlayer.playing, \'fa-play\': !mediaPlayer.playing }' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn', 'ng-click': 'mediaPlayer.next()' },
+						_react2.default.createElement('i', { className: 'fa fa-step-forward' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn btn-noclick' },
+						_react2.default.createElement(
+							'span',
+							null,
+							_react2.default.createElement(
+								'span',
+								{ className: 'badge ng-binding' },
+								'100%'
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn', 'ng-click': 'mediaPlayer.setVolume(mediaPlayer.volume - 0.1)' },
+						_react2.default.createElement(
+							'span',
+							null,
+							_react2.default.createElement('i', { className: 'fa fa-volume-down' })
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'btn', 'ng-click': 'mediaPlayer.setVolume(mediaPlayer.volume + 0.1)' },
+						_react2.default.createElement(
+							'span',
+							null,
+							_react2.default.createElement('i', { className: 'fa fa-volume-up' })
+						)
+					)
+				);
+			}
+		}]);
+
+		return PlayControls;
+	}(_react2.default.Component);
+
+	var PlayDuration = function (_React$Component2) {
+		_inherits(PlayDuration, _React$Component2);
+
+		function PlayDuration() {
+			_classCallCheck(this, PlayDuration);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayDuration).apply(this, arguments));
+		}
+
+		_createClass(PlayDuration, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'song-duration' },
+					_react2.default.createElement(
+						'span',
+						{ className: 'song-duration-beg ng-binding' },
+						'00:00'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'progress', 'ng-click': 'mediaPlayer.seek(mediaPlayer.duration * generalPlaylist.seekPercentage($event))' },
+						_react2.default.createElement('div', { className: 'progress-bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'ng-style': '{ width: mediaPlayer.currentTime*100/mediaPlayer.duration + \'%\' }' })
+					),
+					_react2.default.createElement(
+						'span',
+						{ className: 'song-duration-end ng-binding' },
+						'03:28'
+					)
+				);
+			}
+		}]);
+
+		return PlayDuration;
+	}(_react2.default.Component);
+
+	var PlayerControls = function (_React$Component3) {
+		_inherits(PlayerControls, _React$Component3);
+
+		function PlayerControls() {
+			_classCallCheck(this, PlayerControls);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayerControls).apply(this, arguments));
+		}
+
+		_createClass(PlayerControls, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'player-control' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'player-control-bottom' },
+						_react2.default.createElement(PlayControls, null),
+						_react2.default.createElement(PlayDuration, null)
+					)
+				);
+			}
+		}]);
+
+		return PlayerControls;
+	}(_react2.default.Component);
+
+	exports.default = PlayerControls;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ChannelMedia = function (_React$Component) {
+		_inherits(ChannelMedia, _React$Component);
+
+		function ChannelMedia() {
+			_classCallCheck(this, ChannelMedia);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(ChannelMedia).apply(this, arguments));
+		}
+
+		_createClass(ChannelMedia, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"audio",
+					{ "media-player": "mediaPlayer", playlist: "generalPlaylist.audioPlaylist" },
+					_react2.default.createElement("source", { src: "http://ccmixter.org/content/snowflake/snowflake_-_I_Miss_You.mp3", type: "audio/mpeg" })
+				);
+			}
+		}]);
+
+		return ChannelMedia;
+	}(_react2.default.Component);
+
+	exports.default = ChannelMedia;
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _allChannelList = __webpack_require__(240);
 
 	var _allChannelList2 = _interopRequireDefault(_allChannelList);
 
@@ -29425,7 +29711,7 @@
 	exports.default = AllChannels;
 
 /***/ },
-/* 237 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29440,7 +29726,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _allChannelItem = __webpack_require__(238);
+	var _allChannelItem = __webpack_require__(241);
 
 	var _allChannelItem2 = _interopRequireDefault(_allChannelItem);
 
@@ -29641,7 +29927,7 @@
 	exports.default = AllChannelItemList;
 
 /***/ },
-/* 238 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29739,7 +30025,7 @@
 	exports.default = AllChannelItem;
 
 /***/ },
-/* 239 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29754,7 +30040,538 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _channelList = __webpack_require__(240);
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	var _playChannel = __webpack_require__(243);
+
+	var _playChannel2 = _interopRequireDefault(_playChannel);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PlayAllChannels = function (_React$Component) {
+		_inherits(PlayAllChannels, _React$Component);
+
+		function PlayAllChannels() {
+			_classCallCheck(this, PlayAllChannels);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayAllChannels).apply(this, arguments));
+		}
+
+		_createClass(PlayAllChannels, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_appActions2.default.SHOW_TOPMENU();
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'section',
+					{ 'data-ng-view': '', id: 'content', className: 'animate-fade-up fixed' },
+					_react2.default.createElement(_playChannel2.default, null)
+				);
+			}
+		}]);
+
+		return PlayAllChannels;
+	}(_react2.default.Component);
+
+	exports.default = PlayAllChannels;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _appStore = __webpack_require__(218);
+
+	var _appStore2 = _interopRequireDefault(_appStore);
+
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	var _channelActivity = __webpack_require__(244);
+
+	var _channelActivity2 = _interopRequireDefault(_channelActivity);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PlayChannelItem = function (_React$Component) {
+		_inherits(PlayChannelItem, _React$Component);
+
+		function PlayChannelItem() {
+			_classCallCheck(this, PlayChannelItem);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannelItem).apply(this, arguments));
+		}
+
+		_createClass(PlayChannelItem, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'music-listing__name' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__thumbnail' },
+						_react2.default.createElement('img', { src: '../assets/images/songs/song1.jpg', alt: 'song__image', width: '100px', height: '100px' }),
+						_react2.default.createElement('img', { src: this.props.data.channelImg, alt: 'song__image', width: '100px', height: '100px' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__artist-name ng-binding' },
+						this.props.data.channelName
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__song-name ng-binding' },
+						this.props.data.category
+					)
+				);
+			}
+		}]);
+
+		return PlayChannelItem;
+	}(_react2.default.Component);
+
+	var PlayChannelHeader = function (_React$Component2) {
+		_inherits(PlayChannelHeader, _React$Component2);
+
+		function PlayChannelHeader() {
+			_classCallCheck(this, PlayChannelHeader);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannelHeader).apply(this, arguments));
+		}
+
+		_createClass(PlayChannelHeader, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'music-listing__header' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__actions-top' },
+						_react2.default.createElement(
+							'button',
+							{ 'ng-click': 'artist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)', className: 'btn btn-primary' },
+							_react2.default.createElement('i', { className: 'fa fa-headphones' }),
+							'  Listening'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'btn-group' },
+							_react2.default.createElement(
+								'button',
+								{ type: 'button', className: 'btn btn-bordered btn-bordered-default dropdown-toggle', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
+								_react2.default.createElement('i', { className: 'fa fa-plus' }),
+								'   ',
+								_react2.default.createElement('span', { className: 'caret' })
+							),
+							_react2.default.createElement(
+								'ul',
+								{ className: 'dropdown-menu', role: 'menu' },
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ href: '#' },
+										'Another action'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ href: '#' },
+										'Something else here'
+									)
+								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__filter' },
+						_react2.default.createElement('input', { type: 'text', className: 'form-control ng-pristine ng-untouched ng-valid', 'ng-model': 'searchText', placeholder: 'Filter' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__switch' },
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn btn-switch', href: 'javascript:;', 'data-ng-click': 'artist.toggleAlbumsList();', 'tooltip-placement': 'bottom', tooltip: 'View Albums', 'tooltip-append-to-body': 'true' },
+							_react2.default.createElement('i', { className: 'fa fa-list' })
+						),
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn btn-switch', href: 'javascript:;', 'data-ng-click': 'artist.toggleFullList();', 'tooltip-placement': 'bottom', tooltip: 'View all songs', 'tooltip-append-to-body': 'true' },
+							_react2.default.createElement('i', { className: 'fa fa-sliders' })
+						)
+					)
+				);
+			}
+		}]);
+
+		return PlayChannelHeader;
+	}(_react2.default.Component);
+
+	var PlayChannel = function (_React$Component3) {
+		_inherits(PlayChannel, _React$Component3);
+
+		function PlayChannel() {
+			_classCallCheck(this, PlayChannel);
+
+			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannel).call(this));
+
+			_this3.state = {
+				playlist: []
+			};
+			_this3._onChange = _this3._onChange.bind(_this3);
+			return _this3;
+		}
+
+		_createClass(PlayChannel, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_appStore2.default.addChangeListener(this._onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_appStore2.default.removeChangeListener(this._onChange);
+			}
+		}, {
+			key: '_onChange',
+			value: function _onChange() {
+				var _channelList = _appStore2.default.GetChannelPlayList(true);
+				if (_channelList != undefined) {
+					this.setState({
+						playlist: _appStore2.default.GetChannelPlayList(true)
+					});
+				}
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'page page-artist' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'row' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-8' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'panel panel-default' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'panel-body' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'music-listing' },
+										_react2.default.createElement(PlayChannelHeader, null),
+										this.state.playlist.map(function (obj, index) {
+											return _react2.default.createElement(PlayChannelItem, { key: obj.channelId, data: obj });
+										})
+									)
+								)
+							)
+						),
+						_react2.default.createElement(_channelActivity2.default, null)
+					)
+				);
+			}
+		}]);
+
+		return PlayChannel;
+	}(_react2.default.Component);
+
+	exports.default = PlayChannel;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	var _appStore = __webpack_require__(218);
+
+	var _appStore2 = _interopRequireDefault(_appStore);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CurrentlyListening = function (_React$Component) {
+		_inherits(CurrentlyListening, _React$Component);
+
+		function CurrentlyListening() {
+			_classCallCheck(this, CurrentlyListening);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(CurrentlyListening).apply(this, arguments));
+		}
+
+		_createClass(CurrentlyListening, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'panel panel-default' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'panel-body' },
+						_react2.default.createElement(
+							'h4',
+							null,
+							_react2.default.createElement('i', { className: 'fa fa-history color-primary' }),
+							'   Listening to current Channel'
+						),
+						_react2.default.createElement(
+							'div',
+							null,
+							_react2.default.createElement(
+								'ul',
+								{ className: 'list-inline' },
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement('i', { className: 'fa fa-people' })
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement('img', { src: '../assets/images/user.png', alt: '', className: 'img30_30 img-circle', 'tooltip-placement': 'bottom', tooltip: 'John Doeser', 'tooltip-append-to-body': 'true' })
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement('img', { src: '../assets/images/team1.jpg', alt: '', className: 'img30_30 img-circle', 'tooltip-placement': 'bottom', tooltip: 'John Doeser', 'tooltip-append-to-body': 'true' })
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement('img', { src: '../assets/images/team2.jpg', alt: '', className: 'img30_30 img-circle', 'tooltip-placement': 'bottom', tooltip: 'John Doeser', 'tooltip-append-to-body': 'true' })
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement('img', { src: '../assets/images/team3.jpg', alt: '', className: 'img30_30 img-circle', 'tooltip-placement': 'bottom', tooltip: 'John Doeser', 'tooltip-append-to-body': 'true' })
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement('img', { src: '../assets/images/team4.jpg', alt: '', className: 'img30_30 img-circle', 'tooltip-placement': 'bottom', tooltip: 'John Doeser', 'tooltip-append-to-body': 'true' })
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return CurrentlyListening;
+	}(_react2.default.Component);
+
+	var RelatedChannels = function (_React$Component2) {
+		_inherits(RelatedChannels, _React$Component2);
+
+		function RelatedChannels() {
+			_classCallCheck(this, RelatedChannels);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(RelatedChannels).apply(this, arguments));
+		}
+
+		_createClass(RelatedChannels, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'panel panel-default' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'panel-body' },
+						_react2.default.createElement(
+							'h4',
+							null,
+							_react2.default.createElement('i', { className: 'fa fa-headphones color-primary' }),
+							'   Related artists'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'related-items' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'related-item' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'item-image' },
+									_react2.default.createElement('img', { src: '../assets/images/artists/artist1.jpg', className: 'img40_40' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'item-name' },
+									_react2.default.createElement(
+										'h5',
+										null,
+										'The Beatles'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'related-item' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'item-image' },
+									_react2.default.createElement('img', { src: '../assets/images/artists/artist2.jpg', className: 'img40_40' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'item-name' },
+									_react2.default.createElement(
+										'h5',
+										null,
+										'Jason Derulo'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'related-item' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'item-image' },
+									_react2.default.createElement('img', { src: '../assets/images/artists/artist3.jpg', className: 'img40_40' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'item-name' },
+									_react2.default.createElement(
+										'h5',
+										null,
+										'Aloe Black'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'related-item' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'item-image' },
+									_react2.default.createElement('img', { src: '../assets/images/artists/artist4.jpg', className: 'img40_40' })
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'item-name' },
+									_react2.default.createElement(
+										'h5',
+										null,
+										'Pharel Williams'
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return RelatedChannels;
+	}(_react2.default.Component);
+
+	var ChannelActivity = function (_React$Component3) {
+		_inherits(ChannelActivity, _React$Component3);
+
+		function ChannelActivity() {
+			_classCallCheck(this, ChannelActivity);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(ChannelActivity).apply(this, arguments));
+		}
+
+		_createClass(ChannelActivity, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'col-md-4' },
+					_react2.default.createElement(CurrentlyListening, null),
+					_react2.default.createElement(RelatedChannels, null)
+				);
+			}
+		}]);
+
+		return ChannelActivity;
+	}(_react2.default.Component);
+
+	exports.default = ChannelActivity;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _channelList = __webpack_require__(246);
 
 	var _channelList2 = _interopRequireDefault(_channelList);
 
@@ -29830,7 +30647,7 @@
 	exports.default = ChannelDashboard;
 
 /***/ },
-/* 240 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29845,7 +30662,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _channelItem = __webpack_require__(241);
+	var _channelItem = __webpack_require__(247);
 
 	var _channelItem2 = _interopRequireDefault(_channelItem);
 
@@ -29894,7 +30711,7 @@
 	exports.default = ChannelList;
 
 /***/ },
-/* 241 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30065,7 +30882,7 @@
 	exports.default = ChannelItem;
 
 /***/ },
-/* 242 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30080,7 +30897,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _signInComponent = __webpack_require__(243);
+	var _signInComponent = __webpack_require__(249);
 
 	var _signInComponent2 = _interopRequireDefault(_signInComponent);
 
@@ -30161,7 +30978,7 @@
 	exports.default = SignIn;
 
 /***/ },
-/* 243 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30440,7 +31257,7 @@
 	exports.default = SignInComponent;
 
 /***/ },
-/* 244 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30455,7 +31272,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _singUpComponent = __webpack_require__(245);
+	var _singUpComponent = __webpack_require__(251);
 
 	var _singUpComponent2 = _interopRequireDefault(_singUpComponent);
 
@@ -30510,7 +31327,7 @@
 	exports.default = SignUp;
 
 /***/ },
-/* 245 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30722,7 +31539,7 @@
 	exports.default = SignUpComponent;
 
 /***/ },
-/* 246 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30741,7 +31558,7 @@
 
 	var _appActions2 = _interopRequireDefault(_appActions);
 
-	var _dashboardSetup = __webpack_require__(247);
+	var _dashboardSetup = __webpack_require__(253);
 
 	var _dashboardSetup2 = _interopRequireDefault(_dashboardSetup);
 
@@ -30806,7 +31623,7 @@
 	exports.default = AdminDashboard;
 
 /***/ },
-/* 247 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30833,15 +31650,15 @@
 
 	var _appConstants2 = _interopRequireDefault(_appConstants);
 
-	var _dasboardInfo = __webpack_require__(248);
+	var _dasboardInfo = __webpack_require__(254);
 
 	var _dasboardInfo2 = _interopRequireDefault(_dasboardInfo);
 
-	var _categoryPage = __webpack_require__(250);
+	var _categoryPage = __webpack_require__(256);
 
 	var _categoryPage2 = _interopRequireDefault(_categoryPage);
 
-	var _channelPage = __webpack_require__(251);
+	var _channelPage = __webpack_require__(257);
 
 	var _channelPage2 = _interopRequireDefault(_channelPage);
 
@@ -30947,7 +31764,7 @@
 	exports.default = AddChannelPage;
 
 /***/ },
-/* 248 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30962,7 +31779,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classNames = __webpack_require__(249);
+	var _classNames = __webpack_require__(255);
 
 	var _classNames2 = _interopRequireDefault(_classNames);
 
@@ -31105,7 +31922,7 @@
 	exports.default = DashBoardInfo;
 
 /***/ },
-/* 249 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -31159,7 +31976,7 @@
 
 
 /***/ },
-/* 250 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31485,7 +32302,7 @@
 	exports.default = CategoryPage;
 
 /***/ },
-/* 251 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31798,326 +32615,6 @@
 	}(_react2.default.Component);
 
 	exports.default = ChannelPage;
-
-/***/ },
-/* 252 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _appActions = __webpack_require__(210);
-
-	var _appActions2 = _interopRequireDefault(_appActions);
-
-	var _playChannel = __webpack_require__(253);
-
-	var _playChannel2 = _interopRequireDefault(_playChannel);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var PlayAllChannels = function (_React$Component) {
-		_inherits(PlayAllChannels, _React$Component);
-
-		function PlayAllChannels() {
-			_classCallCheck(this, PlayAllChannels);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayAllChannels).apply(this, arguments));
-		}
-
-		_createClass(PlayAllChannels, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
-				_appActions2.default.SHOW_TOPMENU();
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'section',
-					{ id: 'content', className: 'animate-fade-up fixed' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'page page-full page-dashboard two-column' },
-						_react2.default.createElement(
-							'section',
-							{ className: 'inner-wrapper scrollable' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'inner-page' },
-								_react2.default.createElement(
-									'section',
-									{ className: 'dashboard-banner' },
-									_react2.default.createElement(
-										'div',
-										{ className: 'dashboard-banner__content' },
-										_react2.default.createElement(
-											'h2',
-											null,
-											"It's",
-											' all HERE, Find the Best Channels'
-										),
-										_react2.default.createElement(
-											'h5',
-											null,
-											'DYDIO gives you access to the best channels anywhere. Search ',
-											"for",
-											' Local or Foreign channels as well as Artist channels. Create your own playlist, schedule your playlist and share ',
-											"with",
-											' your friends.'
-										),
-										_react2.default.createElement(
-											'a',
-											{ className: 'btn btn-primary', href: '#/artist-list' },
-											'Start searching'
-										)
-									)
-								),
-								_react2.default.createElement(_playChannel2.default, null)
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return PlayAllChannels;
-	}(_react2.default.Component);
-
-	exports.default = PlayAllChannels;
-
-/***/ },
-/* 253 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _appStore = __webpack_require__(218);
-
-	var _appStore2 = _interopRequireDefault(_appStore);
-
-	var _appActions = __webpack_require__(210);
-
-	var _appActions2 = _interopRequireDefault(_appActions);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var PlayChannelItem = function (_React$Component) {
-		_inherits(PlayChannelItem, _React$Component);
-
-		function PlayChannelItem() {
-			_classCallCheck(this, PlayChannelItem);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannelItem).apply(this, arguments));
-		}
-
-		_createClass(PlayChannelItem, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'music-listing__name' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'music-listing__thumbnail' },
-						_react2.default.createElement('img', { src: '../assets/images/songs/song1.jpg', alt: 'song__image' })
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'music-listing__artist-name ng-binding' },
-						'The lunatics'
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'music-listing__song-name ng-binding' },
-						'Come Together'
-					)
-				);
-			}
-		}]);
-
-		return PlayChannelItem;
-	}(_react2.default.Component);
-
-	var PlayChannelHeader = function (_React$Component2) {
-		_inherits(PlayChannelHeader, _React$Component2);
-
-		function PlayChannelHeader() {
-			_classCallCheck(this, PlayChannelHeader);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannelHeader).apply(this, arguments));
-		}
-
-		_createClass(PlayChannelHeader, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'music-listing__header' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'music-listing__actions-top' },
-						_react2.default.createElement(
-							'button',
-							{ 'ng-click': 'artist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)', className: 'btn btn-primary' },
-							_react2.default.createElement('i', { className: 'fa fa-headphones' }),
-							'  Play all'
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'btn-group' },
-							_react2.default.createElement(
-								'button',
-								{ type: 'button', className: 'btn btn-bordered btn-bordered-default dropdown-toggle', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
-								_react2.default.createElement('i', { className: 'fa fa-plus' }),
-								'   ',
-								_react2.default.createElement('span', { className: 'caret' })
-							),
-							_react2.default.createElement(
-								'ul',
-								{ className: 'dropdown-menu', role: 'menu' },
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										'a',
-										{ 'ng-click': 'artist.addSongs(generalPlaylist.audioPlaylist)', href: 'javascript:;' },
-										'Add to Queue'
-									)
-								),
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										'a',
-										{ href: '#' },
-										'Another action'
-									)
-								),
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										'a',
-										{ href: '#' },
-										'Something else here'
-									)
-								),
-								_react2.default.createElement('li', { className: 'divider' }),
-								_react2.default.createElement(
-									'li',
-									null,
-									_react2.default.createElement(
-										'a',
-										{ href: '#' },
-										'Separated link'
-									)
-								)
-							)
-						)
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'music-listing__filter' },
-						_react2.default.createElement('input', { type: 'text', className: 'form-control ng-pristine ng-untouched ng-valid', 'ng-model': 'searchText', placeholder: 'Filter' })
-					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'music-listing__switch' },
-						_react2.default.createElement(
-							'a',
-							{ className: 'btn btn-switch', href: 'javascript:;', 'data-ng-click': 'artist.toggleAlbumsList();', 'tooltip-placement': 'bottom', tooltip: 'View Albums', 'tooltip-append-to-body': 'true' },
-							_react2.default.createElement('i', { className: 'fa fa-list' })
-						),
-						_react2.default.createElement(
-							'a',
-							{ className: 'btn btn-switch', href: 'javascript:;', 'data-ng-click': 'artist.toggleFullList();', 'tooltip-placement': 'bottom', tooltip: 'View all songs', 'tooltip-append-to-body': 'true' },
-							_react2.default.createElement('i', { className: 'fa fa-sliders' })
-						)
-					)
-				);
-			}
-		}]);
-
-		return PlayChannelHeader;
-	}(_react2.default.Component);
-
-	var PlayChannel = function (_React$Component3) {
-		_inherits(PlayChannel, _React$Component3);
-
-		function PlayChannel() {
-			_classCallCheck(this, PlayChannel);
-
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannel).apply(this, arguments));
-		}
-
-		_createClass(PlayChannel, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'page page-artist' },
-					_react2.default.createElement(
-						'div',
-						{ className: 'row' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'col-md-8' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'panel panel-default' },
-								_react2.default.createElement(
-									'div',
-									{ className: 'panel-body' },
-									_react2.default.createElement(
-										'div',
-										{ className: 'music-listing' },
-										_react2.default.createElement(PlayChannelHeader, null),
-										_react2.default.createElement(PlayChannelItem, null)
-									)
-								)
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return PlayChannel;
-	}(_react2.default.Component);
-
-	exports.default = PlayChannel;
 
 /***/ }
 /******/ ]);

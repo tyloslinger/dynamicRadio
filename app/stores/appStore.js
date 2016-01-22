@@ -131,6 +131,9 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 			case AppConstants.ADD_CHANNEL_TO_PLAYLIST:
 				ChannelAPI._addToChannelPlaylist(action.payload);				
 			break;
+			case AppConstants.DELETE_CHANNEL_FROM_PLAYLIST:
+				ChannelAPI._deleteFromChannelPlaylist(action.payload);
+			break;
 		}
 
 		AppStore.emitChange();

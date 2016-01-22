@@ -6,6 +6,8 @@ import Flags from './flags';
 import TopNav from './components/nav/topNav';
 import AsideNavMenu from './components/sideNav/asideNavMenu';
 import AdminSideNavMenu from './components/sideNav/adminSideNavMenu';
+import Player from './components/channels/player';
+import ChannelMedia from './components/channels/channelMedia';
 
 
 class Body extends React.Component {
@@ -43,7 +45,9 @@ class Body extends React.Component {
 	    return (
 	      	<div className={this.state.showMenu ? 	this.state.showMiniMenu ? "on-canvas nav-min" 
 	      																  	: null
-	      										: "body-special"}>      			
+	      										: "body-special"}>   
+	      		<ChannelMedia />
+
   				{this.state.showMenu 
   						? 
   						this.state.userObject != undefined && this.state.userObject.userType === 'admin' 	
@@ -63,6 +67,7 @@ class Body extends React.Component {
 		      			: null}
 					{this.props.children}	
 				</div>		
+				<Player />			
 			</div>
 	    )
 	}
