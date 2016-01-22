@@ -69,7 +69,10 @@ class AsideNavMenuItem extends React.Component{
 		AppStore.removeChangeListener( this._onChange );
 	}
 	_onChange(){
-		this.setState(AppStore.GetSwitchedMenu())
+		var _switchedMenu = AppStore.GetSwitchedMenu();
+		if(_switchedMenu != undefined){			
+			this.setState(_switchedMenu);
+		}
 	}
 	render(){
 		return(

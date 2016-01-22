@@ -1,5 +1,6 @@
 import React from 'react';
 import AllChannelItem from './allChannelItem';
+import guid from 'uuid';
 
 
 class AllChannelItemList extends React.Component{
@@ -13,54 +14,64 @@ class AllChannelItemList extends React.Component{
 			 foreignChannelData : [
 			 			{
 							channelImg: "../assets/images/albums/bbc1.jpeg",
-							channelName: 'BBC',
-							category: 'FOREIGN_NEWS'
+							channelName: 'BBC NEWS UK',
+							category: 'FOREIGN_NEWS',
+							channelId: guid.v1()
 						},
 						{
 							channelImg: "../assets/images/albums/cnn.png",
-							channelName: 'BBC',
-							category: 'FOREIGN_NEWS'
+							channelName: 'BBC TRENDING',
+							category: 'FOREIGN_NEWS',
+							channelId: guid.v1()
 						},
 						{
 							channelImg: "../assets/images/albums/bbc3.png",
-							channelName: 'BBC',
-							category: 'FOREIGN_NEWS'
+							channelName: 'BBC ARTS',
+							category: 'FOREIGN_NEWS',
+							channelId: guid.v1()
 						},
 						{
 							channelImg: "../assets/images/albums/aljazeera.jpeg",
-							channelName: 'BBC',
-							category: 'FOREIGN_NEWS'
+							channelName: 'ALJAZEERA',
+							category: 'FOREIGN_NEWS',
+							channelId: guid.v1()
 						},				
 						{
 							channelImg: "../assets/images/albums/bbc4.jpg",
-							channelName: 'BBC',
-							category: 'FOREIGN_NEWS'
+							channelName: 'BBC Earth',
+							category: 'FOREIGN_NEWS',
+							channelId: guid.v1()
 						}],
 			localChannelData:[
 						{
 							channelImg: "../assets/images/albums/joy1.png",
-							channelName: 'BBC',
-							category: 'LOCAL_NEWS'
+							channelName: 'Joy FM',
+							category: 'LOCAL_NEWS',
+							channelId: guid.v1()
 						},
 						{
 							channelImg: "../assets/images/albums/city.jpg",
-							channelName: 'BBC',
-							category: 'LOCAL_NEWS'
+							channelName: 'City FM',
+							category: 'LOCAL_NEWS',
+							channelId: guid.v1()
 						},
 						{
 							channelImg: "../assets/images/albums/radioFlash.jpeg",
-							channelName: 'BBC',
-							category: 'LOCAL_NEWS'
+							channelName: 'Radio Flash',
+							category: 'LOCAL_NEWS',
+							channelId: guid.v1()
 						},
 						{
 							channelImg: "../assets/images/albums/Y.jpeg",
-							channelName: 'BBC',
-							category: 'LOCAL_NEWS'
+							channelName: 'Y FM',
+							category: 'LOCAL_NEWS',
+							channelId: guid.v1()
 						},				
 						{
 							channelImg: "../assets/images/albums/happy.jpeg",
-							channelName: 'BBC',
-							category: 'LOCAL_NEWS'
+							channelName: 'Happy FM',
+							category: 'LOCAL_NEWS',
+							channelId: guid.v1()
 						}]
 			}
 	}

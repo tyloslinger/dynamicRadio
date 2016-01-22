@@ -17,6 +17,7 @@ export default{
 
 
 
+
 	ADD_NEW_CHANNEL(payload){
 		dispatch({
 			actionType: AppConstants.ADD_NEW_CHANNEL, 
@@ -29,6 +30,25 @@ export default{
 			payload: payload
 		}, payload)
 	},
+	ADD_CHANNEL_TO_PLAYLIST(payload){
+		dispatch({
+			actionType: AppConstants.ADD_CHANNEL_TO_PLAYLIST,
+			payload: payload
+		}, payload)		
+	},
+	DELETE_CHANNEL_FROM_PLAYLIST(payload){
+		dispatch({
+			actionType: AppConstants.DELETE_CHANNEL_FROM_PLAYLIST,
+			payload: payload
+		}, payload)
+	},
+	STREAM_CHANNEL(payload){
+		dispatch({
+			actionType: AppConstants.STREAM_CHANNEL,
+			payload: payload
+		}, payload)
+	},
+
 
 
 

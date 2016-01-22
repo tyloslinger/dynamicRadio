@@ -19,6 +19,7 @@ var _pageObject;
 var _switchedMenu;
 
 
+
 const AppStore = Object.assign(EventEmitter.prototype, {
 
 	//EMITTER METHOD
@@ -70,6 +71,12 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 	GetChannels(payload){
 		return ChannelAPI._getChannels(payload);
 	},
+	GetChannelPlayList(isGetAll){
+		if(!isGetAll)
+			return ChannelAPI.currentChannel;
+		else
+			return ChannelAPI.channelPlaylist;
+	},
 
 
 	//DISPATCHER
@@ -112,12 +119,17 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 				CategoryAPI._deleteCategory(action.payload);
 			break;
 
+
+
 			//CHANNELS
 			case AppConstants.ADD_NEW_CHANNEL:
 				ChannelAPI._addNewChannel(action.payload);
 			break;
 			case AppConstants.DELETE_CHANNEL:
 				ChannelAPI._deleteChannel(action.payload);
+			break;
+			case AppConstants.ADD_CHANNEL_TO_PLAYLIST:
+				ChannelAPI._addToChannelPlaylist(action.payload);				
 			break;
 		}
 

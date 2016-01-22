@@ -1,6 +1,7 @@
 import React from 'react';
 import Action from '../../../actions/appActions';
 import AppStore from '../../../stores/appStore';
+import guid from 'uuid';
 
 
 class ChannelPage extends React.Component{
@@ -138,7 +139,7 @@ class ChannelPage extends React.Component{
 											channelName: this.state.channelName,
 											channelDispName: this.state.channelDispName,
 											catName: this.state.selectedCategory,
-											id: this.state.selectedCategory + "_" + this.state.channelName
+											channelId: guid.v1()
 										})}>Save</button>
 									<button className='btn btn-info btn-width-xs'
 										onClick={this.handleClear1.bind(this)} disabled={this.state.selectedCategory === ''}

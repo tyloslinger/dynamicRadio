@@ -4,6 +4,7 @@ import { Route, IndexRoute } from 'react-router'
 import Home from '../home';
 import Body from '../body';
 import AllChannels from '../components/channels/allChannels';
+import PlayAllChannels from '../components/channels/playAllChannels';
 import ChannelDashboard from '../components/Dashboard/channelDashboard';
 import SignIn from '../components/admin/signIn';
 import SignUp from '../components/admin/signUp';
@@ -17,4 +18,5 @@ export default 	<Route path="/" component={Body}>
 					<Route path="signUp/:number" component={SignUp} />
 					<Route path="setup" component={AdminDashboard} />
 					<Route path="allChannels" component={AllChannels} />
+					<Route path="playChannel" component={PlayAllChannels} />
 				</Route>

@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7317082e4f6fe9abcde8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "89a7a5c573fad043e2dd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -24680,23 +24680,27 @@
 
 	var _body2 = _interopRequireDefault(_body);
 
-	var _allChannels = __webpack_require__(233);
+	var _allChannels = __webpack_require__(236);
 
 	var _allChannels2 = _interopRequireDefault(_allChannels);
 
-	var _channelDashboard = __webpack_require__(235);
+	var _playAllChannels = __webpack_require__(252);
+
+	var _playAllChannels2 = _interopRequireDefault(_playAllChannels);
+
+	var _channelDashboard = __webpack_require__(239);
 
 	var _channelDashboard2 = _interopRequireDefault(_channelDashboard);
 
-	var _signIn = __webpack_require__(238);
+	var _signIn = __webpack_require__(242);
 
 	var _signIn2 = _interopRequireDefault(_signIn);
 
-	var _signUp = __webpack_require__(240);
+	var _signUp = __webpack_require__(244);
 
 	var _signUp2 = _interopRequireDefault(_signUp);
 
-	var _adminDashboard = __webpack_require__(242);
+	var _adminDashboard = __webpack_require__(246);
 
 	var _adminDashboard2 = _interopRequireDefault(_adminDashboard);
 
@@ -24710,7 +24714,8 @@
 						_react2.default.createElement(_reactRouter.Route, { path: 'signIn/:userType', component: _signIn2.default }),
 						_react2.default.createElement(_reactRouter.Route, { path: 'signUp/:number', component: _signUp2.default }),
 						_react2.default.createElement(_reactRouter.Route, { path: 'setup', component: _adminDashboard2.default }),
-						_react2.default.createElement(_reactRouter.Route, { path: 'allChannels', component: _allChannels2.default })
+						_react2.default.createElement(_reactRouter.Route, { path: 'allChannels', component: _allChannels2.default }),
+						_react2.default.createElement(_reactRouter.Route, { path: 'playChannel', component: _playAllChannels2.default })
 	);
 
 /***/ },
@@ -24989,6 +24994,24 @@
 				payload: payload
 			}, payload);
 		},
+		ADD_CHANNEL_TO_PLAYLIST: function ADD_CHANNEL_TO_PLAYLIST(payload) {
+			(0, _appDispatchers.dispatch)({
+				actionType: _appConstants2.default.ADD_CHANNEL_TO_PLAYLIST,
+				payload: payload
+			}, payload);
+		},
+		DELETE_CHANNEL_FROM_PLAYLIST: function DELETE_CHANNEL_FROM_PLAYLIST(payload) {
+			(0, _appDispatchers.dispatch)({
+				actionType: _appConstants2.default.DELETE_CHANNEL_FROM_PLAYLIST,
+				payload: payload
+			}, payload);
+		},
+		STREAM_CHANNEL: function STREAM_CHANNEL(payload) {
+			(0, _appDispatchers.dispatch)({
+				actionType: _appConstants2.default.STREAM_CHANNEL,
+				payload: payload
+			}, payload);
+		},
 		ADD_NEW_CATEGORY_GROUP: function ADD_NEW_CATEGORY_GROUP(payload) {
 			(0, _appDispatchers.dispatch)({
 				actionType: _appConstants2.default.ADD_NEW_CATEGORY_GROUP,
@@ -25062,6 +25085,9 @@
 
 		ADD_NEW_CHANNEL: 'ADD_NEW_CHANNEL',
 		DELETE_CHANNEL: 'DELETE_CHANNEL',
+		ADD_CHANNEL_TO_PLAYLIST: 'ADD_CHANNEL_TO_PLAYLIST',
+		DELETE_CHANNEL_FROM_PLAYLIST: 'DELETE_CHANNEL_FROM_PLAYLIST',
+		STREAM_CHANNEL: 'STREAM_CHANNEL',
 
 		ADD_NEW_USER: 'ADD_NEW_USER',
 		ADD_NEW_USER_PAGE: 'ADD_NEW_USER_PAGE',
@@ -25449,7 +25475,7 @@
 
 	var _asideNavMenu2 = _interopRequireDefault(_asideNavMenu);
 
-	var _adminSideNavMenu = __webpack_require__(231);
+	var _adminSideNavMenu = __webpack_require__(234);
 
 	var _adminSideNavMenu2 = _interopRequireDefault(_adminSideNavMenu);
 
@@ -27176,6 +27202,9 @@
 		GetChannels: function GetChannels(payload) {
 			return _channelAPI2.default._getChannels(payload);
 		},
+		GetChannelPlayList: function GetChannelPlayList(isGetAll) {
+			if (!isGetAll) return _channelAPI2.default.currentChannel;else return _channelAPI2.default.channelPlaylist;
+		},
 
 		//DISPATCHER
 		dispatcherIndex: (0, _appDispatchers.register)(function (action) {
@@ -27221,6 +27250,9 @@
 					break;
 				case _appConstants2.default.DELETE_CHANNEL:
 					_channelAPI2.default._deleteChannel(action.payload);
+					break;
+				case _appConstants2.default.ADD_CHANNEL_TO_PLAYLIST:
+					_channelAPI2.default._addToChannelPlaylist(action.payload);
 					break;
 			}
 
@@ -27608,6 +27640,9 @@
 	var ChannelAPI = {
 		//
 		channels: [],
+		currentChannel: null,
+		channelPlaylist: [],
+
 		//
 		_getChannels: function _getChannels(category) {
 			if (category === undefined) {
@@ -27627,16 +27662,31 @@
 		//
 		_addNewChannel: function _addNewChannel(_channel) {
 			if (ChannelAPI.channels.find(function (channel) {
-				return channel.id === _channel.id;
+				return channel.channelName === _channel.channelName;
 			}) === undefined) {
 				ChannelAPI.channels.push(_channel);
+			}
+		},
+		_addToChannelPlaylist: function _addToChannelPlaylist(_channel) {
+			if (ChannelAPI.channelPlaylist.find(function (channel) {
+				return channel.channelId === _channel.channelId;
+			}) === undefined) {
+				ChannelAPI.currentChannel = _channel;
+				ChannelAPI.channelPlaylist.push(_channel);
 			}
 		},
 
 		//
 		_deleteChannel: function _deleteChannel(channel) {
-			ChannelAPI.channels.splice(ChannelAPI.channels.findIndex(function (i) {
-				return i === channel;
+			ChannelAPI.channels.splice(ChannelAPI.channels.findIndex(function (id) {
+				return id === channel;
+			}), 1);
+		},
+
+		//
+		_deleteFromChannelPlaylist: function _deleteFromChannelPlaylist(cahnnelId) {
+			ChannelAPI.channelPlaylist.splice(ChannelAPI.findIndex(function (id) {
+				return id === channelId;
 			}), 1);
 		}
 	};
@@ -28249,6 +28299,10 @@
 
 	var _appActions2 = _interopRequireDefault(_appActions);
 
+	var _appStore = __webpack_require__(218);
+
+	var _appStore2 = _interopRequireDefault(_appStore);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28267,12 +28321,31 @@
 
 			_this.state = {
 				home: 'active',
-				queue: ''
-			};
+				queue: '',
+				playlistNumber: 0
+			}, _this._onChange = _this._onChange.bind(_this);
 			return _this;
 		}
 
 		_createClass(AsideNavSwitch, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_appStore2.default.addChangeListener(this._onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_appStore2.default.removeChangeListener(this._onChange);
+			}
+		}, {
+			key: '_onChange',
+			value: function _onChange() {
+				var _playlistNumber = _appStore2.default.GetChannelPlayList(true);
+				if (_playlistNumber != undefined) {
+					this.setState({ playlistNumber: _playlistNumber.length });
+				}
+			}
+		}, {
 			key: '_setActive',
 			value: function _setActive(label) {
 				switch (label) {
@@ -28291,6 +28364,12 @@
 				}
 			}
 		}, {
+			key: '_allFunctions',
+			value: function _allFunctions(activatePayload, switchMenuPayload) {
+				_appActions2.default.SWITCH_MENU(switchMenuPayload);
+				this._setActive(activatePayload);
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -28302,31 +28381,29 @@
 						_react2.default.createElement(
 							'a',
 							{ className: 'btn main-nav-link home ' + this.state.home, 'data-nav-section': 'home',
-								onClick: _appActions2.default.SWITCH_MENU.bind(null, { menu: '', queue: 'hide' }) },
+								onClick: this._allFunctions.bind(this, 'home', { menu: '', queue: 'hide' }) },
 							_react2.default.createElement(
 								'span',
-								{ className: 'label',
-									onClick: this._setActive.bind(this, 'home') },
+								{ className: 'label' },
 								'BROWSE'
 							)
 						),
 						_react2.default.createElement(
 							'a',
 							{ className: 'btn main-nav-link queue ' + this.state.queue, 'data-nav-section': 'queue',
-								onClick: _appActions2.default.SWITCH_MENU.bind(null, { menu: 'hide', queue: '' }) },
+								onClick: this._allFunctions.bind(this, 'queue', { menu: 'hide', queue: '' }) },
 							_react2.default.createElement(
 								'span',
 								{ className: 'label queue-label' },
 								_react2.default.createElement(
 									'span',
-									{
-										onClick: this._setActive.bind(this, 'queue') },
+									null,
 									'QUEUE'
 								),
 								_react2.default.createElement(
 									'span',
 									{ className: 'badge badge-primary ng-binding' },
-									'0'
+									this.state.playlistNumber
 								)
 							)
 						)
@@ -28364,7 +28441,7 @@
 
 	var _asideNavPlaylist2 = _interopRequireDefault(_asideNavPlaylist);
 
-	var _queuedPlaylist = __webpack_require__(250);
+	var _queuedPlaylist = __webpack_require__(231);
 
 	var _queuedPlaylist2 = _interopRequireDefault(_queuedPlaylist);
 
@@ -28477,7 +28554,10 @@
 		}, {
 			key: '_onChange',
 			value: function _onChange() {
-				this.setState(_appStore2.default.GetSwitchedMenu());
+				var _switchedMenu = _appStore2.default.GetSwitchedMenu();
+				if (_switchedMenu != undefined) {
+					this.setState(_switchedMenu);
+				}
 			}
 		}, {
 			key: 'render',
@@ -28646,11 +28726,421 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _uuid = __webpack_require__(232);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
+
+	var _appStore = __webpack_require__(218);
+
+	var _appStore2 = _interopRequireDefault(_appStore);
+
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PlayListItem = function (_React$Component) {
+		_inherits(PlayListItem, _React$Component);
+
+		function PlayListItem() {
+			_classCallCheck(this, PlayListItem);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayListItem).apply(this, arguments));
+		}
+
+		_createClass(PlayListItem, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'music-listing__row', 'ui-draggable': 'true', drag: 'song', 'on-drop-success': 'generalPlaylist.removeSong($index)',
+						'ui-on-drop': 'generalPlaylist.dropSong($data, $index)', draggable: 'true' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__number ng-binding' },
+						'4'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__row-actions' },
+						_react2.default.createElement('i', { className: 'fa fa-times action', title: 'Remove song',
+							onClick: _appActions2.default.REMOVE_CHANNEL(this.props.data.channelId) }),
+						_react2.default.createElement(
+							'a',
+							{ href: '#/playChannel' },
+							_react2.default.createElement('i', { className: 'fa fa-list action', title: 'More Options...' })
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__name' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'music-listing__thumbnail' },
+							_react2.default.createElement('img', { src: this.props.data.channelImg, width: '30px', height: '30px' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'music-listing__artist-name ng-binding' },
+							this.props.data.channelName
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'music-listing__song-name ng-binding' },
+							this.props.data.category
+						)
+					),
+					_react2.default.createElement('p', null)
+				);
+			}
+		}]);
+
+		return PlayListItem;
+	}(_react2.default.Component);
+
+	var PlaylistQueue = function (_React$Component2) {
+		_inherits(PlaylistQueue, _React$Component2);
+
+		function PlaylistQueue() {
+			_classCallCheck(this, PlaylistQueue);
+
+			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(PlaylistQueue).call(this));
+
+			_this2.state = {
+				playlist: []
+			};
+			_this2._onChange = _this2._onChange.bind(_this2);
+			return _this2;
+		}
+
+		_createClass(PlaylistQueue, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_appStore2.default.addChangeListener(this._onChange);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				_appStore2.default.removeChangeListener(this._onChange);
+			}
+		}, {
+			key: '_onChange',
+			value: function _onChange() {
+				var _channelList = _appStore2.default.GetChannelPlayList(true);
+				if (_channelList != undefined) {
+					this.setState({
+						playlist: _appStore2.default.GetChannelPlayList(true)
+					});
+				}
+			}
+		}, {
+			key: 'testGUID',
+			value: function testGUID() {}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'music-listing__songs ' + this.props.hide },
+					_react2.default.createElement(
+						'div',
+						{ className: 'playlist-item-list music-listing--queue', 'ng-show': 'navigation.navigationState.playlist' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'music-listing__songs' },
+							this.state.playlist.length > 0 ? this.state.playlist.map(function (obj, index) {
+								return _react2.default.createElement(PlayListItem, { key: obj.channelId, data: obj });
+							}) : null
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'empty-listing ' + (this.state.playlist.length > 0 ? 'hide' : '') },
+							_react2.default.createElement(
+								'div',
+								{ className: 'empty-listing-icon' },
+								_react2.default.createElement('i', { className: 'musicicon-dj4' })
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'empty-listing-message' },
+								'You dont have any item in the playlist'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'empty-listing-message' },
+								_react2.default.createElement(
+									'a',
+									{ 'ng-href': '#/artist-list', className: 'btn btn-primary btn-block btn-sm', href: '#/artist-list',
+										onClick: this.testGUID.bind(this) },
+									'Add Channels From View'
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return PlaylistQueue;
+	}(_react2.default.Component);
+
+	exports.default = PlaylistQueue;
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//     uuid.js
+	//
+	//     Copyright (c) 2010-2012 Robert Kieffer
+	//     MIT License - http://opensource.org/licenses/mit-license.php
+
+	// Unique ID creation requires a high quality random # generator.  We feature
+	// detect to determine the best RNG source, normalizing to a function that
+	// returns 128-bits of randomness, since that's what's usually required
+	var _rng = __webpack_require__(233);
+
+	// Maps for number <-> hex string conversion
+	var _byteToHex = [];
+	var _hexToByte = {};
+	for (var i = 0; i < 256; i++) {
+	  _byteToHex[i] = (i + 0x100).toString(16).substr(1);
+	  _hexToByte[_byteToHex[i]] = i;
+	}
+
+	// **`parse()` - Parse a UUID into it's component bytes**
+	function parse(s, buf, offset) {
+	  var i = (buf && offset) || 0, ii = 0;
+
+	  buf = buf || [];
+	  s.toLowerCase().replace(/[0-9a-f]{2}/g, function(oct) {
+	    if (ii < 16) { // Don't overflow!
+	      buf[i + ii++] = _hexToByte[oct];
+	    }
+	  });
+
+	  // Zero out remaining bytes if string was short
+	  while (ii < 16) {
+	    buf[i + ii++] = 0;
+	  }
+
+	  return buf;
+	}
+
+	// **`unparse()` - Convert UUID byte array (ala parse()) into a string**
+	function unparse(buf, offset) {
+	  var i = offset || 0, bth = _byteToHex;
+	  return  bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]];
+	}
+
+	// **`v1()` - Generate time-based UUID**
+	//
+	// Inspired by https://github.com/LiosK/UUID.js
+	// and http://docs.python.org/library/uuid.html
+
+	// random #'s we need to init node and clockseq
+	var _seedBytes = _rng();
+
+	// Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
+	var _nodeId = [
+	  _seedBytes[0] | 0x01,
+	  _seedBytes[1], _seedBytes[2], _seedBytes[3], _seedBytes[4], _seedBytes[5]
+	];
+
+	// Per 4.2.2, randomize (14 bit) clockseq
+	var _clockseq = (_seedBytes[6] << 8 | _seedBytes[7]) & 0x3fff;
+
+	// Previous uuid creation time
+	var _lastMSecs = 0, _lastNSecs = 0;
+
+	// See https://github.com/broofa/node-uuid for API details
+	function v1(options, buf, offset) {
+	  var i = buf && offset || 0;
+	  var b = buf || [];
+
+	  options = options || {};
+
+	  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+
+	  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
+	  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
+	  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
+	  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
+	  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+
+	  // Per 4.2.1.2, use count of uuid's generated during the current clock
+	  // cycle to simulate higher resolution clock
+	  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+
+	  // Time since last uuid creation (in msecs)
+	  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+
+	  // Per 4.2.1.2, Bump clockseq on clock regression
+	  if (dt < 0 && options.clockseq === undefined) {
+	    clockseq = clockseq + 1 & 0x3fff;
+	  }
+
+	  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
+	  // time interval
+	  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
+	    nsecs = 0;
+	  }
+
+	  // Per 4.2.1.2 Throw error if too many uuids are requested
+	  if (nsecs >= 10000) {
+	    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
+	  }
+
+	  _lastMSecs = msecs;
+	  _lastNSecs = nsecs;
+	  _clockseq = clockseq;
+
+	  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
+	  msecs += 12219292800000;
+
+	  // `time_low`
+	  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
+	  b[i++] = tl >>> 24 & 0xff;
+	  b[i++] = tl >>> 16 & 0xff;
+	  b[i++] = tl >>> 8 & 0xff;
+	  b[i++] = tl & 0xff;
+
+	  // `time_mid`
+	  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
+	  b[i++] = tmh >>> 8 & 0xff;
+	  b[i++] = tmh & 0xff;
+
+	  // `time_high_and_version`
+	  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
+	  b[i++] = tmh >>> 16 & 0xff;
+
+	  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
+	  b[i++] = clockseq >>> 8 | 0x80;
+
+	  // `clock_seq_low`
+	  b[i++] = clockseq & 0xff;
+
+	  // `node`
+	  var node = options.node || _nodeId;
+	  for (var n = 0; n < 6; n++) {
+	    b[i + n] = node[n];
+	  }
+
+	  return buf ? buf : unparse(b);
+	}
+
+	// **`v4()` - Generate random UUID**
+
+	// See https://github.com/broofa/node-uuid for API details
+	function v4(options, buf, offset) {
+	  // Deprecated - 'format' argument, as supported in v1.2
+	  var i = buf && offset || 0;
+
+	  if (typeof(options) == 'string') {
+	    buf = options == 'binary' ? new Array(16) : null;
+	    options = null;
+	  }
+	  options = options || {};
+
+	  var rnds = options.random || (options.rng || _rng)();
+
+	  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+	  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+	  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+
+	  // Copy bytes to buffer, if provided
+	  if (buf) {
+	    for (var ii = 0; ii < 16; ii++) {
+	      buf[i + ii] = rnds[ii];
+	    }
+	  }
+
+	  return buf || unparse(rnds);
+	}
+
+	// Export public API
+	var uuid = v4;
+	uuid.v1 = v1;
+	uuid.v4 = v4;
+	uuid.parse = parse;
+	uuid.unparse = unparse;
+
+	module.exports = uuid;
+
+
+/***/ },
+/* 233 */
+/***/ function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {
+	var rng;
+
+	if (global.crypto && crypto.getRandomValues) {
+	  // WHATWG crypto-based RNG - http://wiki.whatwg.org/wiki/Crypto
+	  // Moderately fast, high quality
+	  var _rnds8 = new Uint8Array(16);
+	  rng = function whatwgRNG() {
+	    crypto.getRandomValues(_rnds8);
+	    return _rnds8;
+	  };
+	}
+
+	if (!rng) {
+	  // Math.random()-based (RNG)
+	  //
+	  // If all else fails, use Math.random().  It's fast, but is of unspecified
+	  // quality.
+	  var  _rnds = new Array(16);
+	  rng = function() {
+	    for (var i = 0, r; i < 16; i++) {
+	      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+	      _rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+	    }
+
+	    return _rnds;
+	  };
+	}
+
+	module.exports = rng;
+
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	var _logoSearchSideNav = __webpack_require__(227);
 
 	var _logoSearchSideNav2 = _interopRequireDefault(_logoSearchSideNav);
 
-	var _adminAsideNavMenuItem = __webpack_require__(232);
+	var _adminAsideNavMenuItem = __webpack_require__(235);
 
 	var _adminAsideNavMenuItem2 = _interopRequireDefault(_adminAsideNavMenuItem);
 
@@ -28697,7 +29187,7 @@
 	exports.default = AdminSideNav;
 
 /***/ },
-/* 232 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28833,7 +29323,7 @@
 	exports.default = AdminAsideNavMenuItem;
 
 /***/ },
-/* 233 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28848,7 +29338,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _allChannelList = __webpack_require__(234);
+	var _allChannelList = __webpack_require__(237);
 
 	var _allChannelList2 = _interopRequireDefault(_allChannelList);
 
@@ -28935,7 +29425,7 @@
 	exports.default = AllChannels;
 
 /***/ },
-/* 234 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28950,9 +29440,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _allChannelItem = __webpack_require__(248);
+	var _allChannelItem = __webpack_require__(238);
 
 	var _allChannelItem2 = _interopRequireDefault(_allChannelItem);
+
+	var _uuid = __webpack_require__(232);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28976,45 +29470,55 @@
 				aritst: '',
 				foreignChannelData: [{
 					channelImg: "../assets/images/albums/bbc1.jpeg",
-					channelName: 'BBC',
-					category: 'FOREIGN_NEWS'
+					channelName: 'BBC NEWS UK',
+					category: 'FOREIGN_NEWS',
+					channelId: _uuid2.default.v1()
 				}, {
 					channelImg: "../assets/images/albums/cnn.png",
-					channelName: 'BBC',
-					category: 'FOREIGN_NEWS'
+					channelName: 'BBC TRENDING',
+					category: 'FOREIGN_NEWS',
+					channelId: _uuid2.default.v1()
 				}, {
 					channelImg: "../assets/images/albums/bbc3.png",
-					channelName: 'BBC',
-					category: 'FOREIGN_NEWS'
+					channelName: 'BBC ARTS',
+					category: 'FOREIGN_NEWS',
+					channelId: _uuid2.default.v1()
 				}, {
 					channelImg: "../assets/images/albums/aljazeera.jpeg",
-					channelName: 'BBC',
-					category: 'FOREIGN_NEWS'
+					channelName: 'ALJAZEERA',
+					category: 'FOREIGN_NEWS',
+					channelId: _uuid2.default.v1()
 				}, {
 					channelImg: "../assets/images/albums/bbc4.jpg",
-					channelName: 'BBC',
-					category: 'FOREIGN_NEWS'
+					channelName: 'BBC Earth',
+					category: 'FOREIGN_NEWS',
+					channelId: _uuid2.default.v1()
 				}],
 				localChannelData: [{
 					channelImg: "../assets/images/albums/joy1.png",
-					channelName: 'BBC',
-					category: 'LOCAL_NEWS'
+					channelName: 'Joy FM',
+					category: 'LOCAL_NEWS',
+					channelId: _uuid2.default.v1()
 				}, {
 					channelImg: "../assets/images/albums/city.jpg",
-					channelName: 'BBC',
-					category: 'LOCAL_NEWS'
+					channelName: 'City FM',
+					category: 'LOCAL_NEWS',
+					channelId: _uuid2.default.v1()
 				}, {
 					channelImg: "../assets/images/albums/radioFlash.jpeg",
-					channelName: 'BBC',
-					category: 'LOCAL_NEWS'
+					channelName: 'Radio Flash',
+					category: 'LOCAL_NEWS',
+					channelId: _uuid2.default.v1()
 				}, {
 					channelImg: "../assets/images/albums/Y.jpeg",
-					channelName: 'BBC',
-					category: 'LOCAL_NEWS'
+					channelName: 'Y FM',
+					category: 'LOCAL_NEWS',
+					channelId: _uuid2.default.v1()
 				}, {
 					channelImg: "../assets/images/albums/happy.jpeg",
-					channelName: 'BBC',
-					category: 'LOCAL_NEWS'
+					channelName: 'Happy FM',
+					category: 'LOCAL_NEWS',
+					channelId: _uuid2.default.v1()
 				}]
 			};
 			return _this;
@@ -29137,7 +29641,105 @@
 	exports.default = AllChannelItemList;
 
 /***/ },
-/* 235 */
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AllChannelItem = function (_React$Component) {
+	  _inherits(AllChannelItem, _React$Component);
+
+	  function AllChannelItem() {
+	    _classCallCheck(this, AllChannelItem);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AllChannelItem).apply(this, arguments));
+	  }
+
+	  _createClass(AllChannelItem, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-3' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'list-item__wrap' },
+	          _react2.default.createElement('p', null),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'list-item__image' },
+	            _react2.default.createElement('img', { src: this.props.data.channelImg }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'list-item__play' },
+	              _react2.default.createElement(
+	                'a',
+	                null,
+	                _react2.default.createElement('i', { style: { color: "#ffffff" },
+	                  className: 'fa fa-3x fa-headphones',
+	                  onClick: _appActions2.default.STREAM_CHANNEL.bind(null, { channelId: this.props.data.channelId }) }),
+	                _react2.default.createElement('i', { style: { color: "#ffffff", paddingLeft: '10px' },
+	                  className: 'fa fa-3x fa-plus',
+	                  onClick: _appActions2.default.ADD_CHANNEL_TO_PLAYLIST.bind(null, this.props.data) })
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'list-item__name' },
+	            _react2.default.createElement(
+	              'h6',
+	              null,
+	              this.props.data.channelName
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'list-item__style' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'artist-genre', 'ng-repeat': 'genre in artistItem.genre' },
+	              _react2.default.createElement(
+	                'span',
+	                null,
+	                this.props.data.category
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return AllChannelItem;
+	}(_react2.default.Component);
+
+	exports.default = AllChannelItem;
+
+/***/ },
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29152,7 +29754,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _channelList = __webpack_require__(236);
+	var _channelList = __webpack_require__(240);
 
 	var _channelList2 = _interopRequireDefault(_channelList);
 
@@ -29228,7 +29830,7 @@
 	exports.default = ChannelDashboard;
 
 /***/ },
-/* 236 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29243,7 +29845,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _channelItem = __webpack_require__(237);
+	var _channelItem = __webpack_require__(241);
 
 	var _channelItem2 = _interopRequireDefault(_channelItem);
 
@@ -29292,7 +29894,7 @@
 	exports.default = ChannelList;
 
 /***/ },
-/* 237 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29463,7 +30065,7 @@
 	exports.default = ChannelItem;
 
 /***/ },
-/* 238 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29478,7 +30080,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _signInComponent = __webpack_require__(239);
+	var _signInComponent = __webpack_require__(243);
 
 	var _signInComponent2 = _interopRequireDefault(_signInComponent);
 
@@ -29559,7 +30161,7 @@
 	exports.default = SignIn;
 
 /***/ },
-/* 239 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29838,7 +30440,7 @@
 	exports.default = SignInComponent;
 
 /***/ },
-/* 240 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29853,7 +30455,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _singUpComponent = __webpack_require__(241);
+	var _singUpComponent = __webpack_require__(245);
 
 	var _singUpComponent2 = _interopRequireDefault(_singUpComponent);
 
@@ -29908,7 +30510,7 @@
 	exports.default = SignUp;
 
 /***/ },
-/* 241 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30120,7 +30722,7 @@
 	exports.default = SignUpComponent;
 
 /***/ },
-/* 242 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30139,7 +30741,7 @@
 
 	var _appActions2 = _interopRequireDefault(_appActions);
 
-	var _dashboardSetup = __webpack_require__(243);
+	var _dashboardSetup = __webpack_require__(247);
 
 	var _dashboardSetup2 = _interopRequireDefault(_dashboardSetup);
 
@@ -30204,7 +30806,7 @@
 	exports.default = AdminDashboard;
 
 /***/ },
-/* 243 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30231,15 +30833,15 @@
 
 	var _appConstants2 = _interopRequireDefault(_appConstants);
 
-	var _dasboardInfo = __webpack_require__(244);
+	var _dasboardInfo = __webpack_require__(248);
 
 	var _dasboardInfo2 = _interopRequireDefault(_dasboardInfo);
 
-	var _categoryPage = __webpack_require__(246);
+	var _categoryPage = __webpack_require__(250);
 
 	var _categoryPage2 = _interopRequireDefault(_categoryPage);
 
-	var _channelPage = __webpack_require__(247);
+	var _channelPage = __webpack_require__(251);
 
 	var _channelPage2 = _interopRequireDefault(_channelPage);
 
@@ -30345,7 +30947,7 @@
 	exports.default = AddChannelPage;
 
 /***/ },
-/* 244 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30360,7 +30962,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classNames = __webpack_require__(245);
+	var _classNames = __webpack_require__(249);
 
 	var _classNames2 = _interopRequireDefault(_classNames);
 
@@ -30503,7 +31105,7 @@
 	exports.default = DashBoardInfo;
 
 /***/ },
-/* 245 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30557,7 +31159,7 @@
 
 
 /***/ },
-/* 246 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30883,7 +31485,7 @@
 	exports.default = CategoryPage;
 
 /***/ },
-/* 247 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30905,6 +31507,10 @@
 	var _appStore = __webpack_require__(218);
 
 	var _appStore2 = _interopRequireDefault(_appStore);
+
+	var _uuid = __webpack_require__(232);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31137,7 +31743,7 @@
 												channelName: this.state.channelName,
 												channelDispName: this.state.channelDispName,
 												catName: this.state.selectedCategory,
-												id: this.state.selectedCategory + "_" + this.state.channelName
+												channelId: _uuid2.default.v1()
 											}) },
 										'Save'
 									),
@@ -31194,20 +31800,28 @@
 	exports.default = ChannelPage;
 
 /***/ },
-/* 248 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
+
+	var _playChannel = __webpack_require__(253);
+
+	var _playChannel2 = _interopRequireDefault(_playChannel);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31217,89 +31831,99 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AllChannelItem = function (_React$Component) {
-	  _inherits(AllChannelItem, _React$Component);
+	var PlayAllChannels = function (_React$Component) {
+		_inherits(PlayAllChannels, _React$Component);
 
-	  function AllChannelItem() {
-	    _classCallCheck(this, AllChannelItem);
+		function PlayAllChannels() {
+			_classCallCheck(this, PlayAllChannels);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AllChannelItem).apply(this, arguments));
-	  }
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayAllChannels).apply(this, arguments));
+		}
 
-	  _createClass(AllChannelItem, [{
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "col-md-3" },
-	        _react2.default.createElement(
-	          "div",
-	          { className: "list-item__wrap" },
-	          _react2.default.createElement(
-	            "div",
-	            { className: "list-item__image" },
-	            _react2.default.createElement("img", { src: this.props.data.channelImg }),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "list-item__play" },
-	              _react2.default.createElement(
-	                "a",
-	                { href: "#" },
-	                _react2.default.createElement("i", { style: { color: "#ffffff" },
-	                  className: "fa fa-3x fa-headphones" }),
-	                _react2.default.createElement("i", { style: { color: "#ffffff", paddingLeft: '10px' },
-	                  className: "fa fa-3x fa-plus" })
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "list-item__name" },
-	            _react2.default.createElement(
-	              "h6",
-	              null,
-	              this.props.data.channelName
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "list-item__style" },
-	            _react2.default.createElement(
-	              "div",
-	              { className: "artist-genre", "ng-repeat": "genre in artistItem.genre" },
-	              _react2.default.createElement(
-	                "span",
-	                null,
-	                this.props.data.category
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
+		_createClass(PlayAllChannels, [{
+			key: 'componentWillMount',
+			value: function componentWillMount() {
+				_appActions2.default.SHOW_TOPMENU();
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'section',
+					{ id: 'content', className: 'animate-fade-up fixed' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'page page-full page-dashboard two-column' },
+						_react2.default.createElement(
+							'section',
+							{ className: 'inner-wrapper scrollable' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'inner-page' },
+								_react2.default.createElement(
+									'section',
+									{ className: 'dashboard-banner' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'dashboard-banner__content' },
+										_react2.default.createElement(
+											'h2',
+											null,
+											"It's",
+											' all HERE, Find the Best Channels'
+										),
+										_react2.default.createElement(
+											'h5',
+											null,
+											'DYDIO gives you access to the best channels anywhere. Search ',
+											"for",
+											' Local or Foreign channels as well as Artist channels. Create your own playlist, schedule your playlist and share ',
+											"with",
+											' your friends.'
+										),
+										_react2.default.createElement(
+											'a',
+											{ className: 'btn btn-primary', href: '#/artist-list' },
+											'Start searching'
+										)
+									)
+								),
+								_react2.default.createElement(_playChannel2.default, null)
+							)
+						)
+					)
+				);
+			}
+		}]);
 
-	  return AllChannelItem;
+		return PlayAllChannels;
 	}(_react2.default.Component);
 
-	exports.default = AllChannelItem;
+	exports.default = PlayAllChannels;
 
 /***/ },
-/* 249 */,
-/* 250 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	Object.defineProperty(exports, "__esModule", {
-				value: true
+		value: true
 	});
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _appStore = __webpack_require__(218);
+
+	var _appStore2 = _interopRequireDefault(_appStore);
+
+	var _appActions = __webpack_require__(210);
+
+	var _appActions2 = _interopRequireDefault(_appActions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31309,52 +31933,191 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var PlaylistQueue = function (_React$Component) {
-				_inherits(PlaylistQueue, _React$Component);
+	var PlayChannelItem = function (_React$Component) {
+		_inherits(PlayChannelItem, _React$Component);
 
-				function PlaylistQueue() {
-							_classCallCheck(this, PlaylistQueue);
+		function PlayChannelItem() {
+			_classCallCheck(this, PlayChannelItem);
 
-							return _possibleConstructorReturn(this, Object.getPrototypeOf(PlaylistQueue).apply(this, arguments));
-				}
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannelItem).apply(this, arguments));
+		}
 
-				_createClass(PlaylistQueue, [{
-							key: "render",
-							value: function render() {
-										return _react2.default.createElement(
-													"div",
-													{ className: "music-listing__songs " + this.props.hide },
-													_react2.default.createElement(
-																"div",
-																{ className: "empty-listing" },
-																_react2.default.createElement(
-																			"div",
-																			{ className: "empty-listing-icon" },
-																			_react2.default.createElement("i", { className: "musicicon-dj4" })
-																),
-																_react2.default.createElement(
-																			"div",
-																			{ className: "empty-listing-message" },
-																			"You dont have any item in the playlist"
-																),
-																_react2.default.createElement(
-																			"div",
-																			{ className: "empty-listing-message" },
-																			_react2.default.createElement(
-																						"a",
-																						{ "ng-href": "#/artist-list", className: "btn btn-primary btn-block btn-sm", href: "#/artist-list" },
-																						"Search"
-																			)
-																)
-													)
-										);
-							}
-				}]);
+		_createClass(PlayChannelItem, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'music-listing__name' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__thumbnail' },
+						_react2.default.createElement('img', { src: '../assets/images/songs/song1.jpg', alt: 'song__image' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__artist-name ng-binding' },
+						'The lunatics'
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__song-name ng-binding' },
+						'Come Together'
+					)
+				);
+			}
+		}]);
 
-				return PlaylistQueue;
+		return PlayChannelItem;
 	}(_react2.default.Component);
 
-	exports.default = PlaylistQueue;
+	var PlayChannelHeader = function (_React$Component2) {
+		_inherits(PlayChannelHeader, _React$Component2);
+
+		function PlayChannelHeader() {
+			_classCallCheck(this, PlayChannelHeader);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannelHeader).apply(this, arguments));
+		}
+
+		_createClass(PlayChannelHeader, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'music-listing__header' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__actions-top' },
+						_react2.default.createElement(
+							'button',
+							{ 'ng-click': 'artist.addSongsAndPlay(generalPlaylist.audioPlaylist,mediaPlayer)', className: 'btn btn-primary' },
+							_react2.default.createElement('i', { className: 'fa fa-headphones' }),
+							'  Play all'
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'btn-group' },
+							_react2.default.createElement(
+								'button',
+								{ type: 'button', className: 'btn btn-bordered btn-bordered-default dropdown-toggle', 'data-toggle': 'dropdown', 'aria-expanded': 'false' },
+								_react2.default.createElement('i', { className: 'fa fa-plus' }),
+								'   ',
+								_react2.default.createElement('span', { className: 'caret' })
+							),
+							_react2.default.createElement(
+								'ul',
+								{ className: 'dropdown-menu', role: 'menu' },
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ 'ng-click': 'artist.addSongs(generalPlaylist.audioPlaylist)', href: 'javascript:;' },
+										'Add to Queue'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ href: '#' },
+										'Another action'
+									)
+								),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ href: '#' },
+										'Something else here'
+									)
+								),
+								_react2.default.createElement('li', { className: 'divider' }),
+								_react2.default.createElement(
+									'li',
+									null,
+									_react2.default.createElement(
+										'a',
+										{ href: '#' },
+										'Separated link'
+									)
+								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__filter' },
+						_react2.default.createElement('input', { type: 'text', className: 'form-control ng-pristine ng-untouched ng-valid', 'ng-model': 'searchText', placeholder: 'Filter' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'music-listing__switch' },
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn btn-switch', href: 'javascript:;', 'data-ng-click': 'artist.toggleAlbumsList();', 'tooltip-placement': 'bottom', tooltip: 'View Albums', 'tooltip-append-to-body': 'true' },
+							_react2.default.createElement('i', { className: 'fa fa-list' })
+						),
+						_react2.default.createElement(
+							'a',
+							{ className: 'btn btn-switch', href: 'javascript:;', 'data-ng-click': 'artist.toggleFullList();', 'tooltip-placement': 'bottom', tooltip: 'View all songs', 'tooltip-append-to-body': 'true' },
+							_react2.default.createElement('i', { className: 'fa fa-sliders' })
+						)
+					)
+				);
+			}
+		}]);
+
+		return PlayChannelHeader;
+	}(_react2.default.Component);
+
+	var PlayChannel = function (_React$Component3) {
+		_inherits(PlayChannel, _React$Component3);
+
+		function PlayChannel() {
+			_classCallCheck(this, PlayChannel);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(PlayChannel).apply(this, arguments));
+		}
+
+		_createClass(PlayChannel, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'page page-artist' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'row' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'col-md-8' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'panel panel-default' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'panel-body' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'music-listing' },
+										_react2.default.createElement(PlayChannelHeader, null),
+										_react2.default.createElement(PlayChannelItem, null)
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+
+		return PlayChannel;
+	}(_react2.default.Component);
+
+	exports.default = PlayChannel;
 
 /***/ }
 /******/ ]);

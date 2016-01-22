@@ -1,5 +1,6 @@
 import React from 'react';
 import Action from '../../../actions/appActions';
+import AppStore from '../../../stores/appStore';
 
 
 class AsideNavSwitch extends React.Component{
@@ -7,7 +8,21 @@ class AsideNavSwitch extends React.Component{
 		super();
 		this.state = {
 			home: 'active',
-			queue: ''
+			queue: '',
+			playlistNumber: 0
+		},
+		this._onChange = this._onChange.bind(this);
+	}
+	componentWillMount(){
+		AppStore.addChangeListener( this._onChange );
+	}
+	componentWillUnmount(){
+		AppStore.removeChangeListener( this._onChange );
+	}
+	_onChange(){
+		var _playlistNumber = AppStore.GetChannelPlayList(true);
+		if(_playlistNumber != undefined){
+			this.setState({playlistNumber: _playlistNumber.length});
 		}
 	}
 	_setActive(label){
@@ -26,6 +41,10 @@ class AsideNavSwitch extends React.Component{
 			break;
 		}		
 	}
+	_allFunctions(activatePayload, switchMenuPayload){		
+		Action.SWITCH_MENU(switchMenuPayload);
+		this._setActive(activatePayload);
+	}
 	render(){
 		return(
 				<div className="sidebar-nav-switch">
@@ -33,17 +52,15 @@ class AsideNavSwitch extends React.Component{
 				    <div className="btn-group switch">
 
 					    <a className={`btn main-nav-link home ${this.state.home}`} data-nav-section="home"
-					    	onClick={Action.SWITCH_MENU.bind(null,{menu:'', queue:'hide'})}>
-					        <span className="label"
-					        	onClick={this._setActive.bind(this, 'home')}>BROWSE</span>
+					    	onClick={this._allFunctions.bind(this, 'home', {menu:'', queue:'hide'})}>
+					        <span className="label">BROWSE</span>
 					    </a>
 
 					    <a className={`btn main-nav-link queue ${this.state.queue}`} data-nav-section="queue" 
-					    	onClick={Action.SWITCH_MENU.bind(null,{menu:'hide', queue:''})}>
+					    	onClick={this._allFunctions.bind(this,'queue', {menu:'hide', queue:''})}>
 					        <span className="label queue-label">
-					            <span
-					            	onClick={this._setActive.bind(this, 'queue')}>QUEUE</span>
-					            <span className="badge badge-primary ng-binding">0</span>
+					            <span>QUEUE</span>
+					            <span className="badge badge-primary ng-binding">{this.state.playlistNumber}</span>
 					        </span>
 					    </a>
 
