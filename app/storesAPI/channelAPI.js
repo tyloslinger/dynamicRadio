@@ -1,8 +1,14 @@
+import Action from '../actions/appActions';
+
 const ChannelAPI = {
 	//
+
 	channels: [],	
 	currentChannel: null,
 	channelPlaylist: [],
+	howl: null,
+	channelObj: null,
+	loaded: false,
 
 	//
 	_getChannels(category){
@@ -30,12 +36,35 @@ const ChannelAPI = {
 		}
 	},
 	//
-	_deleteChannel(channel){		
-		ChannelAPI.channels.splice(ChannelAPI.channels.findIndex( id => id === channel), 1);
+	_deleteChannel(_channel){		
+		ChannelAPI.channels.splice(ChannelAPI.channels.findIndex( id => id === _channel), 1);
 	},
 	//
 	_deleteFromChannelPlaylist(channelId){
 		ChannelAPI.channelPlaylist.splice(ChannelAPI.channelPlaylist.findIndex( _channel => _channel.channelId === channelId), 1);
+	},
+	_streamChannel(_channelObj){		
+		ChannelAPI.howl = _channelObj._howl;
+		ChannelAPI.channelObj = _channelObj;		
+
+		ChannelAPI.howl = new Howl({
+			urls: _channelObj.channel.channelUrls,
+			autoplay: false,
+			buffer: true,
+			format: "mp3",
+			onload:function(){				
+				ChannelAPI.loaded = true;
+				Action.STREAM_CHANNEL({init: false});
+			},
+			onloaderror:function(_error){				
+				ChannelAPI.loaded = false
+			},
+			onend:function(){				
+			}
+		})
+	},
+	_getChannelStatus(_channelId){		
+		return {_howl: ChannelAPI.howl, loaded: ChannelAPI.loaded};
 	}
 }
 

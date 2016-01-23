@@ -49,6 +49,7 @@
     "url-loader": "^0.5.7",
     "uuid": "^2.0.1",
     "webpack": "^1.12.11",
-    "webpack-dev-server": "^1.14.0"
+    "webpack-dev-server": "^1.14.0",
+    "howler": "^1.1.29"
   }
 }

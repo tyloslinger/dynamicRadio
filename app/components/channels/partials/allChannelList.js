@@ -16,62 +16,72 @@ class AllChannelItemList extends React.Component{
 							channelImg: "../assets/images/albums/bbc1.jpeg",
 							channelName: 'BBC NEWS UK',
 							category: 'FOREIGN_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: ['http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p']
 						},
 						{
 							channelImg: "../assets/images/albums/cnn.png",
 							channelName: 'BBC TRENDING',
 							category: 'FOREIGN_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: ['http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p']
 						},
 						{
 							channelImg: "../assets/images/albums/bbc3.png",
 							channelName: 'BBC ARTS',
 							category: 'FOREIGN_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: ['http://open.live.bbc.co.uk/mediaselector/5/select/version/2.0/mediaset/http-icy-aac-lc-a/format/pls/vpid/bbc_radio_three.pls']
 						},
 						{
 							channelImg: "../assets/images/albums/aljazeera.jpeg",
 							channelName: 'ALJAZEERA',
 							category: 'FOREIGN_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: ['http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4fm_mf_p']
 						},				
 						{
 							channelImg: "../assets/images/albums/bbc4.jpg",
 							channelName: 'BBC Earth',
 							category: 'FOREIGN_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: ['http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio5live_mf_p']
 						}],
 			localChannelData:[
 						{
 							channelImg: "../assets/images/albums/joy1.png",
 							channelName: 'Joy FM',
 							category: 'LOCAL_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: ['http://67.159.60.45:8000']
 						},
 						{
 							channelImg: "../assets/images/albums/city.jpg",
 							channelName: 'City FM',
 							category: 'LOCAL_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: []
 						},
 						{
 							channelImg: "../assets/images/albums/radioFlash.jpeg",
 							channelName: 'Radio Flash',
 							category: 'LOCAL_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: []
 						},
 						{
 							channelImg: "../assets/images/albums/Y.jpeg",
 							channelName: 'Y FM',
 							category: 'LOCAL_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: []
 						},				
 						{
 							channelImg: "../assets/images/albums/happy.jpeg",
 							channelName: 'Happy FM',
 							category: 'LOCAL_NEWS',
-							channelId: guid.v1()
+							channelId: guid.v1(),
+							channelUrls: []
 						}]
 			}
 	}

@@ -77,7 +77,9 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 		else
 			return ChannelAPI.channelPlaylist;
 	},
-
+	GetChannelStatus(channelId){
+		return ChannelAPI._getChannelStatus(channelId);
+	},
 
 	//DISPATCHER
 	dispatcherIndex: register( function(action){
@@ -133,6 +135,12 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 			break;
 			case AppConstants.DELETE_CHANNEL_FROM_PLAYLIST:
 				ChannelAPI._deleteFromChannelPlaylist(action.payload);
+			break;
+			case AppConstants.STREAM_CHANNEL:
+				console.log("streamer: ", action.payload);
+				if(action.payload.init){
+					ChannelAPI._streamChannel(action.payload);
+				}				
 			break;
 		}
 
