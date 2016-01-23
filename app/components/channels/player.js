@@ -6,7 +6,7 @@ class Player extends React.Component{
 
 	render(){
 		return(
-				<div className="player-region hide">
+				<div className="player-region">
 				    <div>
 				    	<PlayerControls />
 				    </div>

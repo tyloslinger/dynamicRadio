@@ -17,8 +17,10 @@ class PlayListItem extends React.Component{
 			        </div>
 
 		          	<div className="music-listing__row-actions">
-			            <i className="fa fa-times action" title="Remove song"
+		          		<a><i className="fa fa-play-circle action"></i></a>		          		
+			            <a><i className="fa fa-times action" title="Remove song"
 			            	onClick={Action.DELETE_CHANNEL_FROM_PLAYLIST.bind(null, this.props.data.channelId)}></i>
+			            </a>
 			            <a href="#/playChannel">
 			            	<i className="fa fa-list action" title="More Options..."></i>
 			            </a>
@@ -52,13 +54,13 @@ class PlaylistQueue extends React.Component{
 		}
 		this._onChange = this._onChange.bind(this);
 	}
-	componentWillMount(){
+	componentWillMount(){		
 		AppStore.addChangeListener( this._onChange );
 	}
 	componentWillUnmount(){
 		AppStore.removeChangeListener( this._onChange );
 	}
-	_onChange(){	
+	_onChange(){			
 		var _channelList = AppStore.GetChannelPlayList(true);
 		if(_channelList != undefined){
 			this.setState({

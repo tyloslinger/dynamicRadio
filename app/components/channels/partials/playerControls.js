@@ -6,15 +6,12 @@ class PlayControls extends React.Component{
 
 	render(){
 		return(
-				<div className="controlling-options">
-		            <div className="btn" ng-click="mediaPlayer.prev()">
-		              	<i className="fa fa-step-backward"></i>
-		            </div>
+				<div className="controlling-options">		            
 		            <div className="btn" ng-click="mediaPlayer.playPause()">
 		              	<i className="fa fa-play" ng-className="{ 'fa-pause': mediaPlayer.playing, 'fa-play': !mediaPlayer.playing }"></i>
 		            </div>
 		            <div className="btn" ng-click="mediaPlayer.next()">
-		              	<i className="fa fa-step-forward"></i>
+		              	<i className="fa fa-pause"></i>
 		            </div>		        
 		            <div className="btn btn-noclick">
 		              	<span><span className="badge ng-binding">100%</span></span>
