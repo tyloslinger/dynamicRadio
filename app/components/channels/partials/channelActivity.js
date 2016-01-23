@@ -50,7 +50,7 @@ class RelatedChannels extends React.Component{
 				<div className="panel panel-default">
 		          	<div className="panel-body">
 		            <h4>
-		              <i className="fa fa-headphones color-primary"></i>&nbsp;&nbsp; Related artists
+		              <i className="fa fa-headphones color-primary"></i>&nbsp;&nbsp; Related channels
 		            </h4>
 			            <div className="related-items">
 

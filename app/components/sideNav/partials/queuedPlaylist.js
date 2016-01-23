@@ -62,14 +62,11 @@ class PlaylistQueue extends React.Component{
 		var _channelList = AppStore.GetChannelPlayList(true);
 		if(_channelList != undefined){
 			this.setState({
-				playlist: AppStore.GetChannelPlayList(true)
+				playlist: _channelList
 			});
 		}
-	}
-	testGUID(){
-		
-	}
-	render(){
+	}	
+	render(){		
 		return(
 				<div className={`music-listing__songs ${this.props.hide}`}>
 					<div className="playlist-item-list music-listing--queue" ng-show="navigation.navigationState.playlist">
@@ -93,8 +90,7 @@ class PlaylistQueue extends React.Component{
 				            	You dont have any item in the playlist
 				          	</div>
 				          	<div className="empty-listing-message">
-				            	<a ng-href="#/artist-list" className="btn btn-primary btn-block btn-sm" href="#/artist-list"
-				            		onClick={this.testGUID.bind(this)}>Add Channels From View</a>
+				            	<a ng-href="#/artist-list" className="btn btn-primary btn-block btn-sm" href="#/artist-list">Add Channels From View</a>
 				          	</div>				          	
 				        </div>				      
 					</div>			        
