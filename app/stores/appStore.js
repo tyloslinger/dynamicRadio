@@ -77,9 +77,8 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 		else
 			return ChannelAPI.channelPlaylist;
 	},
-	GetChannelStatus(channelId){
-		console.log("checking channel status: ", ChannelAPI.currentStatus);
-		return ChannelAPI._getChannelStatus(channelId);
+	GetChannelStatus(channelId){			
+		return ChannelAPI._status;
 	},
 
 	//DISPATCHER

@@ -54,8 +54,7 @@ class PlaylistQueue extends React.Component{
 		}
 		this._onChange = this._onChange.bind(this);
 	}
-	componentWillMount(){	
-	console.log("QUEUE listener");	
+	componentWillMount(){		
 		AppStore.addChangeListener( this._onChange );
 	}
 	componentWillUnmount(){

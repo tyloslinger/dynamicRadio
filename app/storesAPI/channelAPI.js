@@ -55,16 +55,20 @@ const ChannelAPI = {
 				ChannelAPI._initChannel(_channelObj);
 			break;
 			case 'play':
-				ChannelAPI.howl.play();				
-				ChannelAPI._status = {
-										displayStatus: 'paused',
-										_status: 'pause'
-									};
+				//if(_channelObj.channel.channelId === ChannelAPI.currentChannelId){
+					console.log("said play me")
+					ChannelAPI.howl.play();				
+					ChannelAPI._status = {
+											displayStatus: 'playing',
+											_status: 'pause'
+										};
+				//}
 			break;
 			case 'pause':
+				console.log("said pause me")
 				ChannelAPI.howl.pause();
 				ChannelAPI._status = {
-										displayStatus: 'playing',
+										displayStatus: 'paused',
 										_status: 'play'
 									};
 			break;
@@ -83,9 +87,8 @@ const ChannelAPI = {
 	},
 	//
 	_initChannel(_channelObj){
-		if(_channelObj.channel.channelId != ChannelAPI.currentChannelId){
-			console.log("diff channel: prev %s ..new %s", ChannelAPI.currentChannelId, _channelObj.channel.channelId)
-			ChannelAPI._streamChannel({status: 'unload'});
+		if(_channelObj.channel.channelId != ChannelAPI.currentChannelId){			
+			ChannelAPI._streamChannel({_status: 'unload'});
 
 			ChannelAPI.howl = new Howl({
 				urls: _channelObj.channel.channelUrls,
@@ -97,14 +100,18 @@ const ChannelAPI = {
 											displayStatus: 'loading',
 											_status: 'play'
 										};
-					ChannelAPI._streamChannel({status: 'play'});					
+					ChannelAPI._streamChannel({_status: 'play'});					
 				},
-				onplay: function(){					
+				onplay: function(){		
 					ChannelAPI._status = {
 											displayStatus: 'playing',
 											_status: 'pause'
-										};
-					Action.STREAM_CHANNEL({status:'playing'});					
+										};	
+					if(_channelObj.channel.channelId != ChannelAPI.currentChannelId){
+						console.log("not equal");
+						Action.STREAM_CHANNEL({_status:'playing'});					
+					}
+					ChannelAPI.currentChannelId = _channelObj.channel.channelId;
 				},
 				onloaderror:function(_error){					
 					ChannelAPI.loaded = false;
@@ -112,18 +119,17 @@ const ChannelAPI = {
 											displayStatus: 'error',
 											_status: 'pause'
 										};
+					//Action.STREAM_CHANNEL({_status:'error'});
 				},				
 				onend:function(){				
 				}
-			})
-
-			ChannelAPI.currentChannelId = _channelObj.channel.channelId;
+			})				
 		}else{
 			console.log("same channel: prev==: %s....new==: %s do nothing", ChannelAPI.currentChannelId, _channelObj.channel.channelId)
 		}
 	},
 	//
-	_getChannelStatus(_channelId){
+	_getChannelStatus(_channelId){		
 		return ChannelAPI._status;
 	}
 }
