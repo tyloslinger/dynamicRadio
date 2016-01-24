@@ -4,7 +4,7 @@ import PlayerControls from './partials/playerControls';
 class Player extends React.Component{	
 	render(){
 		return(
-				<div className="player-region">
+				<div className="player-region hide">
 				    <div>
 				    	<PlayerControls />
 				    </div>

@@ -5,51 +5,60 @@ import ChannelActivity from './channelActivity';
 import howl from 'howler';
 
 
-class ChannelRow extends React.Component{	
+class ChannelRow extends React.Component{
 	constructor(){
-		super();		
+		super();
 		this.state = {
-			_howl: null,			
-			loaded: false,			
+			status: 'init',
+			displayStatus: undefined,
+			currentChannelId: '',
+			_status : null
 		}
-		this._onChange = this._onChange.bind(this);
-	}
-	componentWillMount() {
-		AppStore.addChangeListener( this._onChange );		
-	}
-	componentWillUnmount() {
-		AppStore.removeChangeListener( this._onChange );
-	}
-	_onChange(){
-		this.setState(
-			AppStore.GetChannelStatus(this.props.channelId)
-		)
-		
-		if(this.state.loaded && this.state._howl != undefined){			
-			this.state._howl.play();
+	}	
+	componentWillReceiveProps(nextProps, nextContext){						
+		if(this.state.currentChannelId === nextProps.data.channelId){			
+			console.log("next props: ", nextProps, " current: ", this.state.currentChannelId);
+			this.setState({displayStatus: nextProps.displayStatus});
 		}
 	}
-	_playPause(action, val){		
+	componentWillUpdate(){
+
+	}
+	_playPause(action, _channel){		
 		switch(action){
 			case "play":
-				Action.STREAM_CHANNEL({channel: val, _howl: howl, init: true});					
+				if(this.state.currentChannelId != _channel.channelId){
+					Action.STREAM_CHANNEL({channel: _channel, status: 'play'});
+					this.setState({displayStatus: 'paused', currentChannelId: _channel.channelId});
+				}
+			case "init":
+				Action.STREAM_CHANNEL({channel: _channel, status: 'init'});
+				this.setState({displayStatus: 'loading', currentChannelId: _channel.channelId});
 			break;
-			case "pause":
-				if(this.state.loaded && this.state._howl != undefined){
-					this.state._howl.pause();
-				}					
+			case "pause":				
+				Action.STREAM_CHANNEL({channel: _channel, status: 'pause'});
+				this.setState({displayStatus: 'playing', currentChannelId: _channel.channelId});
 			break;
 		}			
 	}
-	render(){
+	render(){			
 		return(
 				<div className="music-listing__row ng-scope">
 
-	                <div className="play-button">
-	                    <button className="btn btn-primary">
-	                    	<i className="fa fa-play" onClick={this._playPause.bind(this, 'play', this.props.data)}></i>
-	                    	&nbsp;&nbsp;&nbsp;&nbsp;
-	                    	<i className="fa fa-pause" onClick={this._playPause.bind(this, 'pause', true)}></i>
+	                <div className="play-button">	                    
+	                    <button className="btn btn-primary" onClick={this._playPause.bind(this, this.state.status, this.props.data)}>
+	                    	{(this.state.displayStatus === undefined || this.state.displayStatus === 'paused') 
+	                    		?
+	                    			<i className="fa fa-play"></i>
+	                    		:
+	                    			this.state.displayStatus === 'playing'
+	                    				?
+	                    					<i className="fa fa-pause"></i>
+	                    				:
+	                    					this.state.displayStatus === 'loading'
+	                    						?
+	                    							<img src="../assets/images/loader.gif" width="20px" height="20px"/>
+	                    						: 	null}	                    	
 	                    </button>
 	                    &nbsp;&nbsp;
 	                    <a type="button" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -91,13 +100,13 @@ class ChannelWrapper extends React.Component{
 	                </div>
 
 	                <div className="col-md-4">
-                  	<ChannelRow data={this.props.data}/>
+                  	<ChannelRow data={this.props.data} streamObj={this.props.streamObj}
+                  		_status={this.props._status}/>
                   	</div>
                 </div>
 			)
 	}
 }
-
 
 
 class PlayChannelHeader extends React.Component{	
@@ -128,16 +137,22 @@ class PlayChannel extends React.Component{
 		super();
 
 		this.state = {
-			playlist: []
+			playlist: [],			
+			loaded: false,
+			channelId: '',
+			_status: {displayStatus: 'paused'}
 		}
 		this._onChange = this._onChange.bind(this);
 	}
 	componentWillMount() {
-		AppStore.addChangeListener(this._onChange);
+		console.log("QUEUE mounted and change occured");
+
+		AppStore.addChangeListener(this._onChange);		
 		var _channeList = AppStore.GetChannelPlayList(true);
-		if(_channeList != undefined){
-			this.setState({
-				playlist: _channeList
+		if(_channeList != undefined && 
+				_channeList.length != this.state.playlist.length){					
+					this.setState({
+					playlist: _channeList
 			})
 		}
 	}
@@ -145,11 +160,21 @@ class PlayChannel extends React.Component{
 		AppStore.removeChangeListener(this._onChange);
 	}
 	_onChange(){		
+		//GET CURRENT PLAYLIST
 		var _channeList = AppStore.GetChannelPlayList(true);
-		if(_channeList != undefined){
-			this.setState({
-				playlist: _channeList
+		if(_channeList != undefined && 
+				_channeList.length != this.state.playlist.length){					
+					this.setState({
+					playlist: _channeList
 			})
+		}
+
+
+
+		//GET STREAMING STATUS
+		var _streamStatus = AppStore.GetChannelStatus('')
+		if(_streamStatus != undefined){
+			this.setState(AppStore.GetChannelStatus(''));
 		}
 	}
 	render(){		
@@ -165,7 +190,9 @@ class PlayChannel extends React.Component{
 
 						            	<div className="music-listing__songs albumlist" data-ng-show="artist.AlbumList">
 							            	{this.state.playlist.map((obj, index) => {
-							            		return <ChannelWrapper key={obj.channelId} data={obj}/>
+							            		return <ChannelWrapper key={obj.channelId} data={obj} 
+							            			streamObj={{loaded: this.state.loaded}}
+							            			status={this.state._status}/>
 							            	})}
 						            	</div>						            	
 									</div>									

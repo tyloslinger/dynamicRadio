@@ -1,4 +1,5 @@
 import Action from '../actions/appActions';
+import howler from 'howler';
 
 const ChannelAPI = {
 	//
@@ -6,9 +7,11 @@ const ChannelAPI = {
 	channels: [],	
 	currentChannel: null,
 	channelPlaylist: [],
-	howl: null,
+	howl: howler,
 	channelObj: null,
 	loaded: false,
+	currentChannelId: '',
+	_status: null,
 
 	//
 	_getChannels(category){
@@ -44,27 +47,84 @@ const ChannelAPI = {
 		ChannelAPI.channelPlaylist.splice(ChannelAPI.channelPlaylist.findIndex( _channel => _channel.channelId === channelId), 1);
 	},
 	_streamChannel(_channelObj){		
-		ChannelAPI.howl = _channelObj._howl;
+		//ChannelAPI.howl = _channelObj._howl;
 		ChannelAPI.channelObj = _channelObj;		
 
-		ChannelAPI.howl = new Howl({
-			urls: _channelObj.channel.channelUrls,
-			autoplay: false,
-			buffer: true,
-			format: "mp3",
-			onload:function(){				
-				ChannelAPI.loaded = true;
-				Action.STREAM_CHANNEL({init: false});
-			},
-			onloaderror:function(_error){				
-				ChannelAPI.loaded = false
-			},
-			onend:function(){				
-			}
-		})
+		switch(_channelObj._status){
+			case 'init':
+				ChannelAPI._initChannel(_channelObj);
+			break;
+			case 'play':
+				ChannelAPI.howl.play();				
+				ChannelAPI._status = {
+										displayStatus: 'paused',
+										_status: 'pause'
+									};
+			break;
+			case 'pause':
+				ChannelAPI.howl.pause();
+				ChannelAPI._status = {
+										displayStatus: 'playing',
+										_status: 'play'
+									};
+			break;
+			case 'unload':
+				if(ChannelAPI.howl.urls != undefined){
+					ChannelAPI.howl.unload();
+				}
+				ChannelAPI.howl = howler;
+				console.log("howl obj reset: ", ChannelAPI.howl);
+				ChannelAPI._status = {
+										displayStatus: 'playing',
+										_status: 'play'
+									};
+			break;			
+		}		
 	},
-	_getChannelStatus(_channelId){		
-		return {_howl: ChannelAPI.howl, loaded: ChannelAPI.loaded};
+	//
+	_initChannel(_channelObj){
+		if(_channelObj.channel.channelId != ChannelAPI.currentChannelId){
+			console.log("diff channel: prev %s ..new %s", ChannelAPI.currentChannelId, _channelObj.channel.channelId)
+			ChannelAPI._streamChannel({status: 'unload'});
+
+			ChannelAPI.howl = new Howl({
+				urls: _channelObj.channel.channelUrls,
+				autoplay: false,
+				buffer: true,
+				format: "mp3",
+				onload:function(){
+					ChannelAPI._status = {
+											displayStatus: 'loading',
+											_status: 'play'
+										};
+					ChannelAPI._streamChannel({status: 'play'});					
+				},
+				onplay: function(){					
+					ChannelAPI._status = {
+											displayStatus: 'playing',
+											_status: 'pause'
+										};
+					Action.STREAM_CHANNEL({status:'playing'});					
+				},
+				onloaderror:function(_error){					
+					ChannelAPI.loaded = false;
+					ChannelAPI._status = {
+											displayStatus: 'error',
+											_status: 'pause'
+										};
+				},				
+				onend:function(){				
+				}
+			})
+
+			ChannelAPI.currentChannelId = _channelObj.channel.channelId;
+		}else{
+			console.log("same channel: prev==: %s....new==: %s do nothing", ChannelAPI.currentChannelId, _channelObj.channel.channelId)
+		}
+	},
+	//
+	_getChannelStatus(_channelId){
+		return ChannelAPI._status;
 	}
 }
 
