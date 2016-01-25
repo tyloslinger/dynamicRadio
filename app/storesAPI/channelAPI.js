@@ -13,6 +13,10 @@ const ChannelAPI = {
 	currentChannelId: '',
 	_status: null,
 
+
+	_updateWorker(val){
+		ChannelAPI._status.worker = val;
+	},
 	//
 	_getChannels(category){
 		if(category === undefined){			
@@ -46,65 +50,65 @@ const ChannelAPI = {
 	_deleteFromChannelPlaylist(channelId){
 		ChannelAPI.channelPlaylist.splice(ChannelAPI.channelPlaylist.findIndex( _channel => _channel.channelId === channelId), 1);
 	},
-	_preStreamingChannel(_channelObj){
+	_preStreamingChannel(_channelObj){			
 		switch(_channelObj._status){
-			case 'init':
-				ChannelAPI._status = {
-										displayStatus: 'playing',
-										_status: 'pause', 
+			case 'init':				
+				ChannelAPI._status = {										
+										_status: {_status:_channelObj._status, displayStatus: 'loading'}, 
 										active: _channelObj.active,
-										preStream: _channelObj.preStream
+										preStream: -1,
+										worker: 2
 									};									
 			break;
 		}
 	},
-	_streamChannel(_channelObj){		
-		//ChannelAPI.howl = _channelObj._howl;
-		ChannelAPI.channelObj = _channelObj;		
-
-		switch(_channelObj._status){
+	///
+	_streamChannel(_channelObj){	
+		console.log("stream obj: ",_channelObj)
+		switch(_channelObj._status){				
 			case 'init':
+				console.log("said init me");
 				ChannelAPI._status = {
-										displayStatus: 'playing',
-										_status: 'pause', 
-										active: _channelObj.active
-									};
-				ChannelAPI._initChannel(_channelObj);
+						displayStatus: 'loading',
+						_status: 'play',
+						active: _channelObj.active
+					}
+				ChannelAPI._initChannel(_channelObj);				
 			break;
-			case 'play':
-				//if(_channelObj.channel.channelId === ChannelAPI.currentChannelId){
+			case 'play':				
 					console.log("said play me")
-					ChannelAPI.howl.play();				
 					ChannelAPI._status = {
-											displayStatus: 'playing',
-											_status: 'pause'
-										};
-				//}
+						displayStatus: 'playing',
+						_status: 'pause',
+						active: ChannelAPI.currentChannelId
+					}
+					ChannelAPI.howl.play();					
 			break;
 			case 'pause':
 				console.log("said pause me")
 				ChannelAPI.howl.pause();
 				ChannelAPI._status = {
-										displayStatus: 'paused',
-										_status: 'play'
-									};
+						displayStatus: 'paused',
+						_status: 'play',
+						active: ChannelAPI.currentChannelId
+					};
 			break;
 			case 'unload':
+				console.log("said unload me")
+
 				if(ChannelAPI.howl.urls != undefined){
 					ChannelAPI.howl.unload();
 				}
+
 				ChannelAPI.howl = howler;
-				console.log("howl obj reset: ", ChannelAPI.howl);
-				ChannelAPI._status = {
-										displayStatus: 'playing',
-										_status: 'play'
-									};
+				console.log("howl obj reset: ", ChannelAPI.howl);				
 			break;			
 		}		
 	},
 	//
-	_initChannel(_channelObj){
+	_initChannel(_channelObj){			
 		if(_channelObj.channel.channelId != ChannelAPI.currentChannelId){			
+			ChannelAPI.currentChannelId = _channelObj.active;
 			ChannelAPI._streamChannel({_status: 'unload'});
 
 			ChannelAPI.howl = new Howl({
@@ -112,33 +116,24 @@ const ChannelAPI = {
 				autoplay: false,
 				buffer: true,
 				format: "mp3",
-				onload:function(){
-					ChannelAPI._status = {
-											displayStatus: 'loading',
-											_status: 'play'
-										};
-					ChannelAPI._streamChannel({_status: 'play'});					
+				onload:function(){					
+					ChannelAPI._streamChannel({_status: 'play'});
 				},
-				onplay: function(){		
-					ChannelAPI._status = {
-											displayStatus: 'playing',
-											_status: 'pause'
-										};	
-					if(_channelObj.channel.channelId != ChannelAPI.currentChannelId){
-						console.log("not equal");
-						Action.STREAM_CHANNEL({_status:'playing'});					
-					}
-					ChannelAPI.currentChannelId = _channelObj.channel.channelId;
+				onplay: function(){					
+					console.log("Playing:  not equal");					
+					try{Action.STREAM_CHANNEL("dispatch for playing now");}catch(e){}
 				},
-				onloaderror:function(_error){					
-					ChannelAPI.loaded = false;
-					ChannelAPI._status = {
-											displayStatus: 'error',
-											_status: 'pause'
-										};
-					//Action.STREAM_CHANNEL({_status:'error'});
+				onloaderror:function(_error){
+					console.log("error:  not equal");
+					// ChannelAPI._status = {
+					// 	displayStatus: 'error',
+					// 	_status: 'play',
+					// 	active: ChannelAPI.currentChannelId
+					// };
+					// try{Action.STREAM_CHANNEL("dispatch for error");}catch(e){}
 				},				
-				onend:function(){				
+				onend:function(){	
+					console.log("ended:  not equal");			
 				}
 			})				
 		}else{
@@ -146,8 +141,7 @@ const ChannelAPI = {
 		}
 	},
 	//
-	_getChannelStatus(_channelId){
-		ChannelAPI._status.preStream = !ChannelAPI._status.preStream;		
+	_getChannelStatus(_channelId){		
 		return ChannelAPI._status;
 	}
 }

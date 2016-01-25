@@ -14,32 +14,46 @@ class ChannelRow extends React.Component{
 			currentChannelId: '',			
 		}
 	}	
-	componentWillReceiveProps(nextProps, nextContext){
-		if(nextProps.data.channelId ===  nextProps._status.active){
-			console.log("status props: ", nextProps.data.channelId, " active: ", nextProps._status.active, " prestream: ", nextProps._status.preStream);
-			this.setState({displayStatus: 'playing'});
+	componentWillReceiveProps(nextProps, nextContext){					
+		if(nextProps.data.channelId ===  nextProps._status.active){			
+			this.setState({
+						_status: nextProps._status._status,
+						displayStatus: nextProps._status.displayStatus,
+						active: nextProps._status.active
+					});			
 		}else{
-			this.setState({displayStatus: 'paused'});
+			this.setState({displayStatus: undefined});
 		}
 	}
-	componentDidUpdate(prevProps, prevState) {
-		if(this.state.currentChannelId === prevProps.data.channelId){
-			console.log("after props: ", prevProps.data.channelId ," ", prevProps._status," pstate: ", prevState.currentChannelId);
-		}
-	}	
-	_playPause(action, _channel){				
+	componentDidUpdate(prevProps, prevState) {	
+	 	if(prevProps.data.channelId === this.state.active){
+	 		console.log("after update  obj: ", this.state)	
+	 	}	
+	}
+	_playPause(action, _channel){						
 		switch(action){
-			case "play":				
-				console.log("command play")				
-				Action.STREAM_CHANNEL({channel: _channel, _status: 'play'});				
+			case "play":												
+				Action.STREAM_CHANNEL({
+						channel: _channel, 
+						_status: action,
+						active: _channel.channelId, 					
+					});
 			break;
-			case "init":
-			console.log("command init")
-				Action.STREAM_CHANNEL({channel: _channel, _status: 'init', active: _channel.channelId, preStream: true});				
+			case "init":	
+				this.setState({displayStatus: 'loading'});
+				Action.STREAM_CHANNEL({
+					channel: _channel, 
+					_status: action,
+					active: _channel.channelId					
+				});
 			break;
-			case "pause":			
-			console.log("command pause")			
-				Action.STREAM_CHANNEL({channel: _channel, _status: 'pause'});					
+			case "pause":
+				//this.setState({displayStatus: 'loading'});			
+				Action.STREAM_CHANNEL({
+					channel: _channel, 
+					_status: action,
+					active: _channel.channelId, 					
+				});
 			break;
 		}			
 	}
@@ -60,16 +74,24 @@ class ChannelRow extends React.Component{
 	                    					this.state.displayStatus === 'loading'
 	                    						?
 	                    							<img src="../assets/images/loader.gif" width="20px" height="20px"/>
-	                    						: 	null}	                    	
+	                    						: 	
+	                    							this.state.displayStatus === 'error'
+	                    								?
+	                    									<i className="fa fa-times" style={{color: 'red'}}></i>
+	                    								:
+	                    									null}    	
 	                    </button>
 	                    &nbsp;&nbsp;
-	                    <a type="button" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-	                    	<i className="fa fa-book action"></i>
-	                    </a>
-	                    &nbsp;&nbsp;
-	                    <a>
-	                    	<i className="fa fa-heart action" title="Add to Favorites"></i>
-	                    </a>
+	                    {this.state.displayStatus === 'playing'
+	                    				?
+	                    					<img src="../assets/images/eq.gif" width="60px" height="20px"/>
+	                    				:	                    					
+                    						<a type="button" className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+	                    						<i className="fa fa-book action"></i>  &nbsp;&nbsp;
+	                    						<i className="fa fa-heart action" title="Add to Favorites"></i>
+	                    					</a>
+	                    			}
+	                    
 	                </div>
 
 	                <div className="music-listing__name">
@@ -144,7 +166,8 @@ class PlayChannel extends React.Component{
 			channelId: '',
 			_status: 'pause',
 			active:'',
-			preStream: null
+			preStream: null,
+			worker: null
 		}
 		this._onChange = this._onChange.bind(this);
 	}
@@ -172,10 +195,10 @@ class PlayChannel extends React.Component{
 		}
 
 
-
 		//GET STREAMING STATUS
 		var _streamStatus = AppStore.GetChannelStatus('')		
-		if(_streamStatus != undefined){
+		console.log("stream status: ", _streamStatus);
+		if(_streamStatus != undefined){						
 			this.setState(AppStore.GetChannelStatus(''));
 		}
 	}
@@ -198,7 +221,8 @@ class PlayChannel extends React.Component{
 									            				displayStatus: this.state.displayStatus, 
 									            				_status: this.state._status, 
 									            				active: this.state.active,
-									            				preStream: this.state.preStream
+									            				preStream: this.state.preStream,
+									            				worker: this.state.worker
 									            			}}/>
 							            	})}
 						            	</div>						            	

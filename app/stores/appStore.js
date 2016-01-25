@@ -137,11 +137,17 @@ const AppStore = Object.assign(EventEmitter.prototype, {
 				ChannelAPI._deleteFromChannelPlaylist(action.payload);
 			break;
 			case AppConstants.STREAM_CHANNEL:
-				if(action.payload.preStream){								
-					ChannelAPI._preStreamingChannel(action.payload);
-				}else{
-					ChannelAPI._streamChannel(action.payload);
-				}
+				ChannelAPI._streamChannel(action.payload);
+				// if(action.payload.worker != -1){
+				// 	if(action.payload.preStream === 1){		
+				// 		console.log("called prestream:")
+				// 		ChannelAPI._preStreamingChannel(action.payload);
+				// 	}else if(action.payload.preStream === 2 && action.payload.worker === 2){
+				// 		console.log("called stream:")
+				// 		ChannelAPI._updateWorker(-1);
+				// 		ChannelAPI._streamChannel(action.payload);						
+				// 	}
+				// }
 			break;
 		}
 
