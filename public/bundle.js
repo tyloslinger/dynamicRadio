@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2a917b5a3c5371011f8a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0d6968ad0eb62ae26ef0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -27211,7 +27211,7 @@
 			if (!isGetAll) return _channelAPI2.default.currentChannel;else return _channelAPI2.default.channelPlaylist;
 		},
 		GetChannelStatus: function GetChannelStatus(channelId) {
-			return _channelAPI2.default._status;
+			return _channelAPI2.default._getChannelStatus('');
 		},
 
 		//DISPATCHER
@@ -27266,7 +27266,11 @@
 					_channelAPI2.default._deleteFromChannelPlaylist(action.payload);
 					break;
 				case _appConstants2.default.STREAM_CHANNEL:
-					_channelAPI2.default._streamChannel(action.payload);
+					if (action.payload.preStream) {
+						_channelAPI2.default._preStreamingChannel(action.payload);
+					} else {
+						_channelAPI2.default._streamChannel(action.payload);
+					}
 					break;
 			}
 
@@ -27720,12 +27724,29 @@
 				return _channel.channelId === channelId;
 			}), 1);
 		},
+		_preStreamingChannel: function _preStreamingChannel(_channelObj) {
+			switch (_channelObj._status) {
+				case 'init':
+					ChannelAPI._status = {
+						displayStatus: 'playing',
+						_status: 'pause',
+						active: _channelObj.active,
+						preStream: _channelObj.preStream
+					};
+					break;
+			}
+		},
 		_streamChannel: function _streamChannel(_channelObj) {
 			//ChannelAPI.howl = _channelObj._howl;
 			ChannelAPI.channelObj = _channelObj;
 
 			switch (_channelObj._status) {
 				case 'init':
+					ChannelAPI._status = {
+						displayStatus: 'playing',
+						_status: 'pause',
+						active: _channelObj.active
+					};
 					ChannelAPI._initChannel(_channelObj);
 					break;
 				case 'play':
@@ -27805,6 +27826,7 @@
 
 		//
 		_getChannelStatus: function _getChannelStatus(_channelId) {
+			ChannelAPI._status.preStream = !ChannelAPI._status.preStream;
 			return ChannelAPI._status;
 		}
 	};
@@ -30287,9 +30309,11 @@
 		_createClass(ChannelRow, [{
 			key: 'componentWillReceiveProps',
 			value: function componentWillReceiveProps(nextProps, nextContext) {
-				if (this.state.currentChannelId === nextProps.data.channelId) {
-					//console.log("before receive props: ", nextProps.data ," ", nextProps._status);
-					this.setState(nextProps._status);
+				if (nextProps.data.channelId === nextProps._status.active) {
+					console.log("status props: ", nextProps.data.channelId, " active: ", nextProps._status.active, " prestream: ", nextProps._status.preStream);
+					this.setState({ displayStatus: 'playing' });
+				} else {
+					this.setState({ displayStatus: 'paused' });
 				}
 			}
 		}, {
@@ -30306,24 +30330,14 @@
 					case "play":
 						console.log("command play");
 						_appActions2.default.STREAM_CHANNEL({ channel: _channel, _status: 'play' });
-						if (this.state.currentChannelId === _channel.channelId) {
-							this.setState({ displayStatus: 'paused', currentChannelId: _channel.channelId });
-						}
 						break;
 					case "init":
 						console.log("command init");
-						_appActions2.default.STREAM_CHANNEL({ channel: _channel, _status: 'init' });
-						//if(this.state.currentChannelId != _channel.channelId){
-						this.setState({ displayStatus: 'loading' });
-						//}
-						//this.setState({currentChannelId: _channel.channelId});
+						_appActions2.default.STREAM_CHANNEL({ channel: _channel, _status: 'init', active: _channel.channelId, preStream: true });
 						break;
 					case "pause":
 						console.log("command pause");
 						_appActions2.default.STREAM_CHANNEL({ channel: _channel, _status: 'pause' });
-						if (this.state.currentChannelId === _channel.channelId) {
-							this.setState({ displayStatus: 'playing', currentChannelId: _channel.channelId });
-						}
 						break;
 				}
 			}
@@ -30482,7 +30496,9 @@
 				playlist: [],
 				loaded: false,
 				channelId: '',
-				_status: 'pause'
+				_status: 'pause',
+				active: '',
+				preStream: null
 			};
 			_this4._onChange = _this4._onChange.bind(_this4);
 			return _this4;
@@ -30551,7 +30567,12 @@
 											this.state.playlist.map(function (obj, index) {
 												return _react2.default.createElement(ChannelWrapper, { key: obj.channelId, data: obj,
 													streamObj: { loaded: _this5.state.loaded },
-													_status: { displayStatus: _this5.state.displayStatus, _status: _this5.state._status } });
+													_status: {
+														displayStatus: _this5.state.displayStatus,
+														_status: _this5.state._status,
+														active: _this5.state.active,
+														preStream: _this5.state.preStream
+													} });
 											})
 										)
 									)

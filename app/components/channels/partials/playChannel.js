@@ -14,10 +14,12 @@ class ChannelRow extends React.Component{
 			currentChannelId: '',			
 		}
 	}	
-	componentWillReceiveProps(nextProps, nextContext){			
-		if(this.state.currentChannelId === nextProps.data.channelId){						
-			//console.log("before receive props: ", nextProps.data ," ", nextProps._status);
-			this.setState(nextProps._status);
+	componentWillReceiveProps(nextProps, nextContext){
+		if(nextProps.data.channelId ===  nextProps._status.active){
+			console.log("status props: ", nextProps.data.channelId, " active: ", nextProps._status.active, " prestream: ", nextProps._status.preStream);
+			this.setState({displayStatus: 'playing'});
+		}else{
+			this.setState({displayStatus: 'paused'});
 		}
 	}
 	componentDidUpdate(prevProps, prevState) {
@@ -29,25 +31,15 @@ class ChannelRow extends React.Component{
 		switch(action){
 			case "play":				
 				console.log("command play")				
-				Action.STREAM_CHANNEL({channel: _channel, _status: 'play'});
-				if(this.state.currentChannelId === _channel.channelId){
-					this.setState({displayStatus: 'paused', currentChannelId: _channel.channelId});				
-				}
+				Action.STREAM_CHANNEL({channel: _channel, _status: 'play'});				
 			break;
 			case "init":
 			console.log("command init")
-				Action.STREAM_CHANNEL({channel: _channel, _status: 'init'});				
-				//if(this.state.currentChannelId != _channel.channelId){
-					this.setState({displayStatus: 'loading'})
-				//}
-				//this.setState({currentChannelId: _channel.channelId});
+				Action.STREAM_CHANNEL({channel: _channel, _status: 'init', active: _channel.channelId, preStream: true});				
 			break;
 			case "pause":			
 			console.log("command pause")			
-				Action.STREAM_CHANNEL({channel: _channel, _status: 'pause'});
-				if(this.state.currentChannelId === _channel.channelId){
-					this.setState({displayStatus: 'playing', currentChannelId: _channel.channelId});
-				}
+				Action.STREAM_CHANNEL({channel: _channel, _status: 'pause'});					
 			break;
 		}			
 	}
@@ -150,7 +142,9 @@ class PlayChannel extends React.Component{
 			playlist: [],			
 			loaded: false,
 			channelId: '',
-			_status: 'pause'
+			_status: 'pause',
+			active:'',
+			preStream: null
 		}
 		this._onChange = this._onChange.bind(this);
 	}
@@ -200,7 +194,12 @@ class PlayChannel extends React.Component{
 							            	{this.state.playlist.map((obj, index) => {
 							            		return <ChannelWrapper key={obj.channelId} data={obj} 
 							            			streamObj={{loaded: this.state.loaded}}
-							            			_status={{displayStatus: this.state.displayStatus, _status: this.state._status}}/>
+							            			_status={{
+									            				displayStatus: this.state.displayStatus, 
+									            				_status: this.state._status, 
+									            				active: this.state.active,
+									            				preStream: this.state.preStream
+									            			}}/>
 							            	})}
 						            	</div>						            	
 									</div>									

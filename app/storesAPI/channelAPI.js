@@ -46,12 +46,29 @@ const ChannelAPI = {
 	_deleteFromChannelPlaylist(channelId){
 		ChannelAPI.channelPlaylist.splice(ChannelAPI.channelPlaylist.findIndex( _channel => _channel.channelId === channelId), 1);
 	},
+	_preStreamingChannel(_channelObj){
+		switch(_channelObj._status){
+			case 'init':
+				ChannelAPI._status = {
+										displayStatus: 'playing',
+										_status: 'pause', 
+										active: _channelObj.active,
+										preStream: _channelObj.preStream
+									};									
+			break;
+		}
+	},
 	_streamChannel(_channelObj){		
 		//ChannelAPI.howl = _channelObj._howl;
 		ChannelAPI.channelObj = _channelObj;		
 
 		switch(_channelObj._status){
 			case 'init':
+				ChannelAPI._status = {
+										displayStatus: 'playing',
+										_status: 'pause', 
+										active: _channelObj.active
+									};
 				ChannelAPI._initChannel(_channelObj);
 			break;
 			case 'play':
@@ -129,7 +146,8 @@ const ChannelAPI = {
 		}
 	},
 	//
-	_getChannelStatus(_channelId){		
+	_getChannelStatus(_channelId){
+		ChannelAPI._status.preStream = !ChannelAPI._status.preStream;		
 		return ChannelAPI._status;
 	}
 }
