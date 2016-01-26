@@ -116,15 +116,16 @@ const ChannelAPI = {
 				autoplay: false,
 				buffer: true,
 				format: "mp3",
-				onload:function(){					
-					ChannelAPI._streamChannel({_status: 'play'});
+				onload:function(){		
+					console.log("loaded");			
 				},
 				onplay: function(){					
-					console.log("Playing:  not equal");					
+					console.log("Playing:  not equal");
+					ChannelAPI._streamChannel({_status: 'play'});
 					try{Action.STREAM_CHANNEL("dispatch for playing now");}catch(e){}
 				},
 				onloaderror:function(_error){
-					console.log("error:  not equal");
+					console.log(_error);
 					// ChannelAPI._status = {
 					// 	displayStatus: 'error',
 					// 	_status: 'play',
@@ -135,7 +136,7 @@ const ChannelAPI = {
 				onend:function(){	
 					console.log("ended:  not equal");			
 				}
-			})				
+			});				
 		}else{
 			console.log("same channel: prev==: %s....new==: %s do nothing", ChannelAPI.currentChannelId, _channelObj.channel.channelId)
 		}
