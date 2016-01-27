@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ac63103ec637a26a3557"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f143e5d1cf4632256e39"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -25128,7 +25128,7 @@
 	}
 
 	function dispatch(actionType, payload) {
-		//console.log("FROM DISPATCHER: actionType: ", actionType, " payload: ", payload)
+		//console.log("FROM DISPATCHER: action: ", actionType)
 		flux.dispatch(actionType, payload);
 	}
 
@@ -27272,17 +27272,9 @@
 					_channelAPI2.default._deleteFromChannelPlaylist(action.payload);
 					break;
 				case _appConstants2.default.STREAM_CHANNEL:
-					_channelAPI2.default._streamChannel(action.payload);
-					// if(action.payload.worker != -1){
-					// 	if(action.payload.preStream === 1){		
-					// 		console.log("called prestream:")
-					// 		ChannelAPI._preStreamingChannel(action.payload);
-					// 	}else if(action.payload.preStream === 2 && action.payload.worker === 2){
-					// 		console.log("called stream:")
-					// 		ChannelAPI._updateWorker(-1);
-					// 		ChannelAPI._streamChannel(action.payload);						
-					// 	}
-					// }
+					if (action.payload !== "_announce") {
+						_channelAPI2.default._streamChannel(action.payload);
+					}
 					break;
 			}
 
@@ -27755,44 +27747,47 @@
 
 		///
 		_streamChannel: function _streamChannel(_channelObj) {
-			console.log("stream obj: ", _channelObj);
+			//console.log("stream obj: ",_channelObj)
 			switch (_channelObj._status) {
 				case 'init':
-					console.log("said init me");
+					//console.log("said init me");
 					ChannelAPI._status = {
 						displayStatus: 'loading',
-						_status: 'play',
-						active: _channelObj.active
+						_status: 'init',
+						active: _channelObj.active,
+						_howlStatus: 'init'
 					};
 					ChannelAPI._initChannel(_channelObj);
 					break;
 				case 'play':
-					console.log("said play me");
-					ChannelAPI._status = {
-						displayStatus: 'playing',
-						_status: 'pause',
-						active: ChannelAPI.currentChannelId
-					};
+					//console.log("said play me")
+					// ChannelAPI._status = {
+					// 	displayStatus: 'playing',
+					// 	_status: 'pause',
+					// 	active: ChannelAPI.currentChannelId,
+					// 	_howlStatus: 'playing',
+					// }
 					ChannelAPI.howl.play();
 					break;
 				case 'pause':
-					console.log("said pause me");
+					//console.log("said pause me")
 					ChannelAPI.howl.pause();
 					ChannelAPI._status = {
 						displayStatus: 'paused',
 						_status: 'play',
-						active: ChannelAPI.currentChannelId
+						active: ChannelAPI.currentChannelId,
+						_howlStatus: 'playing'
 					};
 					break;
 				case 'unload':
-					console.log("said unload me");
+					//console.log("said unload me")
 
 					if (ChannelAPI.howl.urls != undefined) {
 						ChannelAPI.howl.unload();
 					}
 
 					ChannelAPI.howl = _howler2.default;
-					console.log("howl obj reset: ", ChannelAPI.howl);
+					//console.log("said unload me::howl obj reset: ", ChannelAPI.howl);				
 					break;
 			}
 		},
@@ -27809,31 +27804,32 @@
 					buffer: true,
 					format: "mp3",
 					onload: function onload() {
-						console.log("loaded");
-					},
-					onplay: function onplay() {
-						console.log("Playing:  not equal");
+						//console.log("loaded. audionode: ", ChannelAPI.howl._audioNode);
 						ChannelAPI._streamChannel({ _status: 'play' });
+					},
+					onplay: function onplay(_status) {
+						//console.log("Playing:  not equal: ", ChannelAPI.howl._audioNode);					
+						console.log("play status: ", _status);
+						ChannelAPI._status = {
+							displayStatus: 'playing',
+							_status: 'pause',
+							active: ChannelAPI.currentChannelId,
+							_howlStatus: 'playing'
+						};
 						try {
-							_appActions2.default.STREAM_CHANNEL("dispatch for playing now");
+							_appActions2.default.STREAM_CHANNEL("_announce");
 						} catch (e) {}
 					},
 					onloaderror: function onloaderror(_error) {
-						console.log(_error);
-						// ChannelAPI._status = {
-						// 	displayStatus: 'error',
-						// 	_status: 'play',
-						// 	active: ChannelAPI.currentChannelId
-						// };
-						// try{Action.STREAM_CHANNEL("dispatch for error");}catch(e){}
+						//console.log(_error);					
 					},
 					onend: function onend() {
-						console.log("ended:  not equal");
+						//console.log("ended:  not equal");			
 					}
 				});
 			} else {
-				console.log("same channel: prev==: %s....new==: %s do nothing", ChannelAPI.currentChannelId, _channelObj.channel.channelId);
-			}
+					//console.log("same channel: prev==: %s....new==: %s do nothing", ChannelAPI.currentChannelId, _channelObj.channel.channelId)
+				}
 		},
 
 		//
@@ -28196,20 +28192,16 @@
 	          	///EDIT BY ANTHONY
 	          	switch(newNode.error.code){
 		          		case 1:
-		          			_errorMsg = "Error Code: 1. Media fetch aborted by user"
-		          			console.log("Error Code: 1. Media fetch aborted by user")
+		          			_errorMsg = {"Error Code": 1, "ErrorMsg": "Media fetch aborted by user"}	          			
 		          		break;
 		          		case 2:
-		          			_errorMsg = "Error Code: 1. A network error occured fetching media"
-		          			console.log("Error Code: 1. A network error occured fetching media")
+		          			_errorMsg = {"Error Code": 2, "ErrorMsg": "A network error occured fetching media"}	          			
 		          		break;
 		          		case 3:
-		          			_errorMsg = "Error Code: 3. Error decoding media"
-		          			console.log("Error Code: 3. Error decoding media")
+		          			_errorMsg = {"ErrorCode": 3, "ErrorMsg": "Error decoding media"}	          			
 		          		break;          			
 		          		case 4:
-							_errorMsg = "Error Code: 4. Media Source Not Suitable"
-							console.log("Error Code: 4. Media Source Not Suitable")
+							_errorMsg = {"ErrorCode": 4, "ErrorMsg": "Media Source Not Suitable"}						
 		          		break;	          
 	          		}
 	          	///END EDIT 
@@ -28217,7 +28209,8 @@
 	            HowlerGlobal.noAudio = true;
 	          }          
 
-	          self.on('loaderror', {type: newNode.error ? newNode.error.code : 0});
+				self.on('loaderror', _errorMsg);
+	          //self.on('loaderror', {type: newNode.error ? newNode.error.code : 0});//commented out by anthony
 	        }, false);
 
 	        self._audioNode.push(newNode);
@@ -28241,6 +28234,7 @@
 
 	          if (!self._loaded) {
 	            self._loaded = true;
+	            console.log("howler says loaded");
 	            self.on('load');
 	          }
 
@@ -28388,6 +28382,7 @@
 	            loop ? node.bufferSource.start(0, pos, 86400) : node.bufferSource.start(0, pos, duration);
 	          }
 	        } else {
+	        	console.log("ready states: ", node.readyState);
 	          if (node.readyState === 4 || !node.readyState && navigator.isCocoonJS) {
 	            node.readyState = 4;
 	            node.id = soundId;
@@ -28417,9 +28412,19 @@
 	        }
 
 	        // fire the play event and send the soundId back in the callback
-	        self.on('play');
-	        if (typeof callback === 'function') callback(soundId);
 
+	        //EDITED BY ANTHONY
+	        if(node.readyState === 4){
+	            self.on('play',{"readyState": node.readyState});
+	        }
+	        else{
+	        	console.log("ready state not viable yet");
+	        }
+	        //END OF EDIT
+
+	        //self.on('play');//commented out by Anthony
+	        if (typeof callback === 'function') callback(soundId);
+	        console.log("howler says playing now");
 	        return self;
 	      });
 
@@ -31678,6 +31683,7 @@
 			_this.state = {
 				_status: 'init',
 				displayStatus: undefined,
+				_howlStatus: undefined,
 				currentChannelId: ''
 			};
 			return _this;
@@ -31690,7 +31696,8 @@
 					this.setState({
 						_status: nextProps._status._status,
 						displayStatus: nextProps._status.displayStatus,
-						active: nextProps._status.active
+						active: nextProps._status.active,
+						_howlStatus: nextProps._status._howlStatus
 					});
 				} else {
 					this.setState({ displayStatus: undefined });
@@ -31700,7 +31707,7 @@
 			key: 'componentDidUpdate',
 			value: function componentDidUpdate(prevProps, prevState) {
 				if (prevProps.data.channelId === this.state.active) {
-					console.log("after update  obj: ", this.state);
+					console.log("after: ", this.state);
 				}
 			}
 		}, {
@@ -31715,7 +31722,6 @@
 						});
 						break;
 					case "init":
-						this.setState({ displayStatus: 'loading' });
 						_appActions2.default.STREAM_CHANNEL({
 							channel: _channel,
 							_status: action,
@@ -31723,7 +31729,6 @@
 						});
 						break;
 					case "pause":
-						//this.setState({displayStatus: 'loading'});			
 						_appActions2.default.STREAM_CHANNEL({
 							channel: _channel,
 							_status: action,
@@ -31886,7 +31891,8 @@
 				_status: 'pause',
 				active: '',
 				preStream: null,
-				worker: null
+				worker: null,
+				_howlStatus: undefined
 			};
 			_this4._onChange = _this4._onChange.bind(_this4);
 			return _this4;
@@ -31921,7 +31927,6 @@
 
 				//GET STREAMING STATUS
 				var _streamStatus = _appStore2.default.GetChannelStatus('');
-				console.log("stream status: ", _streamStatus);
 				if (_streamStatus != undefined) {
 					this.setState(_appStore2.default.GetChannelStatus(''));
 				}
@@ -31961,7 +31966,8 @@
 														_status: _this5.state._status,
 														active: _this5.state.active,
 														preStream: _this5.state.preStream,
-														worker: _this5.state.worker
+														worker: _this5.state.worker,
+														_howlStatus: _this5.state._howlStatus
 													} });
 											})
 										)

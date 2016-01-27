@@ -11,25 +11,28 @@ class ChannelRow extends React.Component{
 		this.state = {
 			_status: 'init',
 			displayStatus: undefined,
+			_howlStatus: undefined,
 			currentChannelId: '',			
 		}
 	}	
-	componentWillReceiveProps(nextProps, nextContext){					
+	componentWillReceiveProps(nextProps, nextContext){							
 		if(nextProps.data.channelId ===  nextProps._status.active){			
 			this.setState({
-						_status: nextProps._status._status,
-						displayStatus: nextProps._status.displayStatus,
-						active: nextProps._status.active
-					});			
+				_status: nextProps._status._status,
+				displayStatus: nextProps._status.displayStatus,
+				active: nextProps._status.active,
+				_howlStatus: nextProps._status._howlStatus
+			});	
+		
 		}else{
 			this.setState({displayStatus: undefined});
 		}
 	}
-	componentDidUpdate(prevProps, prevState) {	
-	 	if(prevProps.data.channelId === this.state.active){
-	 		console.log("after update  obj: ", this.state)	
+	componentDidUpdate(prevProps, prevState) {			
+	 	if(prevProps.data.channelId === this.state.active){	 		
+	 		console.log("after: ", this.state)
 	 	}	
-	}
+	}		
 	_playPause(action, _channel){						
 		switch(action){
 			case "play":												
@@ -39,16 +42,14 @@ class ChannelRow extends React.Component{
 						active: _channel.channelId, 					
 					});
 			break;
-			case "init":	
-				this.setState({displayStatus: 'loading'});
+			case "init":				
 				Action.STREAM_CHANNEL({
 					channel: _channel, 
 					_status: action,
 					active: _channel.channelId					
 				});
 			break;
-			case "pause":
-				//this.setState({displayStatus: 'loading'});			
+			case "pause":				
 				Action.STREAM_CHANNEL({
 					channel: _channel, 
 					_status: action,
@@ -167,7 +168,8 @@ class PlayChannel extends React.Component{
 			_status: 'pause',
 			active:'',
 			preStream: null,
-			worker: null
+			worker: null,
+			_howlStatus: undefined
 		}
 		this._onChange = this._onChange.bind(this);
 	}
@@ -197,7 +199,6 @@ class PlayChannel extends React.Component{
 
 		//GET STREAMING STATUS
 		var _streamStatus = AppStore.GetChannelStatus('')		
-		console.log("stream status: ", _streamStatus);
 		if(_streamStatus != undefined){						
 			this.setState(AppStore.GetChannelStatus(''));
 		}
@@ -222,7 +223,8 @@ class PlayChannel extends React.Component{
 									            				_status: this.state._status, 
 									            				active: this.state.active,
 									            				preStream: this.state.preStream,
-									            				worker: this.state.worker
+									            				worker: this.state.worker,
+									            				_howlStatus: this.state._howlStatus
 									            			}}/>
 							            	})}
 						            	</div>						            	

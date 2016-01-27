@@ -64,44 +64,47 @@ const ChannelAPI = {
 	},
 	///
 	_streamChannel(_channelObj){	
-		console.log("stream obj: ",_channelObj)
+		//console.log("stream obj: ",_channelObj)
 		switch(_channelObj._status){				
 			case 'init':
-				console.log("said init me");
+				//console.log("said init me");
 				ChannelAPI._status = {
 						displayStatus: 'loading',
-						_status: 'play',
-						active: _channelObj.active
+						_status: 'init',
+						active: _channelObj.active,
+						_howlStatus: 'init',
 					}
-				ChannelAPI._initChannel(_channelObj);				
+				ChannelAPI._initChannel(_channelObj);
 			break;
-			case 'play':				
-					console.log("said play me")
-					ChannelAPI._status = {
-						displayStatus: 'playing',
-						_status: 'pause',
-						active: ChannelAPI.currentChannelId
-					}
+			case 'play':
+					//console.log("said play me")
+					// ChannelAPI._status = {
+					// 	displayStatus: 'playing',
+					// 	_status: 'pause',
+					// 	active: ChannelAPI.currentChannelId,
+					// 	_howlStatus: 'playing',
+					// }
 					ChannelAPI.howl.play();					
 			break;
 			case 'pause':
-				console.log("said pause me")
+				//console.log("said pause me")
 				ChannelAPI.howl.pause();
 				ChannelAPI._status = {
 						displayStatus: 'paused',
 						_status: 'play',
-						active: ChannelAPI.currentChannelId
+						active: ChannelAPI.currentChannelId,
+						_howlStatus: 'playing',
 					};
 			break;
 			case 'unload':
-				console.log("said unload me")
+				//console.log("said unload me")
 
 				if(ChannelAPI.howl.urls != undefined){
 					ChannelAPI.howl.unload();
 				}
 
 				ChannelAPI.howl = howler;
-				console.log("howl obj reset: ", ChannelAPI.howl);				
+				//console.log("said unload me::howl obj reset: ", ChannelAPI.howl);				
 			break;			
 		}		
 	},
@@ -117,28 +120,29 @@ const ChannelAPI = {
 				buffer: true,
 				format: "mp3",
 				onload:function(){		
-					console.log("loaded");			
+					//console.log("loaded. audionode: ", ChannelAPI.howl._audioNode);
+					ChannelAPI._streamChannel({_status: 'play'})
 				},
-				onplay: function(){					
-					console.log("Playing:  not equal");
-					ChannelAPI._streamChannel({_status: 'play'});
-					try{Action.STREAM_CHANNEL("dispatch for playing now");}catch(e){}
+				onplay: function(_status){					
+					//console.log("Playing:  not equal: ", ChannelAPI.howl._audioNode);					
+					console.log("play status: ", _status);
+					ChannelAPI._status = {
+						displayStatus: 'playing',
+						_status: 'pause',
+						active: ChannelAPI.currentChannelId,
+						_howlStatus: 'playing',
+					}
+					try{Action.STREAM_CHANNEL("_announce");}catch(e){}
 				},
 				onloaderror:function(_error){
-					console.log(_error);
-					// ChannelAPI._status = {
-					// 	displayStatus: 'error',
-					// 	_status: 'play',
-					// 	active: ChannelAPI.currentChannelId
-					// };
-					// try{Action.STREAM_CHANNEL("dispatch for error");}catch(e){}
+					//console.log(_error);					
 				},				
 				onend:function(){	
-					console.log("ended:  not equal");			
+					//console.log("ended:  not equal");			
 				}
 			});				
 		}else{
-			console.log("same channel: prev==: %s....new==: %s do nothing", ChannelAPI.currentChannelId, _channelObj.channel.channelId)
+			//console.log("same channel: prev==: %s....new==: %s do nothing", ChannelAPI.currentChannelId, _channelObj.channel.channelId)
 		}
 	},
 	//
