@@ -30,7 +30,7 @@ class ChannelRow extends React.Component{
 	}
 	componentDidUpdate(prevProps, prevState) {			
 	 	if(prevProps.data.channelId === this.state.active){	 		
-	 		console.log("after: ", this.state)
+	 		//console.log("after: ", this.state)
 	 	}	
 	}		
 	_playPause(action, _channel){						

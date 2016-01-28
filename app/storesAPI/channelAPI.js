@@ -116,12 +116,12 @@ const ChannelAPI = {
 
 			ChannelAPI.howl = new Howl({
 				urls: _channelObj.channel.channelUrls,
-				autoplay: false,
+				autoplay: true,
 				buffer: true,
 				format: "mp3",
 				onload:function(){		
 					//console.log("loaded. audionode: ", ChannelAPI.howl._audioNode);
-					ChannelAPI._streamChannel({_status: 'play'})
+					//ChannelAPI._streamChannel({_status: 'play'})
 				},
 				onplay: function(_status){					
 					//console.log("Playing:  not equal: ", ChannelAPI.howl._audioNode);					
@@ -135,7 +135,7 @@ const ChannelAPI = {
 					try{Action.STREAM_CHANNEL("_announce");}catch(e){}
 				},
 				onloaderror:function(_error){
-					//console.log(_error);					
+					console.log(_error);					
 				},				
 				onend:function(){	
 					//console.log("ended:  not equal");			
